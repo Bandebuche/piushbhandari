@@ -48,7 +48,10 @@
 
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   
+  /* Prevent scrollbar disappearance layout shift */
   html {
+    scrollbar-gutter: stable;
+    overflow-y: scroll;
     scroll-behavior: smooth;
     width: 100%;
     margin: 0;
@@ -69,7 +72,7 @@
     min-height: 100vh;
     margin: 0;
     padding: 0 0 40px 0;
-    overflow-x: clip; /* clip prevents horizontal scroll without breaking position:sticky! */
+    overflow-x: clip; /* prevents horizontal shift without breaking position:sticky */
   }
 
   button, input, select, textarea { font: inherit; color: inherit; }
@@ -89,6 +92,7 @@
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     width: 100%;
+    min-height: 64px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   }
 
@@ -100,6 +104,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 16px;
+    min-height: 64px;
   }
 
   /* Logo Only - No text label, transparent 3D logo */
@@ -108,6 +113,7 @@
     align-items: center;
     text-decoration: none;
     cursor: pointer;
+    flex: none;
   }
 
   .brand-logo-img {
@@ -123,42 +129,84 @@
     transform: scale(1.04);
   }
 
-  /* Desktop Sticky Navigation Tabs */
+  /* -------------------------------------------------------------
+     DESKTOP STICKY NAVBAR - DYNAMIC ICON-COLLAPSE PILLS
+     Inactive: Icon only!
+     Active (Clicked): Expands to show Icon + Name!
+  ------------------------------------------------------------- */
   .desktop-nav {
     display: flex;
     align-items: center;
     gap: 6px;
     background: rgba(255, 255, 255, 0.04);
-    padding: 4px 6px;
+    padding: 5px 6px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .nav-pill-btn {
     border: none;
     background: transparent;
     color: var(--text-secondary);
-    padding: 7px 16px;
+    height: 38px;
     border-radius: 999px;
-    font-size: 13.5px;
+    font-size: 13px;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 7px;
+    justify-content: center;
+    padding: 0 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
   }
+
+  /* Inactive: Text hidden by default */
+  .nav-pill-btn span {
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-left: 0;
+    transition: max-width 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, margin 0.2s ease;
+  }
+
+  .nav-pill-btn svg {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    transition: transform 0.2s;
+  }
+
   .nav-pill-btn:hover {
     color: #fff;
-    background: rgba(255, 255, 255, 0.07);
+    background: rgba(255, 255, 255, 0.08);
   }
+  .nav-pill-btn:hover svg {
+    transform: scale(1.1);
+  }
+
+  /* Active: Expands to reveal Name with Glowing Background */
   .nav-pill-btn.active {
     background: linear-gradient(135deg, var(--neon), #059669);
     color: #042517;
     font-weight: 800;
+    padding: 0 16px;
     box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
   }
+  .nav-pill-btn.active span {
+    max-width: 120px;
+    opacity: 1;
+    margin-left: 7px;
+  }
+  .nav-pill-btn.active svg {
+    color: #042517;
+  }
+
+  /* External Sheet Link */
   .nav-pill-btn.sheet-link {
     color: var(--blue);
   }
@@ -166,11 +214,17 @@
     background: rgba(56, 189, 248, 0.12);
     color: #fff;
   }
+  .nav-pill-btn.sheet-link:hover span {
+    max-width: 120px;
+    opacity: 1;
+    margin-left: 7px;
+  }
 
   .topbar-right {
     display: flex;
     align-items: center;
     gap: 10px;
+    flex: none;
   }
 
   .live-badge {
@@ -235,7 +289,7 @@
   .mobile-drawer {
     display: none;
     position: fixed;
-    top: 63px;
+    top: 64px;
     left: 0;
     right: 0;
     bottom: 0;
@@ -247,7 +301,7 @@
     flex-direction: column;
     gap: 10px;
     overflow-y: auto;
-    animation: drawerFadeIn 0.22s ease forwards;
+    animation: drawerFadeIn 0.2s ease forwards;
   }
   @keyframes drawerFadeIn {
     from { opacity: 0; transform: translateY(-8px); }
@@ -354,7 +408,7 @@
   }
 
   /* -------------------------------------------------------------
-     MULTI-PAGE VIEW ARCHITECTURE
+     MULTI-PAGE VIEW ARCHITECTURE - ZERO LAYOUT SHIFT
   ------------------------------------------------------------- */
   main {
     max-width: 1240px;
@@ -366,14 +420,15 @@
   .app-view {
     display: none;
     width: 100%;
-    animation: viewFadeIn 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    /* Pure opacity fade without translateY to avoid layout shake/jump */
+    animation: viewFadeIn 0.16s ease-out forwards;
   }
   .app-view.active-view {
     display: block;
   }
   @keyframes viewFadeIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 
   .view-header {
@@ -427,36 +482,39 @@
   }
 
   /* -------------------------------------------------------------
-     VIEW 1: DATA ENTRY FORM & LIVE TICKET PREVIEW
+     VIEW 1: FORM & TICKET - BALANCED EQUAL SCALE TWIN CARDS
   ------------------------------------------------------------- */
   .entry-grid {
     display: grid;
-    grid-template-columns: minmax(0, 390px) minmax(0, 1fr);
-    gap: 24px;
-    align-items: start;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: stretch;
     width: 100%;
   }
 
-  /* Form Card */
+  /* Left: Form Card */
   .form-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-xl);
-    padding: 24px;
+    padding: 28px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   .form-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
   }
   .form-header h2 {
     font-family: var(--font-heading);
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 800;
     color: #fff;
     margin: 0;
@@ -473,7 +531,7 @@
     font-size: 13px;
     font-weight: 700;
     color: #e2e8f0;
-    margin-bottom: 7px;
+    margin-bottom: 8px;
   }
   .req-star { color: var(--rose); margin-left: 2px; }
   .field-counter { font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); }
@@ -493,7 +551,7 @@
     font-size: 15px;
     font-weight: 600;
   }
-  textarea { min-height: 95px; resize: vertical; line-height: 1.45; }
+  textarea { min-height: 105px; resize: vertical; line-height: 1.45; }
   input:focus, textarea:focus {
     outline: none;
     border-color: var(--neon);
@@ -546,7 +604,7 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 8px 13px;
+    padding: 8px 14px;
     border: 1.5px solid var(--border);
     border-radius: 999px;
     font-size: 12px;
@@ -573,19 +631,19 @@
   }
   .category-pills input:checked + label::before { background: #042517; }
 
-  /* Assignee Selector */
+  /* Assignee Selector - Names Only (Sachin, Pragati) */
   .assignee-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 12px;
     width: 100%;
   }
   .assignee-grid input { position: absolute; opacity: 0; width: 1px; height: 1px; }
   .assignee-card {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px 14px;
+    gap: 12px;
+    padding: 12px 16px;
     border: 1.5px solid var(--border);
     border-radius: 14px;
     cursor: pointer;
@@ -598,37 +656,43 @@
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--asg-color) 25%, transparent);
   }
   .assignee-av {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     display: grid;
     place-items: center;
     font-family: var(--font-heading);
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 800;
     color: #fff;
     background: var(--asg-color);
+    flex: none;
   }
-  .assignee-info b { display: block; font-size: 13.5px; font-weight: 700; color: #fff; }
-  .assignee-info small { font-size: 10.5px; color: var(--text-muted); }
+  .assignee-info b {
+    display: block;
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
 
   /* Buttons */
   .form-actions {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
-    margin-top: 22px;
-    padding-top: 18px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
   }
   .btn-submit {
-    flex: 1 1 180px;
+    flex: 1 1 200px;
     background: linear-gradient(135deg, var(--neon), var(--neon-bright));
     color: #042517;
     font-family: var(--font-heading);
     font-weight: 800;
-    font-size: 14.5px;
-    padding: 13px 20px;
+    font-size: 15px;
+    padding: 13px 22px;
     border: none;
     border-radius: 12px;
     cursor: pointer;
@@ -637,7 +701,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 7px;
+    gap: 8px;
   }
   .btn-submit:hover { filter: brightness(1.1); transform: translateY(-1px); }
   .btn-reset {
@@ -645,156 +709,171 @@
     color: var(--text-secondary);
     border: 1.5px solid var(--border);
     font-weight: 700;
-    font-size: 13px;
-    padding: 13px 18px;
+    font-size: 13.5px;
+    padding: 13px 20px;
     border-radius: 12px;
     cursor: pointer;
   }
 
-  /* Ticket Preview Card */
+  /* Right: Ticket Wrap & Twin Scale Ticket */
   .ticket-wrap {
-    position: sticky;
-    top: 75px;
-    display: grid;
-    gap: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     width: 100%;
+    height: 100%;
   }
 
   .ticket {
+    flex: 1;
     position: relative;
-    background: linear-gradient(160deg, #111a24 0%, #0d141d 100%);
-    border: 1px solid rgba(0, 255, 135, 0.22);
-    border-radius: 24px;
-    padding: 22px 20px 18px;
+    background: linear-gradient(160deg, #101923 0%, #0d141d 100%);
+    border: 1px solid rgba(0, 255, 135, 0.25);
+    border-radius: var(--radius-xl);
+    padding: 28px;
     box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 255, 135, 0.08);
     overflow: hidden;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   .ticket-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 10.5px;
+    font-size: 12px;
     font-weight: 800;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.16em;
     color: var(--neon-bright);
-    margin-bottom: 14px;
+    margin-bottom: 18px;
   }
   .ticket-no {
     font-family: var(--font-mono);
     color: #fff;
-    background: rgba(255, 255, 255, 0.07);
-    padding: 2px 7px;
-    border-radius: 6px;
-    font-size: 11px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 3px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    letter-spacing: 0.05em;
   }
 
   .ticket-user {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
+    gap: 16px;
+    margin-bottom: 16px;
   }
 
   .ticket-avatar {
-    width: 48px;
-    height: 48px;
+    width: 54px;
+    height: 54px;
     border-radius: 50%;
     display: grid;
     place-items: center;
     font-family: var(--font-heading);
-    font-size: 17px;
-    font-weight: 800;
+    font-size: 19px;
+    font-weight: 900;
     flex: none;
     background: linear-gradient(135deg, var(--neon), #0284c7);
     color: #032014;
-    box-shadow: 0 0 12px rgba(0, 255, 135, 0.3);
+    box-shadow: 0 0 16px rgba(0, 255, 135, 0.35);
   }
 
   .ticket-name {
     font-family: var(--font-heading);
-    font-size: 17px;
+    font-size: 20px;
     font-weight: 800;
     letter-spacing: -0.02em;
     line-height: 1.2;
     color: #fff;
     word-break: break-word;
   }
-  .ticket-name.placeholder { color: var(--text-muted); font-weight: 600; font-size: 15px; }
+  .ticket-name.placeholder { color: var(--text-muted); font-weight: 600; font-size: 16px; }
 
   .ticket-tag {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    padding: 3px 9px;
+    gap: 6px;
+    padding: 4px 12px;
     border-radius: 999px;
-    font-size: 11px;
-    font-weight: 700;
-    margin-top: 4px;
+    font-size: 11.5px;
+    font-weight: 800;
+    margin-top: 6px;
     background: rgba(255, 255, 255, 0.06);
     color: var(--text-secondary);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .ticket-query-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .ticket-query {
-    min-height: 52px;
-    font-size: 13px;
-    color: #cbd5e1;
+    min-height: 60px;
+    font-size: 14px;
+    color: #e2e8f0;
     font-weight: 500;
-    line-height: 1.45;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    line-height: 1.55;
     word-break: break-word;
   }
-  .ticket-query.placeholder { color: var(--text-muted); }
+  .ticket-query.placeholder { color: var(--text-muted); font-style: italic; }
 
   .ticket-perf {
     position: relative;
-    margin: 14px -20px 12px;
+    margin: 14px -28px 16px;
     border-top: 2px dashed rgba(255, 255, 255, 0.12);
   }
 
   .ticket-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 12px;
   }
   .ticket-grid small {
     display: block;
     color: var(--text-muted);
-    font-size: 10px;
+    font-size: 10.5px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.07em;
+    margin-bottom: 2px;
   }
   .ticket-grid b {
     font-family: var(--font-mono);
-    font-size: 12.5px;
+    font-size: 13.5px;
     font-weight: 700;
-    color: #e2e8f0;
+    color: #f1f5f9;
   }
 
   /* SAVED Stamp */
   .stamp-badge {
     position: absolute;
-    right: 16px;
-    bottom: 50px;
+    right: 24px;
+    bottom: 60px;
     border: 3.5px solid var(--neon-bright);
     color: var(--neon-bright);
     font-family: var(--font-heading);
     font-weight: 900;
-    font-size: 24px;
+    font-size: 26px;
     letter-spacing: 0.08em;
-    padding: 2px 12px;
-    border-radius: 10px;
+    padding: 4px 16px;
+    border-radius: 12px;
     transform: rotate(-14deg) scale(2.2);
     opacity: 0;
     pointer-events: none;
-    background: rgba(7, 12, 18, 0.94);
-    box-shadow: 0 0 20px rgba(0, 255, 135, 0.4);
+    background: rgba(7, 12, 18, 0.95);
+    box-shadow: 0 0 24px rgba(0, 255, 135, 0.45);
   }
   .ticket.stamped .stamp-badge {
     animation: stampIn 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) forwards;
@@ -808,7 +887,7 @@
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 12px 16px;
+    padding: 14px 18px;
     width: 100%;
   }
   .ready-meter-top {
@@ -817,14 +896,15 @@
     font-size: 12px;
     font-weight: 700;
     color: var(--text-secondary);
-    margin-bottom: 7px;
+    margin-bottom: 8px;
   }
   .ready-meter-top span:last-child {
     font-family: var(--font-mono);
     color: var(--neon-bright);
+    font-weight: 800;
   }
   .meter-track {
-    height: 6px;
+    height: 7px;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.06);
     overflow: hidden;
@@ -841,7 +921,7 @@
   .nav-shortcuts-row {
     display: flex;
     gap: 10px;
-    margin-top: 18px;
+    margin-top: 14px;
   }
   .shortcut-btn {
     flex: 1;
@@ -1024,8 +1104,8 @@
     font-weight: 600;
   }
   .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
-  .legend-name { color: #fff; font-size: 13px; }
-  .legend-name small { display: block; color: var(--text-muted); font-size: 11px; }
+  .legend-name { color: #fff; font-size: 13.5px; font-weight: 700; }
+  .legend-name small { display: block; color: var(--text-muted); font-size: 11px; font-weight: 600; }
   .legend-val { font-family: var(--font-mono); font-size: 16px; font-weight: 800; color: #fff; }
 
   .vs-horizontal-bar {
@@ -1348,6 +1428,7 @@
     main { padding: 16px 12px 32px; }
     .card { padding: 18px 14px; border-radius: var(--radius-lg); }
     .form-card { padding: 18px 14px; border-radius: var(--radius-lg); }
+    .ticket { padding: 20px 16px; border-radius: var(--radius-lg); }
     .view-title { font-size: 22px; }
     .view-desc { font-size: 12.5px; }
     .kpi-value { font-size: 26px; }
@@ -1379,22 +1460,22 @@
       <img src="logo.png" alt="Support" class="brand-logo-img">
     </a>
 
-    <!-- Desktop Sticky Navigation Links (Center Tabs) -->
+    <!-- Desktop Sticky Navigation Links - Dynamic Icon-Collapse Pills -->
     <nav class="desktop-nav" aria-label="Main Navigation">
-      <button type="button" class="nav-pill-btn active" data-view="entry">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+      <button type="button" class="nav-pill-btn active" data-view="entry" title="New Entry">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
         <span>New Entry</span>
       </button>
-      <button type="button" class="nav-pill-btn" data-view="dashboard">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      <button type="button" class="nav-pill-btn" data-view="dashboard" title="Dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
         <span>Dashboard</span>
       </button>
-      <button type="button" class="nav-pill-btn" data-view="records">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+      <button type="button" class="nav-pill-btn" data-view="records" title="Records Table">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
         <span>Records Table</span>
       </button>
-      <a href="https://docs.google.com/spreadsheets/d/1hP5XQ9EtMVQ5qRM0FW2GG8WQkYtXLwFisx7eh96ibz0/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="nav-pill-btn sheet-link">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+      <a href="https://docs.google.com/spreadsheets/d/1hP5XQ9EtMVQ5qRM0FW2GG8WQkYtXLwFisx7eh96ibz0/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="nav-pill-btn sheet-link" title="Open Google Sheet">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
         <span>Google Sheet ↗</span>
       </a>
     </nav>
@@ -1458,7 +1539,7 @@
 <main>
 
   <!-- =========================================================================
-       PAGE / VIEW 1: DATA ENTRY FORM & LIVE TICKET PREVIEW
+       PAGE / VIEW 1: DATA ENTRY FORM & TWIN SCALE TICKET PREVIEW
   ========================================================================= -->
   <div id="view-entry" class="app-view active-view">
     
@@ -1482,81 +1563,81 @@
 
     <div class="entry-grid">
       
-      <!-- Left / Top: Form Card -->
+      <!-- Left: Form Card -->
       <form class="form-card" id="entryForm" novalidate>
-        <div class="form-header">
-          <h2>Student Query Form</h2>
-          <span style="font-size:12px;color:var(--text-muted)" id="deskDateLine"></span>
-        </div>
-
-        <!-- Student Name -->
-        <div class="field-group">
-          <label class="field-label" for="name">
-            <span>Student Name <span class="req-star">*</span></span>
-          </label>
-          <input type="text" id="name" name="name" class="lg" placeholder="e.g. Rahul Sharma" required autocomplete="name">
-          <div class="field-error" id="errName" hidden>Student name is required.</div>
-        </div>
-
-        <!-- Membership Category -->
-        <div class="field-group">
-          <label class="field-label">
-            <span>Category / Membership Type <span class="req-star">*</span></span>
-          </label>
-          <div class="category-pills" id="categoryPills"></div>
-          <div class="field-error" id="errCat" hidden>Please select a membership category.</div>
-        </div>
-
-        <!-- Query Description -->
-        <div class="field-group">
-          <label class="field-label" for="query">
-            <span>Query Description</span>
-            <span class="field-counter" id="qCount">0 / 500</span>
-          </label>
-          <div class="quick-chips-row">
-            <button type="button" class="quick-chip" data-text="Course access issue">Course access</button>
-            <button type="button" class="quick-chip" data-text="Payment verification">Payment</button>
-            <button type="button" class="quick-chip" data-text="Exam schedule help">Exam schedule</button>
-            <button type="button" class="quick-chip" data-text="Certificate request">Certificate</button>
+        <div>
+          <div class="form-header">
+            <h2>Student Query Form</h2>
+            <span style="font-size:12px;color:var(--text-muted)" id="deskDateLine"></span>
           </div>
-          <textarea id="query" name="query" maxlength="500" placeholder="Type the student's question, problem, or request here..."></textarea>
-        </div>
 
-        <!-- Typing Time -->
-        <div class="field-group">
-          <label class="field-label" for="typingTime">
-            <span>Typing Time</span>
-            <button type="button" id="nowBtn" style="background:none;border:none;color:var(--neon-bright);font-size:11px;font-weight:700;cursor:pointer;padding:0">Set to Now</button>
-          </label>
-          <input type="datetime-local" id="typingTime" name="typingTime">
-        </div>
+          <!-- Student Name -->
+          <div class="field-group">
+            <label class="field-label" for="name">
+              <span>Student Name <span class="req-star">*</span></span>
+            </label>
+            <input type="text" id="name" name="name" class="lg" placeholder="e.g. Rahul Sharma" required autocomplete="name">
+            <div class="field-error" id="errName" hidden>Student name is required.</div>
+          </div>
 
-        <!-- Assigned By -->
-        <div class="field-group">
-          <label class="field-label">
-            <span>Assigned By <span class="req-star">*</span></span>
-          </label>
-          <div class="assignee-grid">
-            <label>
-              <input type="radio" name="assignedBy" value="Sachin" checked>
-              <div class="assignee-card" style="--asg-color:#38bdf8">
-                <span class="assignee-av">S</span>
-                <div class="assignee-info">
-                  <b>Sachin</b>
-                  <small>Academic & Mentorship</small>
-                </div>
-              </div>
+          <!-- Membership Category -->
+          <div class="field-group">
+            <label class="field-label">
+              <span>Category / Membership Type <span class="req-star">*</span></span>
             </label>
-            <label>
-              <input type="radio" name="assignedBy" value="Pragati">
-              <div class="assignee-card" style="--asg-color:#10b981">
-                <span class="assignee-av">P</span>
-                <div class="assignee-info">
-                  <b>Pragati</b>
-                  <small>Query Resolution & Exams</small>
-                </div>
-              </div>
+            <div class="category-pills" id="categoryPills"></div>
+            <div class="field-error" id="errCat" hidden>Please select a membership category.</div>
+          </div>
+
+          <!-- Query Description -->
+          <div class="field-group">
+            <label class="field-label" for="query">
+              <span>Query Description</span>
+              <span class="field-counter" id="qCount">0 / 500</span>
             </label>
+            <div class="quick-chips-row">
+              <button type="button" class="quick-chip" data-text="Course access issue">Course access</button>
+              <button type="button" class="quick-chip" data-text="Payment verification">Payment</button>
+              <button type="button" class="quick-chip" data-text="Exam schedule help">Exam schedule</button>
+              <button type="button" class="quick-chip" data-text="Certificate request">Certificate</button>
+            </div>
+            <textarea id="query" name="query" maxlength="500" placeholder="Type the student's question, problem, or request here..."></textarea>
+          </div>
+
+          <!-- Typing Time -->
+          <div class="field-group">
+            <label class="field-label" for="typingTime">
+              <span>Typing Time</span>
+              <button type="button" id="nowBtn" style="background:none;border:none;color:var(--neon-bright);font-size:11px;font-weight:700;cursor:pointer;padding:0">Set to Now</button>
+            </label>
+            <input type="datetime-local" id="typingTime" name="typingTime">
+          </div>
+
+          <!-- Assigned By - Names Only (Sachin, Pragati) -->
+          <div class="field-group">
+            <label class="field-label">
+              <span>Assigned By <span class="req-star">*</span></span>
+            </label>
+            <div class="assignee-grid">
+              <label>
+                <input type="radio" name="assignedBy" value="Sachin" checked>
+                <div class="assignee-card" style="--asg-color:#38bdf8">
+                  <span class="assignee-av">S</span>
+                  <div class="assignee-info">
+                    <b>Sachin</b>
+                  </div>
+                </div>
+              </label>
+              <label>
+                <input type="radio" name="assignedBy" value="Pragati">
+                <div class="assignee-card" style="--asg-color:#10b981">
+                  <span class="assignee-av">P</span>
+                  <div class="assignee-info">
+                    <b>Pragati</b>
+                  </div>
+                </div>
+              </label>
+            </div>
           </div>
         </div>
 
@@ -1570,36 +1651,43 @@
         </div>
       </form>
 
-      <!-- Right / Bottom: Live Ticket Card & Shortcuts -->
+      <!-- Right: Ticket Wrap & Twin Scale Ticket Preview -->
       <div class="ticket-wrap">
         <div class="ticket" id="ticketCard" aria-label="Query Ticket">
-          <div class="ticket-top">
-            <span>SUPPORT TICKET</span>
-            <span class="ticket-no" id="tNo">#0001</span>
-          </div>
+          
+          <div>
+            <div class="ticket-top">
+              <span>SUPPORT TICKET</span>
+              <span class="ticket-no" id="tNo">#0001</span>
+            </div>
 
-          <div class="ticket-user">
-            <span class="ticket-avatar" id="tAv">?</span>
-            <div>
-              <div class="ticket-name placeholder" id="tName">Student Name</div>
-              <span class="ticket-tag" id="tCat">Pick Category</span>
+            <div class="ticket-user">
+              <span class="ticket-avatar" id="tAv">?</span>
+              <div>
+                <div class="ticket-name placeholder" id="tName">Student Name</div>
+                <span class="ticket-tag" id="tCat">Pick Category</span>
+              </div>
+            </div>
+
+            <div class="ticket-query-box">
+              <div class="ticket-query placeholder" id="tQuery">
+                Query details will appear here as you type...
+              </div>
             </div>
           </div>
 
-          <div class="ticket-query placeholder" id="tQuery">
-            Query details will appear here as you type...
-          </div>
+          <div>
+            <div class="ticket-perf"></div>
 
-          <div class="ticket-perf"></div>
-
-          <div class="ticket-grid">
-            <div>
-              <small>Typing Time</small>
-              <b id="tTime">Not set</b>
-            </div>
-            <div>
-              <small>Assigned By</small>
-              <b id="tAsg">Not selected</b>
+            <div class="ticket-grid">
+              <div>
+                <small>Typing Time</small>
+                <b id="tTime">Not set</b>
+              </div>
+              <div>
+                <small>Assigned By</small>
+                <b id="tAsg">Sachin</b>
+              </div>
             </div>
           </div>
 
@@ -1881,7 +1969,6 @@
   var CAT_COLORS = ['#38bdf8', '#94a3b8', '#f59e0b', '#818cf8', '#cbd5e1', '#10b981', '#14b8a6'];
   var ASSIGNEES = ['Sachin', 'Pragati'];
   var ASG_COLORS = { Sachin: '#38bdf8', Pragati: '#10b981' };
-  var ASG_ROLE = { Sachin: 'Academic & Mentorship', Pragati: 'Query Resolution & Exams' };
   var PAGE_SIZE = 15;
 
   var records = [];
@@ -1940,7 +2027,7 @@
   }
 
   /* -------------------------------------------------------------
-     MULTI-PAGE VIEW SWITCHER
+     MULTI-PAGE VIEW SWITCHER (ZERO LAYOUT SHIFT)
   ------------------------------------------------------------- */
   var hamBtn = $('hamburgerBtn');
   var mobileDrawer = $('mobileDrawer');
@@ -1964,9 +2051,10 @@
       }
     });
 
-    // Update Desktop Nav Pills
+    // Update Desktop Dynamic Nav Pills (Expands Active, Collapses Inactive to Icons)
     document.querySelectorAll('.nav-pill-btn[data-view]').forEach(function (btn) {
-      btn.classList.toggle('active', btn.getAttribute('data-view') === viewId);
+      var isAct = btn.getAttribute('data-view') === viewId;
+      btn.classList.toggle('active', isAct);
     });
 
     // Update Mobile Drawer Links
@@ -1986,10 +2074,12 @@
       $('hamIcon').innerHTML = '<line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>';
     }
 
-    // Scroll smoothly to top
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Only scroll to top if scrolled down - prevents jerky layout jumping
+    if (window.scrollY > 120) {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
 
-    // Update URL hash
+    // Update URL hash without scroll jump
     if (history.replaceState) {
       history.replaceState(null, '', '#' + viewId);
     }
@@ -2397,15 +2487,16 @@
       '<text x="21" y="22" text-anchor="middle" font-size="7" font-weight="800" fill="#fff" font-family="var(--font-heading)">' + total + '</text>' +
       '<text x="21" y="27" text-anchor="middle" font-size="3" fill="#64748b" font-weight="700">TOTAL</text>';
 
+    // Names only (no subtitle descriptions)
     $('legendList').innerHTML =
       '<div class="legend-row">' +
         '<span class="legend-dot" style="background:#38bdf8"></span>' +
-        '<div class="legend-name">Sachin <small>' + (total ? Math.round(sPct * 100) : 0) + '% · Mentorship</small></div>' +
+        '<div class="legend-name">Sachin <small>' + (total ? Math.round(sPct * 100) : 0) + '% workload</small></div>' +
         '<span class="legend-val">' + sCount + '</span>' +
       '</div>' +
       '<div class="legend-row">' +
         '<span class="legend-dot" style="background:#00ff87"></span>' +
-        '<div class="legend-name">Pragati <small>' + (total ? (100 - Math.round(sPct * 100)) : 0) + '% · Query Resolution</small></div>' +
+        '<div class="legend-name">Pragati <small>' + (total ? (100 - Math.round(sPct * 100)) : 0) + '% workload</small></div>' +
         '<span class="legend-val">' + pCount + '</span>' +
       '</div>';
 
