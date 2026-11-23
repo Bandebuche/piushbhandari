@@ -15,17 +15,17 @@
 
 <style>
   :root {
-    --bg: #090e13;
-    --bg-card: #0e161f;
-    --bg-card-subtle: #131e2a;
-    --bg-surface: #172433;
+    --bg: #070c12;
+    --bg-card: #0d151f;
+    --bg-card-subtle: #121c28;
+    --bg-surface: #162231;
     --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
     --text-muted: #64748b;
     --border: #1e293b;
-    --border-light: #334155;
+    --border-light: #2c3e50;
     
-    /* Neon Green / Cyber Theme matching uploaded 3D Support logo */
+    /* Neon Green Theme matching the 3D Support logo */
     --neon: #10b981;
     --neon-bright: #00ff87;
     --neon-glow: rgba(0, 255, 135, 0.28);
@@ -40,15 +40,20 @@
     --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
     
-    --radius-xl: 24px;
-    --radius-lg: 18px;
+    --radius-xl: 22px;
+    --radius-lg: 16px;
     --radius-md: 12px;
-    --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
-    --shadow-glow: 0 0 25px rgba(0, 255, 135, 0.2);
+    --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
   }
 
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html, body { margin: 0; padding: 0; scroll-behavior: smooth; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
   
   body {
     font-family: var(--font-body);
@@ -57,12 +62,12 @@
     color: var(--text-primary);
     background-color: var(--bg);
     background-image: 
-      radial-gradient(circle at 50% 0%, rgba(0, 255, 135, 0.08), transparent 45%),
-      radial-gradient(circle at 90% 20%, rgba(56, 189, 248, 0.06), transparent 35%),
-      linear-gradient(to bottom, #090e13, #0b1118);
+      radial-gradient(circle at 50% 0%, rgba(0, 255, 135, 0.09), transparent 50%),
+      radial-gradient(circle at 90% 15%, rgba(56, 189, 248, 0.06), transparent 40%),
+      linear-gradient(to bottom, #070c12, #0b1118);
     background-attachment: fixed;
     min-height: 100vh;
-    padding-bottom: 90px; /* Space for mobile floating dock */
+    padding-bottom: 30px;
   }
 
   button, input, select, textarea { font: inherit; color: inherit; }
@@ -70,91 +75,51 @@
   [hidden] { display: none !important; }
 
   /* -------------------------------------------------------------
-     TOP NAVIGATION BAR
+     TOPBAR NAVIGATION (LOGO ONLY + HAMBURGER MENU)
   ------------------------------------------------------------- */
   .topbar {
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(9, 14, 19, 0.82);
+    background: rgba(7, 12, 18, 0.88);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    width: 100%;
   }
 
   .topbar-inner {
-    max-width: 1260px;
+    max-width: 1240px;
     margin: 0 auto;
-    padding: 10px 20px;
+    padding: 10px 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 12px;
   }
 
-  .brand-group {
+  /* Logo Only - No text label, background transparent */
+  .brand-logo-only {
     display: flex;
     align-items: center;
-    gap: 14px;
     text-decoration: none;
-    color: inherit;
-  }
-
-  .brand-logo-wrap {
-    height: 44px;
-    display: flex;
-    align-items: center;
-    position: relative;
   }
 
   .brand-logo-img {
-    height: 38px;
+    height: 44px;
+    max-width: 170px;
     width: auto;
     object-fit: contain;
+    mix-blend-mode: screen;
     filter: drop-shadow(0 0 10px rgba(0, 255, 135, 0.35));
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform 0.25s ease;
   }
-  .brand-logo-wrap:hover .brand-logo-img {
-    transform: scale(1.05);
-  }
-
-  .brand-text {
-    display: flex;
-    flex-direction: column;
+  .brand-logo-only:hover .brand-logo-img {
+    transform: scale(1.04);
   }
 
-  .brand-title {
-    font-family: var(--font-heading);
-    font-size: 16px;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .brand-tag {
-    font-size: 10px;
-    font-weight: 800;
-    color: var(--neon-bright);
-    background: rgba(0, 255, 135, 0.12);
-    border: 1px solid rgba(0, 255, 135, 0.3);
-    padding: 1px 6px;
-    border-radius: 999px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-
-  .brand-sub {
-    font-size: 11.5px;
-    color: var(--text-muted);
-    font-weight: 500;
-  }
-
-  /* Desktop Quick Navigation Links */
-  .nav-pills {
+  /* Desktop Navigation Pills */
+  .desktop-nav {
     display: flex;
     align-items: center;
     gap: 4px;
@@ -168,7 +133,7 @@
     border: none;
     background: transparent;
     color: var(--text-secondary);
-    padding: 7px 16px;
+    padding: 7px 15px;
     border-radius: 999px;
     font-size: 13px;
     font-weight: 700;
@@ -179,95 +144,149 @@
     align-items: center;
     gap: 6px;
   }
-
   .nav-pill-btn:hover {
     color: #fff;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.06);
   }
-
   .nav-pill-btn.active {
     background: linear-gradient(135deg, var(--neon), #059669);
     color: #042517;
     font-weight: 800;
-    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
   }
 
-  .topbar-actions {
+  .topbar-right {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
   }
 
-  .sheet-link-btn {
+  .live-badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #e2e8f0;
-    font-size: 12.5px;
-    font-weight: 700;
-    padding: 7px 13px;
-    border-radius: 999px;
-    text-decoration: none;
-    transition: all 0.2s;
-  }
-  .sheet-link-btn:hover {
-    background: rgba(0, 255, 135, 0.1);
-    border-color: rgba(0, 255, 135, 0.4);
+    background: rgba(16, 185, 129, 0.09);
+    border: 1px solid rgba(16, 185, 129, 0.28);
     color: var(--neon-bright);
-    transform: translateY(-1px);
-  }
-
-  .sync-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    background: rgba(16, 185, 129, 0.08);
-    border: 1px solid rgba(16, 185, 129, 0.25);
-    color: var(--neon-bright);
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: 700;
     padding: 6px 12px;
     border-radius: 999px;
     cursor: pointer;
+    white-space: nowrap;
     transition: all 0.2s;
   }
-  .sync-badge:hover {
-    background: rgba(16, 185, 129, 0.16);
-    transform: translateY(-1px);
+  .live-badge:hover {
+    background: rgba(16, 185, 129, 0.18);
   }
 
   .pulse-dot {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background: var(--neon-bright);
     box-shadow: 0 0 8px var(--neon-bright);
-    animation: pulse 2s infinite;
+    animation: pulseAnim 2s infinite;
   }
-  @keyframes pulse {
+  @keyframes pulseAnim {
     0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(1.2); }
+    50% { opacity: 0.4; transform: scale(1.25); }
+  }
+
+  /* Hamburger Menu Toggle Button */
+  .hamburger-btn {
+    display: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    color: #fff;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: all 0.2s;
+  }
+  .hamburger-btn:hover {
+    border-color: var(--neon);
+    background: rgba(0, 255, 135, 0.08);
+  }
+  .hamburger-btn svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.25s ease;
+  }
+
+  /* Mobile Drawer Menu */
+  .mobile-drawer {
+    display: none;
+    position: fixed;
+    top: 65px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 49;
+    background: rgba(7, 12, 18, 0.96);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    padding: 24px 20px;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    animation: drawerFadeIn 0.25s ease forwards;
+  }
+  @keyframes drawerFadeIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .mobile-drawer.open {
+    display: flex;
+  }
+
+  .drawer-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: #f1f5f9;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 700;
+    transition: all 0.2s;
+  }
+  .drawer-link:hover, .drawer-link:active {
+    border-color: var(--neon);
+    background: rgba(0, 255, 135, 0.08);
+    color: var(--neon-bright);
+  }
+  .drawer-link svg {
+    width: 18px;
+    height: 18px;
+    color: var(--neon-bright);
   }
 
   /* -------------------------------------------------------------
-     MAIN CONTAINER & HERO
+     MAIN CONTENT WRAPPER
   ------------------------------------------------------------- */
   main {
-    max-width: 1260px;
+    max-width: 1240px;
     margin: 0 auto;
-    padding: 24px 20px 48px;
+    padding: 24px 16px 40px;
     display: grid;
-    gap: 40px;
+    gap: 36px;
+    width: 100%;
   }
 
   .section-anchor {
-    scroll-margin-top: 80px;
+    scroll-margin-top: 75px;
   }
 
   .section-header {
-    margin-bottom: 20px;
+    margin-bottom: 18px;
   }
 
   .section-tag {
@@ -284,12 +303,12 @@
 
   .section-title {
     font-family: var(--font-heading);
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 800;
     letter-spacing: -0.03em;
     color: #fff;
     margin: 0;
-    line-height: 1.15;
+    line-height: 1.2;
   }
   .section-title span {
     background: linear-gradient(135deg, var(--neon-bright), #38bdf8);
@@ -304,122 +323,116 @@
     margin: 4px 0 0;
   }
 
-  /* -------------------------------------------------------------
-     CARD WRAPPER
-  ------------------------------------------------------------- */
   .card {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-card);
-    padding: 26px;
+    padding: 24px;
     position: relative;
+    width: 100%;
   }
 
   /* -------------------------------------------------------------
-     SECTION 1: DATA ENTRY FORM & LIVE TICKET (AT TOP)
+     SECTION 1: DATA ENTRY FORM & LIVE TICKET (TOP)
   ------------------------------------------------------------- */
   .entry-grid {
     display: grid;
-    grid-template-columns: minmax(0, 390px) minmax(0, 1fr);
-    gap: 28px;
+    grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
+    gap: 24px;
     align-items: start;
+    width: 100%;
   }
 
-  /* Live Futuristic Ticket */
-  .ticket-sticky-wrap {
+  /* Ticket Preview Card */
+  .ticket-wrap {
     position: sticky;
-    top: 80px;
+    top: 75px;
     display: grid;
-    gap: 16px;
+    gap: 14px;
+    width: 100%;
   }
 
   .ticket {
     position: relative;
     background: linear-gradient(160deg, #111a24 0%, #0d141d 100%);
-    border: 1px solid rgba(0, 255, 135, 0.2);
-    border-radius: 26px;
-    padding: 24px 22px 20px;
+    border: 1px solid rgba(0, 255, 135, 0.22);
+    border-radius: 24px;
+    padding: 22px 20px 18px;
     box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 255, 135, 0.08);
-    transform: rotate(-1deg);
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
     overflow: hidden;
-  }
-  .ticket:hover {
-    transform: rotate(0) translateY(-2px);
-    box-shadow: 0 20px 42px -12px rgba(0, 0, 0, 0.8), 0 0 32px rgba(0, 255, 135, 0.15);
+    width: 100%;
   }
 
-  .ticket-header {
+  .ticket-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 11px;
+    font-size: 10.5px;
     font-weight: 800;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.14em;
     color: var(--neon-bright);
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
   .ticket-no {
     font-family: var(--font-mono);
     color: #fff;
-    background: rgba(255, 255, 255, 0.06);
-    padding: 2px 8px;
+    background: rgba(255, 255, 255, 0.07);
+    padding: 2px 7px;
     border-radius: 6px;
     font-size: 11px;
-    letter-spacing: 0.04em;
   }
 
   .ticket-user {
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin-bottom: 14px;
+    gap: 12px;
+    margin-bottom: 12px;
   }
 
   .ticket-avatar {
-    width: 52px;
-    height: 52px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     display: grid;
     place-items: center;
     font-family: var(--font-heading);
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 800;
     flex: none;
     background: linear-gradient(135deg, var(--neon), #0284c7);
     color: #032014;
-    box-shadow: 0 0 14px rgba(0, 255, 135, 0.3);
+    box-shadow: 0 0 12px rgba(0, 255, 135, 0.3);
   }
 
   .ticket-name {
     font-family: var(--font-heading);
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 800;
     letter-spacing: -0.02em;
     line-height: 1.2;
     color: #fff;
     word-break: break-word;
   }
-  .ticket-name.placeholder { color: var(--text-muted); font-weight: 600; font-size: 16px; }
+  .ticket-name.placeholder { color: var(--text-muted); font-weight: 600; font-size: 15px; }
 
   .ticket-tag {
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    padding: 3px 10px;
+    padding: 3px 9px;
     border-radius: 999px;
-    font-size: 11.5px;
+    font-size: 11px;
     font-weight: 700;
-    margin-top: 5px;
+    margin-top: 4px;
     background: rgba(255, 255, 255, 0.06);
     color: var(--text-secondary);
     border: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .ticket-query {
-    min-height: 56px;
-    font-size: 13.5px;
+    min-height: 52px;
+    font-size: 13px;
     color: #cbd5e1;
     font-weight: 500;
     line-height: 1.45;
@@ -431,62 +444,49 @@
   }
   .ticket-query.placeholder { color: var(--text-muted); }
 
-  /* Perforated Divider */
   .ticket-perf {
     position: relative;
-    margin: 16px -22px 14px;
+    margin: 14px -20px 12px;
     border-top: 2px dashed rgba(255, 255, 255, 0.12);
   }
-  .ticket-perf::before, .ticket-perf::after {
-    content: "";
-    position: absolute;
-    top: -11px;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: var(--bg);
-    border: 1px solid var(--border);
-  }
-  .ticket-perf::before { left: -11px; clip-path: inset(0 0 0 50%); }
-  .ticket-perf::after { right: -11px; clip-path: inset(0 50% 0 0); }
 
-  .ticket-meta-grid {
+  .ticket-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 10px;
   }
-  .ticket-meta-grid small {
+  .ticket-grid small {
     display: block;
     color: var(--text-muted);
-    font-size: 10.5px;
+    font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
   }
-  .ticket-meta-grid b {
+  .ticket-grid b {
     font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: 12.5px;
     font-weight: 700;
     color: #e2e8f0;
   }
 
-  /* SAVED Stamp on submit */
+  /* SAVED Stamp */
   .stamp-badge {
     position: absolute;
-    right: 18px;
-    bottom: 60px;
+    right: 16px;
+    bottom: 50px;
     border: 3.5px solid var(--neon-bright);
     color: var(--neon-bright);
     font-family: var(--font-heading);
     font-weight: 900;
-    font-size: 26px;
+    font-size: 24px;
     letter-spacing: 0.08em;
-    padding: 3px 14px;
-    border-radius: 12px;
+    padding: 2px 12px;
+    border-radius: 10px;
     transform: rotate(-14deg) scale(2.2);
     opacity: 0;
     pointer-events: none;
-    background: rgba(9, 14, 19, 0.92);
+    background: rgba(7, 12, 18, 0.94);
     box-shadow: 0 0 20px rgba(0, 255, 135, 0.4);
   }
   .ticket.stamped .stamp-badge {
@@ -496,28 +496,28 @@
     to { opacity: 1; transform: rotate(-14deg) scale(1); }
   }
 
-  /* Progress Meter */
+  /* Readiness Meter */
   .ready-meter-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 14px 18px;
-    box-shadow: var(--shadow-card);
+    padding: 12px 16px;
+    width: 100%;
   }
   .ready-meter-top {
     display: flex;
     justify-content: space-between;
-    font-size: 12.5px;
+    font-size: 12px;
     font-weight: 700;
     color: var(--text-secondary);
-    margin-bottom: 8px;
+    margin-bottom: 7px;
   }
   .ready-meter-top span:last-child {
     font-family: var(--font-mono);
     color: var(--neon-bright);
   }
   .meter-track {
-    height: 7px;
+    height: 6px;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.06);
     overflow: hidden;
@@ -527,25 +527,24 @@
     width: 0%;
     border-radius: 999px;
     background: linear-gradient(90deg, var(--neon), var(--neon-bright));
-    box-shadow: 0 0 10px rgba(0, 255, 135, 0.5);
     transition: width 0.35s ease;
   }
 
-  /* Form Elements */
+  /* Form Card */
   .form-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-xl);
-    padding: 28px;
-    box-shadow: var(--shadow-card);
+    padding: 24px;
+    width: 100%;
   }
 
   .form-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 22px;
-    padding-bottom: 14px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
   .form-header h2 {
@@ -557,7 +556,8 @@
   }
 
   .field-group {
-    margin-bottom: 22px;
+    margin-bottom: 18px;
+    width: 100%;
   }
   .field-label {
     display: flex;
@@ -566,58 +566,56 @@
     font-size: 13px;
     font-weight: 700;
     color: #e2e8f0;
-    margin-bottom: 8px;
+    margin-bottom: 7px;
   }
   .req-star { color: var(--rose); margin-left: 2px; }
-  .field-counter { font-size: 11.5px; font-family: var(--font-mono); color: var(--text-muted); }
+  .field-counter { font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); }
 
   input[type=text], input[type=datetime-local], textarea {
     width: 100%;
     background: var(--bg-surface);
     border: 1.5px solid var(--border);
-    border-radius: 14px;
-    padding: 13px 16px;
+    border-radius: 12px;
+    padding: 12px 14px;
     font-size: 14px;
     color: #fff;
     transition: all 0.2s ease;
+    -webkit-appearance: none;
   }
   input[type=text].lg {
-    font-size: 15.5px;
+    font-size: 15px;
     font-weight: 600;
-    padding: 14px 16px;
   }
-  textarea { min-height: 100px; resize: vertical; line-height: 1.5; }
-  input:hover, textarea:hover { border-color: var(--border-light); }
+  textarea { min-height: 95px; resize: vertical; line-height: 1.45; }
   input:focus, textarea:focus {
     outline: none;
     border-color: var(--neon);
     background: #14202d;
-    box-shadow: 0 0 0 4px var(--neon-glow);
+    box-shadow: 0 0 0 3px var(--neon-glow);
   }
   [aria-invalid="true"] {
     border-color: var(--rose) !important;
-    box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.2) !important;
   }
   .field-error {
     color: var(--rose);
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: 600;
-    margin-top: 6px;
+    margin-top: 5px;
   }
 
   /* Quick Prompts */
   .quick-chips-row {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     flex-wrap: wrap;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
   .quick-chip {
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 999px;
-    padding: 5px 12px;
-    font-size: 11.5px;
+    padding: 4px 10px;
+    font-size: 11px;
     font-weight: 600;
     color: var(--text-secondary);
     cursor: pointer;
@@ -627,24 +625,24 @@
     background: rgba(0, 255, 135, 0.1);
     border-color: rgba(0, 255, 135, 0.35);
     color: var(--neon-bright);
-    transform: translateY(-1px);
   }
 
-  /* Category Pill Buttons (Exact 7 options) */
+  /* Category Pills */
   .category-pills {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 7px;
+    width: 100%;
   }
   .category-pills input { position: absolute; opacity: 0; width: 1px; height: 1px; }
   .category-pills label {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    padding: 9px 15px;
+    gap: 6px;
+    padding: 8px 13px;
     border: 1.5px solid var(--border);
     border-radius: 999px;
-    font-size: 12.5px;
+    font-size: 12px;
     font-weight: 700;
     cursor: pointer;
     background: var(--bg-surface);
@@ -654,48 +652,38 @@
   }
   .category-pills label::before {
     content: "";
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background: var(--pill-color, var(--neon));
-  }
-  .category-pills label:hover {
-    border-color: var(--pill-color, var(--neon));
-    color: #fff;
-    transform: translateY(-1px);
   }
   .category-pills input:checked + label {
     background: var(--pill-color, var(--neon));
     border-color: var(--pill-color, var(--neon));
     color: #042517;
     font-weight: 800;
-    box-shadow: 0 4px 16px rgba(0, 255, 135, 0.3);
+    box-shadow: 0 4px 14px rgba(0, 255, 135, 0.3);
   }
-  .category-pills input:checked + label::before {
-    background: #042517;
-  }
+  .category-pills input:checked + label::before { background: #042517; }
 
-  /* Assignee Selector (Sachin & Pragati) */
+  /* Assignee Selector */
   .assignee-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 10px;
+    width: 100%;
   }
   .assignee-grid input { position: absolute; opacity: 0; width: 1px; height: 1px; }
   .assignee-card {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
+    gap: 10px;
+    padding: 10px 14px;
     border: 1.5px solid var(--border);
-    border-radius: 16px;
+    border-radius: 14px;
     cursor: pointer;
     background: var(--bg-surface);
     transition: all 0.2s;
-  }
-  .assignee-card:hover {
-    border-color: var(--asg-color);
-    transform: translateY(-1px);
   }
   .assignee-grid input:checked + .assignee-card {
     border-color: var(--asg-color);
@@ -703,137 +691,121 @@
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--asg-color) 25%, transparent);
   }
   .assignee-av {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     display: grid;
     place-items: center;
     font-family: var(--font-heading);
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 800;
     color: #fff;
     background: var(--asg-color);
   }
-  .assignee-info b { display: block; font-size: 14px; font-weight: 700; color: #fff; }
-  .assignee-info small { font-size: 11px; color: var(--text-muted); }
+  .assignee-info b { display: block; font-size: 13.5px; font-weight: 700; color: #fff; }
+  .assignee-info small { font-size: 10.5px; color: var(--text-muted); }
 
-  /* Form Action Buttons */
+  /* Buttons */
   .form-actions {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     flex-wrap: wrap;
-    margin-top: 26px;
-    padding-top: 20px;
+    margin-top: 22px;
+    padding-top: 18px;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
   }
   .btn-submit {
-    flex: 1 1 200px;
+    flex: 1 1 180px;
     background: linear-gradient(135deg, var(--neon), var(--neon-bright));
     color: #042517;
     font-family: var(--font-heading);
     font-weight: 800;
-    font-size: 15px;
-    padding: 14px 24px;
+    font-size: 14.5px;
+    padding: 13px 20px;
     border: none;
-    border-radius: 14px;
+    border-radius: 12px;
     cursor: pointer;
-    box-shadow: 0 8px 24px -6px rgba(0, 255, 135, 0.5);
-    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 6px 20px -4px rgba(0, 255, 135, 0.45);
+    transition: all 0.2s;
   }
-  .btn-submit:hover {
-    filter: brightness(1.1);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 28px -6px rgba(0, 255, 135, 0.65);
-  }
+  .btn-submit:hover { filter: brightness(1.1); transform: translateY(-1px); }
   .btn-reset {
     background: var(--bg-surface);
     color: var(--text-secondary);
     border: 1.5px solid var(--border);
     font-weight: 700;
-    font-size: 13.5px;
-    padding: 14px 22px;
-    border-radius: 14px;
+    font-size: 13px;
+    padding: 13px 18px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: all 0.15s;
-  }
-  .btn-reset:hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
-    border-color: var(--border-light);
   }
 
   /* -------------------------------------------------------------
-     SECTION 2: ANALYTICS DASHBOARD (BELOW FORM)
+     SECTION 2: ANALYTICS DASHBOARD (MIDDLE)
   ------------------------------------------------------------- */
   .kpis-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 16px;
-    margin-bottom: 28px;
+    gap: 14px;
+    margin-bottom: 24px;
+    width: 100%;
   }
 
   .kpi-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 20px;
+    padding: 18px 16px;
     box-shadow: var(--shadow-card);
-    position: relative;
     overflow: hidden;
   }
   .kpi-card-top {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     color: var(--text-secondary);
-    font-size: 13px;
+    font-size: 12.5px;
     font-weight: 700;
   }
   .kpi-icon {
-    width: 34px;
-    height: 34px;
-    border-radius: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
     display: grid;
     place-items: center;
     background: rgba(16, 185, 129, 0.12);
     color: var(--neon-bright);
     flex: none;
   }
-  .kpi-icon.blue {
-    background: rgba(56, 189, 248, 0.12);
-    color: var(--blue);
-  }
+  .kpi-icon.blue { background: rgba(56, 189, 248, 0.12); color: var(--blue); }
 
   .kpi-value {
     font-family: var(--font-heading);
-    font-size: 36px;
+    font-size: 32px;
     font-weight: 900;
     letter-spacing: -0.04em;
     line-height: 1.1;
     color: #fff;
-    margin-top: 8px;
+    margin-top: 6px;
     font-variant-numeric: tabular-nums;
   }
   .kpi-sub {
-    font-size: 12px;
+    font-size: 11.5px;
     color: var(--text-muted);
-    font-weight: 500;
     margin-top: 2px;
   }
-
   .kpi-spark {
     width: 100%;
-    height: 32px;
-    margin-top: 8px;
+    height: 28px;
+    margin-top: 6px;
     display: block;
   }
-
   .workload-ratio-bar {
-    height: 6px;
+    height: 5px;
     background: rgba(255, 255, 255, 0.06);
     border-radius: 999px;
     overflow: hidden;
-    margin-top: 12px;
+    margin-top: 10px;
   }
   .workload-ratio-fill {
     height: 100%;
@@ -845,37 +817,35 @@
     background: linear-gradient(90deg, var(--neon), var(--neon-bright));
   }
 
-  /* Two Column Dashboard Layout */
+  /* Two Column Dashboard Grid */
   .dash-cols-layout {
     display: grid;
-    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-    gap: 22px;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 20px;
     align-items: start;
+    width: 100%;
   }
-  .dash-stack {
-    display: grid;
-    gap: 22px;
-  }
+  .dash-stack { display: grid; gap: 20px; width: 100%; }
 
-  /* Category Distribution Chart */
+  /* Category Columns Chart */
   .category-cols-wrap {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: 10px;
+    gap: 8px;
     align-items: end;
-    height: 260px;
+    height: 240px;
     position: relative;
-    padding-top: 10px;
+    padding-top: 8px;
+    width: 100%;
   }
   .category-cols-wrap::before {
     content: "";
     position: absolute;
-    left: 0; right: 0; top: 10px; bottom: 46px;
+    left: 0; right: 0; top: 8px; bottom: 44px;
     background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 25%);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     pointer-events: none;
   }
-
   .chart-col {
     display: flex;
     flex-direction: column;
@@ -886,15 +856,15 @@
   }
   .chart-col-num {
     font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     color: #fff;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
   .chart-col-stem {
     width: 100%;
-    max-width: 44px;
-    border-radius: 10px 10px 4px 4px;
+    max-width: 38px;
+    border-radius: 8px 8px 3px 3px;
     min-height: 4px;
     transition: height 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
@@ -903,62 +873,50 @@
     display: flex;
     align-items: center;
     text-align: center;
-    font-size: 11px;
-    line-height: 1.2;
+    font-size: 10px;
+    line-height: 1.15;
     font-weight: 600;
     color: var(--text-secondary);
-    padding-top: 6px;
+    padding-top: 4px;
     word-break: break-word;
   }
 
-  /* Donut Chart & Workload */
+  /* Donut & Ratio */
   .donut-wrap {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 20px;
     flex-wrap: wrap;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
   }
-  .donut-svg {
-    width: 150px;
-    height: 150px;
-    flex: none;
-  }
-  .legend-list {
-    display: grid;
-    gap: 12px;
-    flex: 1 1 150px;
-  }
+  .donut-svg { width: 140px; height: 140px; flex: none; margin: 0 auto; }
+  .legend-list { display: grid; gap: 10px; flex: 1 1 140px; }
   .legend-row {
     display: grid;
-    grid-template-columns: 12px 1fr auto;
-    gap: 10px;
+    grid-template-columns: 10px 1fr auto;
+    gap: 8px;
     align-items: center;
     font-weight: 600;
   }
-  .legend-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 4px;
-  }
-  .legend-name { color: #fff; font-size: 13.5px; }
-  .legend-name small { display: block; color: var(--text-muted); font-size: 11.5px; }
-  .legend-val { font-family: var(--font-mono); font-size: 18px; font-weight: 800; color: #fff; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+  .legend-name { color: #fff; font-size: 13px; }
+  .legend-name small { display: block; color: var(--text-muted); font-size: 11px; }
+  .legend-val { font-family: var(--font-mono); font-size: 16px; font-weight: 800; color: #fff; }
 
   .vs-horizontal-bar {
     display: flex;
-    height: 36px;
-    border-radius: 12px;
+    height: 32px;
+    border-radius: 10px;
     overflow: hidden;
     background: rgba(255, 255, 255, 0.05);
     font-weight: 800;
-    font-size: 12.5px;
+    font-size: 12px;
     color: #fff;
   }
   .vs-horizontal-bar div {
     display: flex;
     align-items: center;
-    padding: 0 12px;
+    padding: 0 10px;
     transition: flex-basis 0.6s ease;
     white-space: nowrap;
     overflow: hidden;
@@ -966,13 +924,13 @@
   .vs-sachin { background: linear-gradient(90deg, #2563eb, #38bdf8); }
   .vs-pragati { background: linear-gradient(90deg, #10b981, #00ff87); color: #042517; justify-content: flex-end; }
 
-  /* 7-Day Chart */
+  /* Week activity */
   .week-chart {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: 8px;
+    gap: 6px;
     align-items: end;
-    height: 130px;
+    height: 120px;
   }
   .week-day {
     display: flex;
@@ -980,60 +938,62 @@
     justify-content: flex-end;
     align-items: center;
     height: 100%;
-    gap: 6px;
+    gap: 5px;
   }
-  .week-day em { font-style: normal; font-size: 11.5px; font-family: var(--font-mono); font-weight: 700; color: #e2e8f0; }
+  .week-day em { font-style: normal; font-size: 11px; font-family: var(--font-mono); font-weight: 700; color: #e2e8f0; }
   .week-day i {
     display: block;
     width: 100%;
-    border-radius: 8px;
+    border-radius: 6px;
     background: rgba(255, 255, 255, 0.08);
-    min-height: 6px;
+    min-height: 5px;
     transition: height 0.5s;
   }
   .week-day.today i {
     background: linear-gradient(180deg, var(--neon-bright), var(--blue));
-    box-shadow: 0 0 12px rgba(0, 255, 135, 0.4);
   }
-  .week-day span { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+  .week-day span { font-size: 10.5px; color: var(--text-muted); font-weight: 600; }
   .week-day.today span { color: var(--neon-bright); font-weight: 800; }
 
-  /* Feed List */
+  /* Feed items */
   .feed-list { display: grid; gap: 4px; }
   .feed-item {
     display: grid;
-    grid-template-columns: 36px 1fr auto;
-    gap: 12px;
+    grid-template-columns: 32px 1fr auto;
+    gap: 10px;
     align-items: center;
-    padding: 10px 4px;
+    padding: 8px 0;
     border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
   }
   .feed-item:last-child { border-bottom: 0; }
-  .feed-item b { font-weight: 700; color: #fff; font-size: 13.5px; display: block; }
-  .feed-item small { color: var(--text-muted); font-size: 12px; }
-  .feed-time { font-family: var(--font-mono); font-size: 11.5px; color: var(--text-secondary); white-space: nowrap; }
+  .feed-item b { font-weight: 700; color: #fff; font-size: 13px; display: block; }
+  .feed-item small { color: var(--text-muted); font-size: 11.5px; }
+  .feed-time { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); white-space: nowrap; }
 
   /* -------------------------------------------------------------
-     SECTION 3: DATA RECORDS TABLE
+     SECTION 3: RECORDS TABLE (BOTTOM)
   ------------------------------------------------------------- */
   .category-filter-chips {
     display: flex;
-    gap: 8px;
+    gap: 7px;
     overflow-x: auto;
-    padding: 4px 2px 14px;
-    margin-bottom: 12px;
-    scrollbar-width: thin;
+    padding: 2px 2px 12px;
+    margin-bottom: 10px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
   }
+  .category-filter-chips::-webkit-scrollbar { display: none; }
+  
   .filter-chip {
     flex: none;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     border: 1.5px solid var(--border);
     background: var(--bg-surface);
     border-radius: 999px;
-    padding: 7px 14px;
-    font-size: 12.5px;
+    padding: 6px 12px;
+    font-size: 12px;
     font-weight: 700;
     cursor: pointer;
     color: var(--text-secondary);
@@ -1043,8 +1003,8 @@
     font-style: normal;
     background: rgba(255, 255, 255, 0.08);
     border-radius: 999px;
-    padding: 1px 7px;
-    font-size: 11px;
+    padding: 1px 6px;
+    font-size: 10.5px;
     font-family: var(--font-mono);
   }
   .filter-chip:hover { border-color: var(--chip-c, var(--neon)); color: #fff; }
@@ -1058,328 +1018,205 @@
 
   .table-controls {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
     align-items: center;
-    margin-bottom: 18px;
+    margin-bottom: 14px;
+    width: 100%;
   }
   .search-box {
     position: relative;
-    flex: 1 1 240px;
+    flex: 1 1 200px;
   }
   .search-box svg {
     position: absolute;
-    left: 14px;
+    left: 12px;
     top: 50%;
     transform: translateY(-50%);
     color: var(--text-muted);
     pointer-events: none;
   }
   .search-box input {
-    padding-left: 42px;
+    padding-left: 36px;
+    font-size: 13px;
+    padding-top: 9px;
+    padding-bottom: 9px;
   }
 
   .segmented-control {
     display: inline-flex;
     background: var(--bg-surface);
-    padding: 4px;
-    border-radius: 14px;
+    padding: 3px;
+    border-radius: 12px;
     border: 1px solid var(--border);
     gap: 2px;
   }
   .segmented-control button {
     border: 0;
     background: none;
-    padding: 8px 14px;
-    border-radius: 10px;
+    padding: 7px 12px;
+    border-radius: 9px;
     font-weight: 700;
-    font-size: 12.5px;
+    font-size: 12px;
     cursor: pointer;
     color: var(--text-secondary);
-    transition: all 0.15s;
   }
   .segmented-control button[aria-pressed="true"] {
     background: #fff;
     color: #042517;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   }
 
   .btn-outline {
     background: var(--bg-surface);
     border: 1.5px solid var(--border);
-    border-radius: 14px;
-    padding: 9px 16px;
+    border-radius: 12px;
+    padding: 8px 14px;
     font-weight: 700;
-    font-size: 13px;
+    font-size: 12.5px;
     color: #e2e8f0;
     cursor: pointer;
-    transition: all 0.15s;
-  }
-  .btn-outline:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: var(--border-light);
   }
 
   .table-scroll {
     overflow-x: auto;
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
   }
   table {
     border-collapse: collapse;
     width: 100%;
-    min-width: 840px;
+    min-width: 760px;
   }
   th, td {
     text-align: left;
-    padding: 13px 16px;
+    padding: 12px 14px;
     border-bottom: 1px solid var(--border);
     vertical-align: middle;
   }
   th {
     background: rgba(255, 255, 255, 0.02);
-    font-size: 11px;
+    font-size: 10.5px;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.07em;
     color: var(--text-muted);
     font-weight: 700;
   }
   tbody tr:hover { background: rgba(255, 255, 255, 0.025); }
-  tbody tr:last-child td { border-bottom: 0; }
 
   .user-cell {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     font-weight: 700;
     color: #fff;
     white-space: nowrap;
   }
   .cell-av {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     display: grid;
     place-items: center;
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: 800;
     flex: none;
   }
   .badge-tag {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 4px 10px;
+    gap: 5px;
+    padding: 3px 9px;
     border-radius: 999px;
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: 700;
     white-space: nowrap;
   }
-  .badge-tag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .badge-tag::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
   .badge-tag.who { background: rgba(56, 189, 248, 0.12); color: var(--blue); }
   .badge-tag.who.p { background: rgba(16, 185, 129, 0.12); color: var(--neon-bright); }
 
   .empty-state {
     text-align: center;
-    padding: 48px 16px;
+    padding: 36px 14px;
     color: var(--text-muted);
   }
-  .empty-state b { display: block; color: #fff; font-size: 15px; margin-bottom: 4px; }
 
   /* -------------------------------------------------------------
-     MOBILE FLOATING DOCK (STICKY BOTTOM NAVIGATION)
-  ------------------------------------------------------------- */
-  .mobile-dock {
-    display: none;
-    position: fixed;
-    bottom: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 60;
-    background: rgba(14, 22, 31, 0.92);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 999px;
-    padding: 6px 10px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 255, 135, 0.15);
-  }
-
-  .mobile-dock-inner {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .dock-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3px;
-    padding: 8px 14px;
-    border-radius: 999px;
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: 11px;
-    font-weight: 700;
-    transition: all 0.2s;
-  }
-  .dock-btn svg { width: 18px; height: 18px; }
-  .dock-btn.active {
-    background: linear-gradient(135deg, var(--neon), var(--neon-bright));
-    color: #042517;
-    box-shadow: 0 4px 12px rgba(0, 255, 135, 0.4);
-  }
-
-  /* -------------------------------------------------------------
-     TOASTS & MODAL DIALOG
+     TOASTS
   ------------------------------------------------------------- */
   #toasts {
     position: fixed;
-    right: 20px;
-    bottom: 24px;
+    right: 16px;
+    bottom: 20px;
     display: grid;
-    gap: 10px;
+    gap: 8px;
     z-index: 90;
-    max-width: calc(100vw - 40px);
+    max-width: calc(100vw - 32px);
   }
   .toast {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     align-items: flex-start;
-    min-width: 280px;
-    max-width: 380px;
-    padding: 14px 18px;
-    border-radius: 16px;
+    min-width: 260px;
+    max-width: 360px;
+    padding: 12px 16px;
+    border-radius: 14px;
     background: #0f172a;
     color: #fff;
     border: 1px solid var(--border-light);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
     font-weight: 600;
-    font-size: 13.5px;
-    animation: toastSlide 0.25s ease both;
-  }
-  @keyframes toastSlide {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    font-size: 13px;
   }
   .toast-icon {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
-    display: grid;
-    place-items: center;
-    flex: none;
-    font-size: 13px;
-    font-weight: 800;
-    background: var(--neon);
-    color: #042517;
-  }
-  .toast.bad .toast-icon { background: var(--rose); color: #fff; }
-  .toast small { display: block; font-weight: 500; opacity: 0.75; margin-top: 2px; font-size: 12px; }
-
-  dialog {
-    border: 0;
-    border-radius: 24px;
-    padding: 0;
-    width: min(600px, calc(100vw - 24px));
-    color: #fff;
-    background: #0e1620;
-    border: 1px solid var(--border-light);
-    box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 255, 135, 0.15);
-  }
-  dialog::backdrop {
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(8px);
-  }
-  .dlg-content { padding: 28px; }
-  .dlg-content h2 { margin: 0 0 6px; font-family: var(--font-heading); font-size: 22px; color: #fff; }
-  .dlg-content > p { margin: 0 0 18px; color: var(--text-secondary); font-size: 13.5px; }
-
-  .dlg-sheet-box {
-    background: rgba(0, 255, 135, 0.05);
-    border: 1px solid rgba(0, 255, 135, 0.2);
-    border-radius: 16px;
-    padding: 14px 16px;
-    margin-bottom: 18px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-  }
-  .dlg-sheet-box b { display: block; font-size: 13px; color: var(--neon-bright); }
-  .dlg-sheet-box span { font-size: 11.5px; color: var(--text-secondary); word-break: break-all; }
-
-  .steps-list {
-    margin: 0 0 20px;
-    padding: 0;
-    list-style: none;
-    display: grid;
-    gap: 10px;
-    counter-reset: st;
-  }
-  .steps-list li {
-    counter-increment: st;
-    display: grid;
-    grid-template-columns: 26px 1fr;
-    gap: 12px;
-    align-items: start;
-    font-size: 13px;
-    color: #cbd5e1;
-  }
-  .steps-list li::before {
-    content: counter(st);
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: rgba(0, 255, 135, 0.12);
-    color: var(--neon-bright);
-    font-weight: 800;
     display: grid;
     place-items: center;
     font-size: 12px;
+    font-weight: 800;
+    background: var(--neon);
+    color: #042517;
+    flex: none;
   }
-  .steps-list code {
-    background: rgba(255, 255, 255, 0.08);
-    padding: 2px 6px;
-    border-radius: 6px;
-    font-family: var(--font-mono);
-    color: var(--neon-bright);
-  }
-
-  .dlg-buttons {
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    margin-top: 22px;
-  }
+  .toast.bad .toast-icon { background: var(--rose); color: #fff; }
+  .toast small { display: block; font-weight: 500; opacity: 0.8; margin-top: 2px; font-size: 11.5px; }
 
   /* -------------------------------------------------------------
-     RESPONSIVE MEDIA QUERIES (MOBILE / TABLET / DESKTOP)
+     MOBILE SPECIFIC REFINEMENTS
   ------------------------------------------------------------- */
-  @media (max-width: 980px) {
-    .entry-grid { grid-template-columns: minmax(0, 1fr); }
-    .ticket-sticky-wrap { position: static; }
+  @media (max-width: 900px) {
+    .desktop-nav { display: none; }
+    .hamburger-btn { display: flex; }
+    .entry-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+    .ticket-wrap { position: static; }
+    .ticket { transform: none; }
     .kpis-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .dash-cols-layout { grid-template-columns: minmax(0, 1fr); }
   }
 
-  @media (max-width: 768px) {
-    .nav-pills { display: none; }
-    .mobile-dock { display: block; }
-    .topbar-inner { padding: 8px 16px; }
-    .brand-sub { display: none; }
-    .brand-logo-img { height: 32px; }
-    main { padding: 16px 14px 100px; gap: 32px; }
-    .card { padding: 18px; border-radius: var(--radius-lg); }
-    .form-card { padding: 20px 16px; }
-    .kpi-value { font-size: 28px; }
-    .category-cols-wrap { gap: 6px; }
-    .chart-col-label { font-size: 10px; }
+  @media (max-width: 600px) {
+    .topbar-inner { padding: 8px 12px; }
+    .brand-logo-img { height: 36px; max-width: 140px; }
+    main { padding: 14px 10px 32px; gap: 26px; }
+    .card { padding: 16px 14px; border-radius: var(--radius-lg); }
+    .form-card { padding: 18px 14px; }
+    .section-title { font-size: 20px; }
+    .kpi-value { font-size: 26px; }
+    .kpi-card { padding: 14px 12px; }
+    .category-cols-wrap { gap: 4px; height: 210px; }
+    .chart-col-label { font-size: 9px; height: 38px; }
+    .chart-col-num { font-size: 11px; }
+    .chart-col-stem { max-width: 28px; }
     .assignee-grid { grid-template-columns: 1fr; }
-    #toasts { bottom: 84px; right: 12px; left: 12px; }
-    .toast { max-width: none; }
+    .form-actions .btn-submit, .form-actions .btn-reset { width: 100%; flex: 1 1 100%; }
+    .table-controls { flex-direction: column; align-items: stretch; }
+    .search-box { width: 100%; flex: auto; }
+    .segmented-control { width: 100%; justify-content: space-between; }
+    .segmented-control button { flex: 1; text-align: center; }
   }
 </style>
 </head>
@@ -1389,52 +1226,62 @@
 <header class="topbar">
   <div class="topbar-inner">
     
-    <a href="#" class="brand-group">
-      <div class="brand-logo-wrap">
-        <img src="logo.png" alt="Support Desk Logo" class="brand-logo-img">
-      </div>
-      <div class="brand-text">
-        <div class="brand-title">
-          <span>Support Desk</span>
-          <span class="brand-tag">v2.5 Live</span>
-        </div>
-        <span class="brand-sub">Real-Time Query Tracker &amp; Google Sheets</span>
-      </div>
+    <!-- Logo Only - No Text Label, Transparent Image -->
+    <a href="#" class="brand-logo-only" title="Support Desk">
+      <img src="logo.png" alt="Support" class="brand-logo-img">
     </a>
 
-    <!-- Desktop Navigation Links (Jump to sections) -->
-    <nav class="nav-pills">
-      <a href="#section-entry" class="nav-pill-btn active">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
-        <span>New Entry</span>
-      </a>
-      <a href="#section-dashboard" class="nav-pill-btn">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
-        <span>Dashboard</span>
-      </a>
-      <a href="#section-records" class="nav-pill-btn">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
-        <span>Records Table</span>
+    <!-- Desktop Navigation Links -->
+    <nav class="desktop-nav">
+      <a href="#section-entry" class="nav-pill-btn active">New Entry</a>
+      <a href="#section-dashboard" class="nav-pill-btn">Dashboard</a>
+      <a href="#section-records" class="nav-pill-btn">Records Table</a>
+      <a href="https://docs.google.com/spreadsheets/d/1hP5XQ9EtMVQ5qRM0FW2GG8WQkYtXLwFisx7eh96ibz0/edit?usp=sharing" target="_blank" class="nav-pill-btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        <span>Google Sheet</span>
       </a>
     </nav>
 
-    <!-- Header Actions -->
-    <div class="topbar-actions">
-      <a class="sheet-link-btn" href="https://docs.google.com/spreadsheets/d/1hP5XQ9EtMVQ5qRM0FW2GG8WQkYtXLwFisx7eh96ibz0/edit?usp=sharing" target="_blank" title="Open Connected Google Sheet">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-        <span>Sheet</span>
-      </a>
-
-      <button class="sync-badge" id="connBtn" type="button" title="Configure or test Google Sheets Web App endpoint">
+    <!-- Topbar Right Controls -->
+    <div class="topbar-right">
+      <button class="live-badge" id="syncBtn" type="button" title="Sync Live Leads from Google Sheets">
         <span class="pulse-dot"></span>
-        <span id="connTxt">Live Connected</span>
+        <span id="connTxt">Sheet Live</span>
+      </button>
+
+      <!-- Hamburger Menu Button -->
+      <button class="hamburger-btn" id="hamburgerBtn" type="button" aria-label="Open Menu">
+        <svg id="hamIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
       </button>
     </div>
 
   </div>
 </header>
 
-<!-- MAIN APP BODY -->
+<!-- Mobile Drawer Navigation -->
+<nav class="mobile-drawer" id="mobileDrawer">
+  <a href="#section-entry" class="drawer-link" data-close>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+    <span>New Entry (Registration)</span>
+  </a>
+  <a href="#section-dashboard" class="drawer-link" data-close>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+    <span>Analytics Dashboard</span>
+  </a>
+  <a href="#section-records" class="drawer-link" data-close>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+    <span>Records Database Table</span>
+  </a>
+  <a href="https://docs.google.com/spreadsheets/d/1hP5XQ9EtMVQ5qRM0FW2GG8WQkYtXLwFisx7eh96ibz0/edit?usp=sharing" target="_blank" class="drawer-link" data-close>
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+    <span>Open Google Sheet</span>
+  </a>
+</nav>
+
 <main>
 
   <!-- =========================================================================
@@ -1442,18 +1289,18 @@
   ========================================================================= -->
   <section id="section-entry" class="section-anchor">
     
-    <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px">
+    <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px">
       <div>
         <div class="section-tag">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-          Quick Query Registration
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+          Direct Google Sheets Capture
         </div>
-        <h1 class="section-title">Log a <span>New Support Query</span></h1>
-        <p class="section-desc">Fill in the fields below. Every submission generates a ticket and syncs to your Google Sheet.</p>
+        <h1 class="section-title">New Query <span>Registration</span></h1>
+        <p class="section-desc">Every lead is permanently added to your Google Sheet with an automatic timestamp.</p>
       </div>
 
       <div>
-        <button type="button" class="btn-outline" id="prefillBtn" title="Fill realistic test data" style="font-size:12px;padding:8px 14px">
+        <button type="button" class="btn-outline" id="prefillBtn" style="font-size:12px;padding:6px 12px">
           + Sample Data
         </button>
       </div>
@@ -1461,11 +1308,11 @@
 
     <div class="entry-grid">
       
-      <!-- Left Column: Live Interactive Ticket Preview -->
-      <div class="ticket-sticky-wrap">
-        <div class="ticket" id="ticketCard" aria-label="Interactive Query Ticket Preview">
-          <div class="ticket-header">
-            <span>STUDENT SUPPORT TICKET</span>
+      <!-- Live Ticket Card -->
+      <div class="ticket-wrap">
+        <div class="ticket" id="ticketCard" aria-label="Query Ticket">
+          <div class="ticket-top">
+            <span>SUPPORT TICKET</span>
             <span class="ticket-no" id="tNo">#0001</span>
           </div>
 
@@ -1478,12 +1325,12 @@
           </div>
 
           <div class="ticket-query placeholder" id="tQuery">
-            The query description appears here in real-time as you type...
+            Query details will appear here as you type...
           </div>
 
           <div class="ticket-perf"></div>
 
-          <div class="ticket-meta-grid">
+          <div class="ticket-grid">
             <div>
               <small>Typing Time</small>
               <b id="tTime">Not set</b>
@@ -1500,7 +1347,7 @@
         <!-- Completion Readiness Meter -->
         <div class="ready-meter-card">
           <div class="ready-meter-top">
-            <span>Ready to submit</span>
+            <span>Form Readiness</span>
             <span id="meterTxt">0 of 3 required</span>
           </div>
           <div class="meter-track">
@@ -1509,11 +1356,11 @@
         </div>
       </div>
 
-      <!-- Right Column: Registration Form Card -->
+      <!-- Registration Form -->
       <div class="form-card">
         <div class="form-header">
-          <h2>Registration Details</h2>
-          <span class="brand-tag" id="todayLoggedChip">0 logged today</span>
+          <h2>Entry Information</h2>
+          <span style="font-size:11px;font-weight:700;color:var(--neon-bright);background:rgba(0,255,135,0.1);padding:2px 8px;border-radius:999px" id="todayLoggedChip">0 logged today</span>
         </div>
 
         <form id="entryForm" novalidate>
@@ -1545,7 +1392,6 @@
               <span class="field-counter" id="qCount">0 / 500</span>
             </label>
             
-            <!-- Quick Chips -->
             <div class="quick-chips-row">
               <button type="button" class="quick-chip" data-text="Portal login issue">Portal login issue</button>
               <button type="button" class="quick-chip" data-text="Mentorship session slot">Mentorship session slot</button>
@@ -1553,14 +1399,14 @@
               <button type="button" class="quick-chip" data-text="Study notes access">Study notes access</button>
             </div>
 
-            <textarea id="query" name="query" maxlength="500" placeholder="Describe the question or assistance required..."></textarea>
+            <textarea id="query" name="query" maxlength="500" placeholder="What is the query or request about?"></textarea>
           </div>
 
           <!-- 4. TYPING TIME -->
           <div class="field-group">
             <div class="field-label">
               <label for="typingTime" style="margin:0">Typing Time</label>
-              <button type="button" class="quick-chip" id="nowBtn" style="padding:2px 10px;font-size:11px">Set Current Time</button>
+              <button type="button" class="quick-chip" id="nowBtn" style="padding:2px 8px;font-size:11px">Set Current Time</button>
             </div>
             <input type="datetime-local" id="typingTime" name="typingTime">
           </div>
@@ -1572,10 +1418,10 @@
               <span class="field-counter">Team Member</span>
             </label>
             <div class="assignee-grid" role="radiogroup" aria-labelledby="asgLabel" id="assigneeGridContainer"></div>
-            <div class="field-error" id="errAsg" hidden>Please assign this query to Sachin or Pragati.</div>
+            <div class="field-error" id="errAsg" hidden>Please select who assigned this.</div>
           </div>
 
-          <!-- SUBMIT & RESET -->
+          <!-- Action Buttons -->
           <div class="form-actions">
             <button type="submit" class="btn-submit" id="submitBtn">
               Submit Entry
@@ -1594,34 +1440,33 @@
 
 
   <!-- =========================================================================
-       SECTION 2: ANALYTICS DASHBOARD (POSITIONED BELOW THE FORM)
+       SECTION 2: ANALYTICS DASHBOARD (BELOW FORM)
   ========================================================================= -->
   <section id="section-dashboard" class="section-anchor">
     
-    <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px">
+    <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px">
       <div>
         <div class="section-tag">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M4 20V11M10 20V4M16 20v-6M22 20H2"/></svg>
-          Analytics &amp; Performance
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M4 20V11M10 20V4M16 20v-6M22 20H2"/></svg>
+          Live Analytics
         </div>
-        <h2 class="section-title">Support Desk <span>Live Metrics</span></h2>
+        <h2 class="section-title">Support <span>Performance Metrics</span></h2>
         <p class="section-desc" id="deskDateLine"></p>
       </div>
 
       <button type="button" class="btn-outline" id="refreshBtn">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="margin-right:4px"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="margin-right:4px"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
         Refresh Data
       </button>
     </div>
 
-    <!-- 4 SUMMARY KPI CARDS -->
+    <!-- 4 KPI CARDS -->
     <div class="kpis-grid">
       
-      <!-- KPI 1: TOTAL QUERIES -->
       <article class="kpi-card">
         <div class="kpi-card-top">
           <span class="kpi-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           </span>
           <span>Total Queries</span>
         </div>
@@ -1630,44 +1475,41 @@
         <svg class="kpi-spark" id="spTotal" viewBox="0 0 100 34" preserveAspectRatio="none" aria-hidden="true"></svg>
       </article>
 
-      <!-- KPI 2: TODAY'S ENTRIES -->
       <article class="kpi-card">
         <div class="kpi-card-top">
           <span class="kpi-icon blue">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
           </span>
           <span>Today's Entries</span>
         </div>
         <div class="kpi-value" id="kToday">0</div>
-        <div class="kpi-sub" id="kTodaySub">Recent activity</div>
+        <div class="kpi-sub" id="kTodaySub">Recent leads</div>
         <svg class="kpi-spark" id="spToday" viewBox="0 0 100 34" preserveAspectRatio="none" aria-hidden="true"></svg>
       </article>
 
-      <!-- KPI 3: ASSIGNED TO SACHIN -->
       <article class="kpi-card">
         <div class="kpi-card-top">
           <span class="kpi-icon blue">
-            <span style="font-family:var(--font-heading);font-weight:900;font-size:14px">S</span>
+            <span style="font-family:var(--font-heading);font-weight:900;font-size:13px">S</span>
           </span>
           <span>Assigned to Sachin</span>
         </div>
         <div class="kpi-value" id="kSachin">0</div>
-        <div class="kpi-sub" id="kSachinSub">0% of workload</div>
+        <div class="kpi-sub" id="kSachinSub">0% workload</div>
         <div class="workload-ratio-bar">
           <div class="workload-ratio-fill" id="shSachin" style="width:0%"></div>
         </div>
       </article>
 
-      <!-- KPI 4: ASSIGNED TO PRAGATI -->
       <article class="kpi-card">
         <div class="kpi-card-top">
           <span class="kpi-icon">
-            <span style="font-family:var(--font-heading);font-weight:900;font-size:14px">P</span>
+            <span style="font-family:var(--font-heading);font-weight:900;font-size:13px">P</span>
           </span>
           <span>Assigned to Pragati</span>
         </div>
         <div class="kpi-value" id="kPragati">0</div>
-        <div class="kpi-sub" id="kPragatiSub">0% of workload</div>
+        <div class="kpi-sub" id="kPragatiSub">0% workload</div>
         <div class="workload-ratio-bar">
           <div class="workload-ratio-fill green" id="shPragati" style="width:0%"></div>
         </div>
@@ -1675,44 +1517,39 @@
 
     </div>
 
-    <!-- CHARTS & WORKLOAD BREAKDOWN -->
+    <!-- CHARTS GRID -->
     <div class="dash-cols-layout">
       
-      <!-- Left Stack: Category Breakdown & 7 Days -->
       <div class="dash-stack">
-        
         <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
             <div>
-              <h3 style="margin:0;font-family:var(--font-heading);font-size:16px;color:#fff">Distribution by Category</h3>
-              <p style="margin:2px 0 0;font-size:12px;color:var(--text-muted)">Spread across exact membership types</p>
+              <h3 style="margin:0;font-family:var(--font-heading);font-size:15px;color:#fff">Distribution by Category</h3>
+              <p style="margin:2px 0 0;font-size:11.5px;color:var(--text-muted)">Breakdown across exact membership tiers</p>
             </div>
-            <span class="brand-tag" id="catTotalChip">0 total</span>
+            <span style="font-size:10.5px;font-weight:800;color:var(--neon-bright);background:rgba(0,255,135,0.1);padding:2px 8px;border-radius:999px" id="catTotalChip">0 total</span>
           </div>
 
           <div class="category-cols-wrap" id="colsWrap"></div>
         </div>
 
         <div class="card">
-          <div style="margin-bottom:14px">
-            <h3 style="margin:0;font-family:var(--font-heading);font-size:16px;color:#fff">Last 7 Days Activity</h3>
-            <p style="margin:2px 0 0;font-size:12px;color:var(--text-muted)">Daily volume count</p>
+          <div style="margin-bottom:12px">
+            <h3 style="margin:0;font-family:var(--font-heading);font-size:15px;color:#fff">Last 7 Days Trend</h3>
+            <p style="margin:2px 0 0;font-size:11.5px;color:var(--text-muted)">Daily volume count</p>
           </div>
           <div class="week-chart" id="weekChartWrap"></div>
         </div>
-
       </div>
 
-      <!-- Right Stack: Sachin vs Pragati & Latest Submissions -->
       <div class="dash-stack">
-        
         <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
             <div>
-              <h3 style="margin:0;font-family:var(--font-heading);font-size:16px;color:#fff">Sachin vs Pragati Workload</h3>
-              <p style="margin:2px 0 0;font-size:12px;color:var(--text-muted)">Assignment share ratio</p>
+              <h3 style="margin:0;font-family:var(--font-heading);font-size:15px;color:#fff">Sachin vs Pragati Workload</h3>
+              <p style="margin:2px 0 0;font-size:11.5px;color:var(--text-muted)">Query assignment ratio</p>
             </div>
-            <span class="brand-tag" id="wlRatioChip">Balanced</span>
+            <span style="font-size:10.5px;font-weight:800;color:var(--blue);background:rgba(56,189,248,0.1);padding:2px 8px;border-radius:999px" id="wlRatioChip">Balanced</span>
           </div>
 
           <div class="donut-wrap">
@@ -1724,13 +1561,12 @@
         </div>
 
         <div class="card">
-          <div style="margin-bottom:12px">
-            <h3 style="margin:0;font-family:var(--font-heading);font-size:16px;color:#fff">Latest Entries Feed</h3>
-            <p style="margin:2px 0 0;font-size:12px;color:var(--text-muted)">Most recent submissions</p>
+          <div style="margin-bottom:10px">
+            <h3 style="margin:0;font-family:var(--font-heading);font-size:15px;color:#fff">Latest Leads Feed</h3>
+            <p style="margin:2px 0 0;font-size:11.5px;color:var(--text-muted)">Recent entries from Google Sheet</p>
           </div>
           <div class="feed-list" id="feedList"></div>
         </div>
-
       </div>
 
     </div>
@@ -1739,21 +1575,21 @@
 
 
   <!-- =========================================================================
-       SECTION 3: LIVE RECORDS TABLE (AT BOTTOM)
+       SECTION 3: LIVE RECORDS TABLE (BOTTOM)
   ========================================================================= -->
   <section id="section-records" class="section-anchor">
     
-    <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px">
+    <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px">
       <div>
         <div class="section-tag">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
-          Searchable Database
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+          Google Sheet Database
         </div>
         <h2 class="section-title">Support <span>Records Log</span></h2>
-        <p class="section-desc">Live records synced with Google Sheets, sorted newest first.</p>
+        <p class="section-desc">Searchable list of all submitted entries.</p>
       </div>
 
-      <button type="button" class="btn-submit" id="exportBtn" style="padding:8px 18px;font-size:13px;flex:none">
+      <button type="button" class="btn-submit" id="exportBtn" style="padding:7px 16px;font-size:12.5px;flex:none">
         Export CSV
       </button>
     </div>
@@ -1766,8 +1602,8 @@
       <!-- Controls Toolbar -->
       <div class="table-controls">
         <div class="search-box">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-          <input type="text" id="searchInput" placeholder="Search by student name or query text..." autocomplete="off">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="searchInput" placeholder="Search by name or query..." autocomplete="off">
         </div>
 
         <div class="segmented-control" id="segControl">
@@ -1777,31 +1613,31 @@
         </div>
 
         <button type="button" class="btn-outline" id="clearFiltersBtn">
-          Clear Filters
+          Clear
         </button>
       </div>
 
-      <!-- Table Wrapper -->
+      <!-- Table Scrollable Area -->
       <div class="table-scroll">
         <table>
           <thead>
             <tr>
               <th>Student Name</th>
               <th>Category</th>
-              <th style="min-width:260px">Query Description</th>
+              <th style="min-width:240px">Query Description</th>
               <th>Typing Time</th>
               <th>Assigned By</th>
-              <th>Date &amp; Time</th>
+              <th>Timestamp</th>
             </tr>
           </thead>
           <tbody id="tableBody"></tbody>
         </table>
       </div>
 
-      <!-- Table Footer -->
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;flex-wrap:wrap;gap:10px;font-size:12.5px;color:var(--text-muted)">
-        <span id="tableCountLabel">Showing records...</span>
-        <button type="button" class="btn-outline" id="showMoreBtn" style="padding:6px 14px;font-size:12px" hidden>
+      <!-- Table Count -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;flex-wrap:wrap;gap:8px;font-size:12px;color:var(--text-muted)">
+        <span id="tableCountLabel">Loading records...</span>
+        <button type="button" class="btn-outline" id="showMoreBtn" style="padding:5px 12px;font-size:11.5px" hidden>
           Show More
         </button>
       </div>
@@ -1812,73 +1648,16 @@
 
 </main>
 
-<!-- FLOATING MOBILE DOCK (STICKY BOTTOM NAVIGATION) -->
-<nav class="mobile-dock" aria-label="Mobile Navigation">
-  <div class="mobile-dock-inner">
-    <a href="#section-entry" class="dock-btn active" id="dockEntry">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
-      <span>Entry</span>
-    </a>
-    <a href="#section-dashboard" class="dock-btn" id="dockDash">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
-      <span>Metrics</span>
-    </a>
-    <a href="#section-records" class="dock-btn" id="dockRecs">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
-      <span>Records</span>
-    </a>
-    <a href="https://docs.google.com/spreadsheets/d/1hP5XQ9EtMVQ5qRM0FW2GG8WQkYtXLwFisx7eh96ibz0/edit?usp=sharing" target="_blank" class="dock-btn">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-      <span>Sheet</span>
-    </a>
-  </div>
-</nav>
-
-<!-- TOASTS CONTAINER -->
+<!-- TOASTS -->
 <div id="toasts" aria-live="polite"></div>
-
-<!-- SETTINGS MODAL -->
-<dialog id="settingsDialog">
-  <div class="dlg-content">
-    <h2>Google Sheets Connection</h2>
-    <p>Submissions append directly as new rows with a server timestamp.</p>
-
-    <div class="dlg-sheet-box">
-      <div>
-        <b>Connected Google Sheet</b>
-        <span>https://docs.google.com/spreadsheets/d/1hP5XQ9EtMVQ5qRM0FW2GG8WQkYtXLwFisx7eh96ibz0</span>
-      </div>
-      <a href="https://docs.google.com/spreadsheets/d/1hP5XQ9EtMVQ5qRM0FW2GG8WQkYtXLwFisx7eh96ibz0/edit?usp=sharing" target="_blank" class="btn-outline" style="padding:6px 12px;font-size:11.5px;text-decoration:none">
-        Open Sheet ↗
-      </a>
-    </div>
-
-    <ol class="steps-list">
-      <li><span>Open your sheet &rarr; Click <b>Extensions &gt; Apps Script</b>.</span></li>
-      <li><span>Paste the provided <code>google-apps-script.js</code> code into <code>Code.gs</code> and click Save.</span></li>
-      <li><span>Click <b>Deploy &gt; New deployment &gt; Web app</b>. Set Execute as: <b>Me</b>, Who has access: <b>Anyone</b>.</span></li>
-      <li><span>Copy the Web App URL (ends in <code>/exec</code>) and paste below:</span></li>
-    </ol>
-
-    <div style="margin-bottom:16px">
-      <label style="display:block;font-size:12.5px;font-weight:700;margin-bottom:6px;color:#e2e8f0" for="endpointInput">Web App URL</label>
-      <input type="text" id="endpointInput" placeholder="https://script.google.com/macros/s/AKfycb.../exec" autocomplete="off" style="font-family:var(--font-mono);font-size:12.5px">
-      <div class="field-error" id="dlgErr" hidden></div>
-    </div>
-
-    <div class="dlg-buttons">
-      <button type="button" class="btn-outline" id="dlgCancel">Cancel</button>
-      <button type="button" class="btn-submit" id="dlgSave" style="padding:10px 20px;font-size:13.5px;flex:none">Save &amp; Connect</button>
-    </div>
-  </div>
-</dialog>
 
 <script>
 (function () {
   'use strict';
 
+  // Permanent Google Apps Script Web App Endpoint provided by user
+  var SCRIPT_URL = "https://script.google.com/macros/s/AKfycby6bmjmxAkzy2aT5CGcKL30FiefsU8ITOi_EVUG4cYsGM1_BZakNiQI6oj0cNQlf9wj/exec";
   var TARGET_SPREADSHEET_ID = "1hP5XQ9EtMVQ5qRM0FW2GG8WQkYtXLwFisx7eh96ibz0";
-  var SCRIPT_URL = localStorage.getItem('qt_endpoint') || '';
 
   var CATEGORIES = ['Diamond Member', 'Silver Member', 'Gold', 'Diamond', 'Silver', 'PMP', 'Cyclic'];
   var CAT_COLORS = ['#38bdf8', '#94a3b8', '#f59e0b', '#818cf8', '#cbd5e1', '#10b981', '#14b8a6'];
@@ -1931,7 +1710,7 @@
   }
   function catIdx(c) { return CATEGORIES.indexOf(c); }
 
-  /* ---------- Toast Notification ---------- */
+  /* Toast Notification */
   function toast(kind, title, sub) {
     var t = document.createElement('div');
     t.className = 'toast ' + (kind === 'bad' ? 'bad' : '');
@@ -1946,127 +1725,46 @@
     }, kind === 'bad' ? 6000 : 3500);
   }
 
-  /* ---------- Sample Realistic Data ---------- */
-  function getSeedRecords() {
-    var names = ['Aarav Sharma', 'Pooja Deshmukh', 'Rohan Kulkarni', 'Sneha Patel', 'Vikram Malhotra', 'Ananya Iyer', 'Karan Mehta', 'Meera Nair', 'Aditya Verma', 'Kavita Rao'];
-    var queries = [
-      'Need 1-on-1 mentorship session with senior advisor regarding architecture review.',
-      'Unable to download module recordings; 403 access forbidden error on student portal.',
-      'Mock exam test score report verification and certificate eligibility inquiry.',
-      'Extension required for assignment submission due to university semester exams.',
-      'Cycle rotation schedule clarification for batch A weekend classes.',
-      'VIP community discord invite link expired, requested fresh permanent access token.',
-      'Payment receipt generation for tax deduction submission to employer.',
-      'Resume evaluation feedback request before upcoming campus placement drive.'
-    ];
-    var out = [], now = new Date();
-    for (var i = 0; i < 18; i++) {
-      var ts = new Date(now.getTime() - i * 3.8 * 3600 * 1000);
-      var tt = new Date(ts.getTime() + 45 * 60000);
-      out.push({
-        timestamp: fmt(ts),
-        name: names[i % names.length],
-        category: CATEGORIES[(i * 3 + (i > 7 ? 1 : 0)) % CATEGORIES.length],
-        query: queries[(i * 5) % queries.length],
-        typingTime: fmt(tt).slice(0, 16),
-        assignedBy: i % 2 === 0 ? 'Sachin' : 'Pragati'
-      });
-    }
-    return out;
+  /* Local Cache Helper */
+  function saveLocalRecords() {
+    try { localStorage.setItem('qt_leads_records', JSON.stringify(records)); } catch (e) {}
   }
-
   function loadLocalRecords() {
     try {
-      var d = localStorage.getItem('qt_support_records');
+      var d = localStorage.getItem('qt_leads_records');
       if (d) return JSON.parse(d);
     } catch (e) {}
     return null;
   }
-  function saveLocalRecords() {
-    try {
-      localStorage.setItem('qt_support_records', JSON.stringify(records));
-    } catch (e) {}
-  }
 
-  /* ---------- Live Google Sheets Synchronization ---------- */
-  function syncRecords(silent) {
+  /* Fetch all live leads from the permanent Apps Script endpoint */
+  function syncLiveLeads(silent) {
     $('connTxt').textContent = 'Syncing…';
+    var url = SCRIPT_URL + '?action=read';
 
-    // A) If Web App URL configured -> sync via Apps Script endpoint
-    if (SCRIPT_URL) {
-      var url = SCRIPT_URL.includes('?') ? (SCRIPT_URL + '&action=read') : (SCRIPT_URL + '?action=read');
-      return fetch(url, { method: 'GET', redirect: 'follow' })
-        .then(function (r) { return r.json(); })
-        .then(function (data) {
-          if (data && data.records && Array.isArray(data.records) && data.records.length > 0) {
-            records = data.records;
-            saveLocalRecords();
-            $('connTxt').textContent = 'Sheet Live · ' + records.length;
-            renderAll();
-            if (!silent) toast('ok', 'Synced with Google Sheet', records.length + ' rows fetched');
-            return;
-          }
-          throw new Error('No rows in response');
-        })
-        .catch(function (err) {
-          $('connTxt').textContent = 'Local Cache Active';
-          if (!silent) toast('bad', 'Sync check', 'Using local cache.');
-          fallbackToGvizOrLocal();
-        });
-    }
-
-    // B) Direct read from public Google Sheet via GViz API
-    return fallbackToGvizOrLocal(silent);
-  }
-
-  function fallbackToGvizOrLocal(silent) {
-    return fetch('https://docs.google.com/spreadsheets/d/' + TARGET_SPREADSHEET_ID + '/gviz/tq?tqx=out:json')
-      .then(function (r) { return r.text(); })
-      .then(function (text) {
-        var s = text.indexOf('{'), e = text.lastIndexOf('}');
-        if (s !== -1 && e !== -1) {
-          var gviz = JSON.parse(text.substring(s, e + 1));
-          var rows = gviz.table ? gviz.table.rows : [];
-          if (rows && rows.length > 0) {
-            var live = [];
-            rows.forEach(function (r) {
-              var c = r.c || [];
-              var g = function (cell) { return cell && cell.v !== null && cell.v !== undefined ? String(cell.f || cell.v).trim() : ''; };
-              var name = g(c[1]);
-              if (name) {
-                live.push({
-                  timestamp: g(c[0]) || fmt(new Date()),
-                  name: name,
-                  category: g(c[2]) || 'Diamond Member',
-                  query: g(c[3]) || '',
-                  typingTime: g(c[4]) || '',
-                  assignedBy: g(c[5]) || 'Sachin'
-                });
-              }
-            });
-            if (live.length > 0) {
-              records = live;
-              saveLocalRecords();
-              $('connTxt').textContent = 'Sheet Live · ' + records.length;
-              renderAll();
-              if (!silent) toast('ok', 'Connected to Google Sheet', records.length + ' rows loaded');
-              return;
-            }
-          }
-        }
-        throw new Error('Empty sheet');
-      })
-      .catch(function () {
-        if (!records.length) {
-          records = loadLocalRecords() || getSeedRecords();
+    return fetch(url, { method: 'GET', redirect: 'follow' })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data && data.records && Array.isArray(data.records)) {
+          records = data.records;
           saveLocalRecords();
+          $('connTxt').textContent = 'Sheet Live · ' + records.length;
+          renderAll();
+          if (!silent) toast('ok', 'Synced with Google Sheet', records.length + ' leads active');
+          return;
         }
-        $('connTxt').textContent = 'Local Cache · ' + records.length;
+        throw new Error('No records array returned');
+      })
+      .catch(function (err) {
+        // Fallback to local cache
+        records = loadLocalRecords() || [];
+        $('connTxt').textContent = 'Sheet Live · ' + records.length;
         renderAll();
+        if (!silent) toast('bad', 'Sync notice', 'Using cached records. Check your internet.');
       });
   }
 
-  /* ---------- Dashboard Renderers ---------- */
+  /* Data Helpers */
   function countBy(pred) {
     var n = 0;
     for (var i = 0; i < records.length; i++) if (pred(records[i])) n++;
@@ -2134,7 +1832,7 @@
       var h = Math.max(counts[i] / max, counts[i] ? 0.05 : 0);
       return '<div class="chart-col" title="' + esc(c) + ': ' + counts[i] + '">' +
         '<span class="chart-col-num">' + counts[i] + '</span>' +
-        '<div class="chart-col-stem" style="height:calc((100% - 64px) * ' + h + ');background:linear-gradient(180deg,' + CAT_COLORS[i] + ',' + CAT_COLORS[i] + '55)"></div>' +
+        '<div class="chart-col-stem" style="height:calc((100% - 50px) * ' + h + ');background:linear-gradient(180deg,' + CAT_COLORS[i] + ',' + CAT_COLORS[i] + '55)"></div>' +
         '<span class="chart-col-label">' + esc(c) + '</span>' +
         '</div>';
     }).join('');
@@ -2153,7 +1851,7 @@
       if (p) svg += '<circle cx="21" cy="21" r="15.9155" fill="none" stroke="' + cp + '" stroke-width="5.5" stroke-dasharray="' + Math.max(pPct - gap, 0) + ' ' + (100 - Math.max(pPct - gap, 0)) + '" stroke-dashoffset="' + (25 - sPct) + '"/>';
     }
     svg += '<text x="21" y="22" text-anchor="middle" font-size="7.5" font-weight="900" fill="#ffffff" font-family="Outfit, sans-serif">' + total + '</text>' +
-           '<text x="21" y="27" text-anchor="middle" font-size="2.8" fill="#64748b" font-weight="700" letter-spacing="0.08em" font-family="inherit">QUERIES</text>';
+           '<text x="21" y="27" text-anchor="middle" font-size="2.8" fill="#64748b" font-weight="700" letter-spacing="0.08em" font-family="inherit">LEADS</text>';
     $('donutSvg').innerHTML = svg;
 
     function legendRow(name, n, color) {
@@ -2180,8 +1878,8 @@
     var week = lastDays(7), max = Math.max.apply(null, week.map(function (d) { return d.n; }).concat([1]));
     var DN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     $('weekChartWrap').innerHTML = week.map(function (d, i) {
-      var h = d.n ? Math.max(d.n / max * 80, 8) : 0;
-      return '<div class="week-day' + (i === 6 ? ' today' : '') + '" title="' + d.key + ': ' + d.n + ' queries">' +
+      var h = d.n ? Math.max(d.n / max * 75, 6) : 0;
+      return '<div class="week-day' + (i === 6 ? ' today' : '') + '" title="' + d.key + ': ' + d.n + ' leads">' +
         '<em>' + d.n + '</em>' +
         '<i style="height:' + h + 'px"></i>' +
         '<span>' + (i === 6 ? 'Today' : DN[d.d.getDay()]) + '</span>' +
@@ -2192,14 +1890,14 @@
   function renderLatestFeed() {
     var items = records.slice(0, 5);
     if (!items.length) {
-      $('feedList').innerHTML = '<div class="empty-state"><b>No recent submissions</b>Entries will appear here.</div>';
+      $('feedList').innerHTML = '<div class="empty-state"><b>No recent leads</b>New submissions appear here.</div>';
       return;
     }
     $('feedList').innerHTML = items.map(function (r) {
       var ci = catIdx(r.category);
       var col = ci > -1 ? CAT_COLORS[ci] : '#94a3b8';
       var asgInitial = (r.assignedBy || 'S')[0].toUpperCase();
-      var asgBg = r.assignedBy === 'Pragati' ? 'background:rgba(16,185,129,0.15);color:#00ff87' : 'background:rgba(56,189,248,0.15);color:#38bdf8';
+      var asgBg = (r.assignedBy === 'Pragati') ? 'background:rgba(16,185,129,0.15);color:#00ff87' : 'background:rgba(56,189,248,0.15);color:#38bdf8';
 
       return '<div class="feed-item">' +
         '<span class="cell-av" style="' + asgBg + '">' + asgInitial + '</span>' +
@@ -2213,7 +1911,7 @@
     }).join('');
   }
 
-  /* ---------- Table Renderers ---------- */
+  /* Table Rendering */
   function getFilteredRecords() {
     var q = $('searchInput').value.trim().toLowerCase();
     return records.filter(function (r) {
@@ -2241,8 +1939,8 @@
     var body = $('tableBody');
 
     if (!slice.length) {
-      body.innerHTML = '<tr><td colspan="6"><div class="empty-state"><b>No matching entries found</b>Try clearing the filters or searching with another keyword.</div></td></tr>';
-      $('tableCountLabel').textContent = 'Showing 0 entries';
+      body.innerHTML = '<tr><td colspan="6"><div class="empty-state"><b>No matching leads found</b>Clear filters to show all entries.</div></td></tr>';
+      $('tableCountLabel').textContent = 'Showing 0 leads';
       $('showMoreBtn').hidden = true;
       return;
     }
@@ -2255,10 +1953,10 @@
       return '<tr>' +
         '<td><div class="user-cell"><span class="cell-av" style="background:rgba(255,255,255,0.08);color:#fff">' + initials(r.name) + '</span>' + esc(r.name) + '</div></td>' +
         '<td><span class="badge-tag" style="background:' + catColor + '18;color:' + catColor + '">' + esc(r.category) + '</span></td>' +
-        '<td style="color:#cbd5e1;line-height:1.4">' + (r.query ? esc(r.query) : '<span style="color:var(--text-muted)">No query text</span>') + '</td>' +
+        '<td style="color:#cbd5e1;line-height:1.4">' + (r.query ? esc(r.query) : '<span style="color:var(--text-muted)">No description</span>') + '</td>' +
         '<td style="font-family:var(--font-mono);color:#94a3b8;white-space:nowrap">' + (r.typingTime ? niceTime(r.typingTime) : '-') + '</td>' +
         '<td><span class="badge-tag who' + (isPragati ? ' p' : '') + '">' + esc(r.assignedBy) + '</span></td>' +
-        '<td style="font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);white-space:nowrap">' + niceTime(r.timestamp) + '<span style="display:block;color:var(--text-muted);font-size:11px">' + relTime(r.timestamp) + '</span></td>' +
+        '<td style="font-family:var(--font-mono);font-size:11.5px;color:var(--text-secondary);white-space:nowrap">' + niceTime(r.timestamp) + '<span style="display:block;color:var(--text-muted);font-size:10.5px">' + relTime(r.timestamp) + '</span></td>' +
       '</tr>';
     }).join('');
 
@@ -2277,7 +1975,7 @@
     updateTicketPreview();
   }
 
-  /* ---------- Form Controls Builder ---------- */
+  /* Form Controls Builder */
   function buildCategoryPills() {
     $('categoryPillsContainer').innerHTML = CATEGORIES.map(function (c, i) {
       return '<span><input type="radio" name="category" id="catRadio' + i + '" value="' + esc(c) + '"><label for="catRadio' + i + '" style="--pill-color:' + CAT_COLORS[i] + '">' + esc(c) + '</label></span>';
@@ -2300,7 +1998,7 @@
     return el ? el.value : '';
   }
 
-  /* ---------- Ticket Interactive Live Preview ---------- */
+  /* Ticket Preview Sync */
   function updateTicketPreview() {
     var name = $('name').value.trim();
     var cat = getChecked('category');
@@ -2340,7 +2038,7 @@
     }
 
     var tq = $('tQuery');
-    tq.textContent = q || 'The query description appears here in real-time as you type...';
+    tq.textContent = q || 'Query details will appear here as you type...';
     tq.className = 'ticket-query' + (q ? '' : ' placeholder');
 
     $('tTime').textContent = tt ? niceTime(tt.replace('T', ' ')) : 'Not set';
@@ -2374,11 +2072,11 @@
       setTimeout(function () {
         resetForm();
         res();
-      }, 1600);
+      }, 1500);
     });
   }
 
-  /* ---------- Form Submission Handler ---------- */
+  /* Form Submit - Appends to Google Sheet */
   function onFormSubmit(e) {
     e.preventDefault();
     clearErrors();
@@ -2395,7 +2093,7 @@
     if (!assignedBy) { $('errAsg').hidden = false; hasErr = true; }
 
     if (hasErr) {
-      toast('bad', 'Required fields missing', 'Please fill name, category and assignee.');
+      toast('bad', 'Missing Required Fields', 'Please complete student name, category, and assignee.');
       if (!name) $('name').focus();
       return;
     }
@@ -2410,53 +2108,45 @@
 
     var btn = $('submitBtn');
     btn.disabled = true;
-    btn.textContent = 'Saving entry...';
+    btn.textContent = 'Saving to Google Sheet...';
     function enableBtn() { btn.disabled = false; btn.textContent = 'Submit Entry'; }
 
-    var newEntry = {
-      timestamp: fmt(new Date()),
-      name: payload.name,
-      category: payload.category,
-      query: payload.query,
-      typingTime: payload.typingTime,
-      assignedBy: payload.assignedBy
-    };
-
-    // If Web App URL is configured -> POST to Google Apps Script
-    if (SCRIPT_URL) {
-      fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(payload)
-      })
-      .then(function () {
-        records.unshift(newEntry);
-        saveLocalRecords();
-        renderAll();
-        toast('ok', 'Saved to Google Sheet & Dashboard', name + ' (' + category + ')');
-        return celebrate();
-      })
-      .catch(function (err) {
-        toast('bad', 'Network error', err.message);
-      })
-      .then(enableBtn);
-      return;
-    }
-
-    // Otherwise save to local records and advise
-    records.unshift(newEntry);
-    saveLocalRecords();
-    renderAll();
-    toast('ok', 'Saved to local database', name + ' (' + category + '). Connect Google Sheet endpoint to append live.');
-    celebrate().then(enableBtn);
+    // Direct POST to user's permanent Google Apps Script Web App
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    })
+    .then(function () {
+      records.unshift({
+        id: Date.now(),
+        timestamp: fmt(new Date()),
+        name: payload.name,
+        category: payload.category,
+        query: payload.query,
+        typingTime: payload.typingTime,
+        assignedBy: payload.assignedBy
+      });
+      saveLocalRecords();
+      renderAll();
+      toast('ok', 'Saved to Google Sheet & Dashboard', name + ' (' + category + ')');
+      return celebrate();
+    })
+    .then(function () {
+      setTimeout(function () { syncLiveLeads(true); }, 1500);
+    })
+    .catch(function (err) {
+      toast('bad', 'Submission Error', err.message);
+    })
+    .then(enableBtn);
   }
 
-  /* ---------- CSV Export ---------- */
+  /* CSV Export */
   function exportCsv() {
     var rows = getFilteredRecords();
     if (!rows.length) {
-      toast('bad', 'No records to export', 'Filter criteria returned 0 rows.');
+      toast('bad', 'No records to export', 'Filtered view returned 0 rows.');
       return;
     }
     function cell(v) {
@@ -2471,41 +2161,35 @@
     var blob = new Blob(['\uFEFF' + lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
     var a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'support_desk_queries_' + dayKey(new Date()) + '.csv';
+    a.download = 'support_leads_' + dayKey(new Date()) + '.csv';
     document.body.appendChild(a);
     a.click();
     a.remove();
     setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
-    toast('ok', 'CSV Export Complete', rows.length + ' records exported');
+    toast('ok', 'CSV Export Complete', rows.length + ' leads exported');
   }
 
-  /* ---------- Settings Dialog ---------- */
-  function openSettings() {
-    $('endpointInput').value = SCRIPT_URL;
-    $('dlgErr').hidden = true;
-    var d = $('settingsDialog');
-    if (d.showModal) d.showModal(); else d.setAttribute('open', '');
-  }
-  function closeSettings() {
-    var d = $('settingsDialog');
-    if (d.close) d.close(); else d.removeAttribute('open');
-  }
-  function saveSettings() {
-    var v = $('endpointInput').value.trim();
-    if (v && !/^https:\/\/script\.google\.com\/macros\/s\/[^\s]+\/exec$/.test(v) && !/^https:\/\/script\.googleusercontent\.com\/[^\s]+$/.test(v)) {
-      $('dlgErr').textContent = 'Please enter a valid Google Apps Script Web App URL ending with /exec.';
-      $('dlgErr').hidden = false;
-      return;
-    }
-    SCRIPT_URL = v;
-    if (v) localStorage.setItem('qt_endpoint', v);
-    else localStorage.removeItem('qt_endpoint');
-    closeSettings();
-    syncRecords();
-    toast('ok', v ? 'Endpoint Connected' : 'Local Mode Active');
-  }
+  /* Hamburger Menu Toggler */
+  var hamBtn = $('hamburgerBtn');
+  var mobileDrawer = $('mobileDrawer');
 
-  /* ---------- Event Listeners Setup ---------- */
+  hamBtn.addEventListener('click', function () {
+    var isOpen = mobileDrawer.classList.toggle('open');
+    hamBtn.setAttribute('aria-expanded', isOpen);
+    $('hamIcon').innerHTML = isOpen
+      ? '<line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>'
+      : '<line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>';
+  });
+
+  document.querySelectorAll('[data-close]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      mobileDrawer.classList.remove('open');
+      hamBtn.setAttribute('aria-expanded', 'false');
+      $('hamIcon').innerHTML = '<line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>';
+    });
+  });
+
+  /* Setup & Listeners */
   var now = new Date();
   $('deskDateLine').textContent = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
 
@@ -2530,7 +2214,7 @@
     updateTicketPreview();
   });
 
-  // Prompt chips
+  // Quick Chips
   document.querySelectorAll('.quick-chip[data-text]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var t = btn.getAttribute('data-text');
@@ -2542,7 +2226,7 @@
     });
   });
 
-  // Sample data button
+  // Sample Data Prefill
   $('prefillBtn').addEventListener('click', function () {
     var samples = [
       { name: 'Aarav Sharma', cat: 'Diamond Member', q: 'Requesting 1-on-1 mentorship session for portfolio and project code review.', asg: 'Sachin' },
@@ -2562,16 +2246,11 @@
 
     clearErrors();
     updateTicketPreview();
-    toast('ok', 'Sample data loaded', s.name + ' · ' + s.cat);
+    toast('ok', 'Sample lead loaded', s.name + ' · ' + s.cat);
   });
 
-  $('refreshBtn').addEventListener('click', function () {
-    syncRecords(false);
-  });
-
-  $('connBtn').addEventListener('click', openSettings);
-  $('dlgCancel').addEventListener('click', closeSettings);
-  $('dlgSave').addEventListener('click', saveSettings);
+  $('refreshBtn').addEventListener('click', function () { syncLiveLeads(false); });
+  $('syncBtn').addEventListener('click', function () { syncLiveLeads(false); });
 
   $('exportBtn').addEventListener('click', exportCsv);
   $('searchInput').addEventListener('input', function () {
@@ -2616,35 +2295,29 @@
     renderTable();
   });
 
-  /* Active Section Spy for Navigation Links */
+  // Active Navigation Pill Spy on Scroll
   window.addEventListener('scroll', function () {
-    var scrollPos = window.scrollY + 140;
+    var scrollPos = window.scrollY + 120;
     var sections = ['section-entry', 'section-dashboard', 'section-records'];
     var current = 'section-entry';
 
     sections.forEach(function (secId) {
       var el = $(secId);
-      if (el && el.offsetTop <= scrollPos) {
-        current = secId;
-      }
+      if (el && el.offsetTop <= scrollPos) current = secId;
     });
 
     document.querySelectorAll('.nav-pill-btn').forEach(function (btn) {
       btn.classList.toggle('active', btn.getAttribute('href') === ('#' + current));
     });
-
-    $('dockEntry')?.classList.toggle('active', current === 'section-entry');
-    $('dockDash')?.classList.toggle('active', current === 'section-dashboard');
-    $('dockRecs')?.classList.toggle('active', current === 'section-records');
   });
 
-  // Initial Sync and Render
-  syncRecords(true);
+  // Initial Sync from Permanent Google Apps Script Web App
+  syncLiveLeads(true);
 
-  // Periodic background check
+  // Auto-sync every 35 seconds
   setInterval(function () {
-    if (!document.hidden) syncRecords(true);
-  }, 45000);
+    if (!document.hidden) syncLiveLeads(true);
+  }, 35000);
 
 })();
 </script>
