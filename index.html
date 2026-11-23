@@ -47,14 +47,14 @@
   }
 
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html, body {
+  
+  html {
+    scroll-behavior: smooth;
+    width: 100%;
     margin: 0;
     padding: 0;
-    width: 100%;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
   }
-  
+
   body {
     font-family: var(--font-body);
     font-size: 14.5px;
@@ -67,7 +67,9 @@
       linear-gradient(to bottom, #070c12, #0b1118);
     background-attachment: fixed;
     min-height: 100vh;
-    padding-bottom: 30px;
+    margin: 0;
+    padding: 0 0 40px 0;
+    overflow-x: clip; /* clip prevents horizontal scroll without breaking position:sticky! */
   }
 
   button, input, select, textarea { font: inherit; color: inherit; }
@@ -75,39 +77,42 @@
   [hidden] { display: none !important; }
 
   /* -------------------------------------------------------------
-     TOPBAR NAVIGATION (LOGO ONLY + HAMBURGER MENU)
+     DESKTOP & MOBILE STICKY TOPBAR
   ------------------------------------------------------------- */
   .topbar {
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
-    z-index: 50;
-    background: rgba(7, 12, 18, 0.88);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    z-index: 1000;
+    background: rgba(7, 12, 18, 0.94);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     width: 100%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   }
 
   .topbar-inner {
     max-width: 1240px;
     margin: 0 auto;
-    padding: 10px 16px;
+    padding: 10px 18px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
+    gap: 16px;
   }
 
-  /* Logo Only - No text label, background transparent */
+  /* Logo Only - No text label, transparent 3D logo */
   .brand-logo-only {
     display: flex;
     align-items: center;
     text-decoration: none;
+    cursor: pointer;
   }
 
   .brand-logo-img {
-    height: 44px;
-    max-width: 170px;
+    height: 42px;
+    max-width: 165px;
     width: auto;
     object-fit: contain;
     mix-blend-mode: screen;
@@ -118,71 +123,79 @@
     transform: scale(1.04);
   }
 
-  /* Desktop Navigation Pills */
+  /* Desktop Sticky Navigation Tabs */
   .desktop-nav {
     display: flex;
     align-items: center;
-    gap: 4px;
-    background: rgba(255, 255, 255, 0.03);
-    padding: 4px;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.04);
+    padding: 4px 6px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.07);
   }
 
   .nav-pill-btn {
     border: none;
     background: transparent;
     color: var(--text-secondary);
-    padding: 7px 15px;
+    padding: 7px 16px;
     border-radius: 999px;
-    font-size: 13px;
+    font-size: 13.5px;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
   }
   .nav-pill-btn:hover {
     color: #fff;
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.07);
   }
   .nav-pill-btn.active {
     background: linear-gradient(135deg, var(--neon), #059669);
     color: #042517;
     font-weight: 800;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+  }
+  .nav-pill-btn.sheet-link {
+    color: var(--blue);
+  }
+  .nav-pill-btn.sheet-link:hover {
+    background: rgba(56, 189, 248, 0.12);
+    color: #fff;
   }
 
   .topbar-right {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
   }
 
   .live-badge {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    background: rgba(16, 185, 129, 0.09);
-    border: 1px solid rgba(16, 185, 129, 0.28);
+    gap: 7px;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
     color: var(--neon-bright);
-    font-size: 11.5px;
+    font-size: 12px;
     font-weight: 700;
-    padding: 6px 12px;
+    padding: 6px 14px;
     border-radius: 999px;
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.2s;
   }
   .live-badge:hover {
-    background: rgba(16, 185, 129, 0.18);
+    background: rgba(16, 185, 129, 0.2);
+    transform: translateY(-1px);
   }
 
   .pulse-dot {
-    width: 7px;
-    height: 7px;
+    width: 7.5px;
+    height: 7.5px;
     border-radius: 50%;
     background: var(--neon-bright);
     box-shadow: 0 0 8px var(--neon-bright);
@@ -190,10 +203,10 @@
   }
   @keyframes pulseAnim {
     0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(1.25); }
+    50% { opacity: 0.35; transform: scale(1.3); }
   }
 
-  /* Hamburger Menu Toggle Button */
+  /* Hamburger Menu Button (Mobile) */
   .hamburger-btn {
     display: none;
     width: 40px;
@@ -222,19 +235,19 @@
   .mobile-drawer {
     display: none;
     position: fixed;
-    top: 65px;
+    top: 63px;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 49;
-    background: rgba(7, 12, 18, 0.96);
+    z-index: 1050;
+    background: rgba(7, 12, 18, 0.97);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    padding: 24px 20px;
+    padding: 20px 16px;
     flex-direction: column;
     gap: 10px;
     overflow-y: auto;
-    animation: drawerFadeIn 0.25s ease forwards;
+    animation: drawerFadeIn 0.22s ease forwards;
   }
   @keyframes drawerFadeIn {
     from { opacity: 0; transform: translateY(-8px); }
@@ -256,40 +269,122 @@
     text-decoration: none;
     font-size: 15px;
     font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
     transition: all 0.2s;
   }
-  .drawer-link:hover, .drawer-link:active {
+  .drawer-link:hover {
     border-color: var(--neon);
     background: rgba(0, 255, 135, 0.08);
     color: var(--neon-bright);
   }
+  .drawer-link.active {
+    background: rgba(0, 255, 135, 0.14);
+    border-color: var(--neon);
+    color: var(--neon-bright);
+  }
   .drawer-link svg {
-    width: 18px;
-    height: 18px;
+    width: 19px;
+    height: 19px;
+    color: var(--neon-bright);
+    flex: none;
+  }
+
+  /* -------------------------------------------------------------
+     MOBILE BOTTOM DOCK (STICKY APP-BAR)
+  ------------------------------------------------------------- */
+  .mobile-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 950;
+    background: rgba(9, 15, 23, 0.96);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.6);
+  }
+
+  @media (max-width: 820px) {
+    .desktop-nav { display: none !important; }
+    .hamburger-btn { display: flex !important; }
+    .mobile-bottom-nav {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    body {
+      padding-bottom: 84px !important;
+    }
+  }
+
+  .bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 7px 4px;
+    border-radius: 12px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .bottom-nav-item svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s;
+  }
+  .bottom-nav-item.active {
+    color: var(--neon-bright);
+    background: rgba(0, 255, 135, 0.1);
+  }
+  .bottom-nav-item.active svg {
+    transform: scale(1.1);
     color: var(--neon-bright);
   }
 
   /* -------------------------------------------------------------
-     MAIN CONTENT WRAPPER
+     MULTI-PAGE VIEW ARCHITECTURE
   ------------------------------------------------------------- */
   main {
     max-width: 1240px;
     margin: 0 auto;
-    padding: 24px 16px 40px;
-    display: grid;
-    gap: 36px;
+    padding: 24px 18px 40px;
     width: 100%;
   }
 
-  .section-anchor {
-    scroll-margin-top: 75px;
+  .app-view {
+    display: none;
+    width: 100%;
+    animation: viewFadeIn 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .app-view.active-view {
+    display: block;
+  }
+  @keyframes viewFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  .section-header {
-    margin-bottom: 18px;
+  .view-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 22px;
   }
-
-  .section-tag {
+  .view-tag {
     font-size: 11px;
     font-weight: 800;
     text-transform: uppercase;
@@ -300,24 +395,22 @@
     align-items: center;
     gap: 6px;
   }
-
-  .section-title {
+  .view-title {
     font-family: var(--font-heading);
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 800;
     letter-spacing: -0.03em;
     color: #fff;
     margin: 0;
     line-height: 1.2;
   }
-  .section-title span {
+  .view-title span {
     background: linear-gradient(135deg, var(--neon-bright), #38bdf8);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
-
-  .section-desc {
+  .view-desc {
     color: var(--text-secondary);
     font-size: 13.5px;
     margin: 4px 0 0;
@@ -334,200 +427,14 @@
   }
 
   /* -------------------------------------------------------------
-     SECTION 1: DATA ENTRY FORM & LIVE TICKET (TOP)
+     VIEW 1: DATA ENTRY FORM & LIVE TICKET PREVIEW
   ------------------------------------------------------------- */
   .entry-grid {
     display: grid;
-    grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 390px) minmax(0, 1fr);
     gap: 24px;
     align-items: start;
     width: 100%;
-  }
-
-  /* Ticket Preview Card */
-  .ticket-wrap {
-    position: sticky;
-    top: 75px;
-    display: grid;
-    gap: 14px;
-    width: 100%;
-  }
-
-  .ticket {
-    position: relative;
-    background: linear-gradient(160deg, #111a24 0%, #0d141d 100%);
-    border: 1px solid rgba(0, 255, 135, 0.22);
-    border-radius: 24px;
-    padding: 22px 20px 18px;
-    box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 255, 135, 0.08);
-    overflow: hidden;
-    width: 100%;
-  }
-
-  .ticket-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 10.5px;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    color: var(--neon-bright);
-    margin-bottom: 14px;
-  }
-  .ticket-no {
-    font-family: var(--font-mono);
-    color: #fff;
-    background: rgba(255, 255, 255, 0.07);
-    padding: 2px 7px;
-    border-radius: 6px;
-    font-size: 11px;
-  }
-
-  .ticket-user {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-  }
-
-  .ticket-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    font-family: var(--font-heading);
-    font-size: 17px;
-    font-weight: 800;
-    flex: none;
-    background: linear-gradient(135deg, var(--neon), #0284c7);
-    color: #032014;
-    box-shadow: 0 0 12px rgba(0, 255, 135, 0.3);
-  }
-
-  .ticket-name {
-    font-family: var(--font-heading);
-    font-size: 17px;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-    color: #fff;
-    word-break: break-word;
-  }
-  .ticket-name.placeholder { color: var(--text-muted); font-weight: 600; font-size: 15px; }
-
-  .ticket-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 3px 9px;
-    border-radius: 999px;
-    font-size: 11px;
-    font-weight: 700;
-    margin-top: 4px;
-    background: rgba(255, 255, 255, 0.06);
-    color: var(--text-secondary);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .ticket-query {
-    min-height: 52px;
-    font-size: 13px;
-    color: #cbd5e1;
-    font-weight: 500;
-    line-height: 1.45;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    word-break: break-word;
-  }
-  .ticket-query.placeholder { color: var(--text-muted); }
-
-  .ticket-perf {
-    position: relative;
-    margin: 14px -20px 12px;
-    border-top: 2px dashed rgba(255, 255, 255, 0.12);
-  }
-
-  .ticket-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-  .ticket-grid small {
-    display: block;
-    color: var(--text-muted);
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-  .ticket-grid b {
-    font-family: var(--font-mono);
-    font-size: 12.5px;
-    font-weight: 700;
-    color: #e2e8f0;
-  }
-
-  /* SAVED Stamp */
-  .stamp-badge {
-    position: absolute;
-    right: 16px;
-    bottom: 50px;
-    border: 3.5px solid var(--neon-bright);
-    color: var(--neon-bright);
-    font-family: var(--font-heading);
-    font-weight: 900;
-    font-size: 24px;
-    letter-spacing: 0.08em;
-    padding: 2px 12px;
-    border-radius: 10px;
-    transform: rotate(-14deg) scale(2.2);
-    opacity: 0;
-    pointer-events: none;
-    background: rgba(7, 12, 18, 0.94);
-    box-shadow: 0 0 20px rgba(0, 255, 135, 0.4);
-  }
-  .ticket.stamped .stamp-badge {
-    animation: stampIn 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) forwards;
-  }
-  @keyframes stampIn {
-    to { opacity: 1; transform: rotate(-14deg) scale(1); }
-  }
-
-  /* Readiness Meter */
-  .ready-meter-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 12px 16px;
-    width: 100%;
-  }
-  .ready-meter-top {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--text-secondary);
-    margin-bottom: 7px;
-  }
-  .ready-meter-top span:last-child {
-    font-family: var(--font-mono);
-    color: var(--neon-bright);
-  }
-  .meter-track {
-    height: 6px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.06);
-    overflow: hidden;
-  }
-  .meter-fill {
-    height: 100%;
-    width: 0%;
-    border-radius: 999px;
-    background: linear-gradient(90deg, var(--neon), var(--neon-bright));
-    transition: width 0.35s ease;
   }
 
   /* Form Card */
@@ -727,6 +634,10 @@
     cursor: pointer;
     box-shadow: 0 6px 20px -4px rgba(0, 255, 135, 0.45);
     transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
   }
   .btn-submit:hover { filter: brightness(1.1); transform: translateY(-1px); }
   .btn-reset {
@@ -740,8 +651,222 @@
     cursor: pointer;
   }
 
+  /* Ticket Preview Card */
+  .ticket-wrap {
+    position: sticky;
+    top: 75px;
+    display: grid;
+    gap: 14px;
+    width: 100%;
+  }
+
+  .ticket {
+    position: relative;
+    background: linear-gradient(160deg, #111a24 0%, #0d141d 100%);
+    border: 1px solid rgba(0, 255, 135, 0.22);
+    border-radius: 24px;
+    padding: 22px 20px 18px;
+    box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 255, 135, 0.08);
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .ticket-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: var(--neon-bright);
+    margin-bottom: 14px;
+  }
+  .ticket-no {
+    font-family: var(--font-mono);
+    color: #fff;
+    background: rgba(255, 255, 255, 0.07);
+    padding: 2px 7px;
+    border-radius: 6px;
+    font-size: 11px;
+  }
+
+  .ticket-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .ticket-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-heading);
+    font-size: 17px;
+    font-weight: 800;
+    flex: none;
+    background: linear-gradient(135deg, var(--neon), #0284c7);
+    color: #032014;
+    box-shadow: 0 0 12px rgba(0, 255, 135, 0.3);
+  }
+
+  .ticket-name {
+    font-family: var(--font-heading);
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: #fff;
+    word-break: break-word;
+  }
+  .ticket-name.placeholder { color: var(--text-muted); font-weight: 600; font-size: 15px; }
+
+  .ticket-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .ticket-query {
+    min-height: 52px;
+    font-size: 13px;
+    color: #cbd5e1;
+    font-weight: 500;
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+  }
+  .ticket-query.placeholder { color: var(--text-muted); }
+
+  .ticket-perf {
+    position: relative;
+    margin: 14px -20px 12px;
+    border-top: 2px dashed rgba(255, 255, 255, 0.12);
+  }
+
+  .ticket-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .ticket-grid small {
+    display: block;
+    color: var(--text-muted);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .ticket-grid b {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #e2e8f0;
+  }
+
+  /* SAVED Stamp */
+  .stamp-badge {
+    position: absolute;
+    right: 16px;
+    bottom: 50px;
+    border: 3.5px solid var(--neon-bright);
+    color: var(--neon-bright);
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: 24px;
+    letter-spacing: 0.08em;
+    padding: 2px 12px;
+    border-radius: 10px;
+    transform: rotate(-14deg) scale(2.2);
+    opacity: 0;
+    pointer-events: none;
+    background: rgba(7, 12, 18, 0.94);
+    box-shadow: 0 0 20px rgba(0, 255, 135, 0.4);
+  }
+  .ticket.stamped .stamp-badge {
+    animation: stampIn 0.5s cubic-bezier(0.2, 1.4, 0.4, 1) forwards;
+  }
+  @keyframes stampIn {
+    to { opacity: 1; transform: rotate(-14deg) scale(1); }
+  }
+
+  /* Readiness Meter */
+  .ready-meter-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 12px 16px;
+    width: 100%;
+  }
+  .ready-meter-top {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-bottom: 7px;
+  }
+  .ready-meter-top span:last-child {
+    font-family: var(--font-mono);
+    color: var(--neon-bright);
+  }
+  .meter-track {
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+  }
+  .meter-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--neon), var(--neon-bright));
+    transition: width 0.35s ease;
+  }
+
+  /* Quick Navigation Card in Entry View */
+  .nav-shortcuts-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .shortcut-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 11px 14px;
+    color: #e2e8f0;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .shortcut-btn:hover {
+    border-color: var(--neon);
+    background: rgba(0, 255, 135, 0.08);
+    color: var(--neon-bright);
+  }
+
   /* -------------------------------------------------------------
-     SECTION 2: ANALYTICS DASHBOARD (MIDDLE)
+     VIEW 2: ANALYTICS DASHBOARD
   ------------------------------------------------------------- */
   .kpis-grid {
     display: grid;
@@ -971,7 +1096,7 @@
   .feed-time { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); white-space: nowrap; }
 
   /* -------------------------------------------------------------
-     SECTION 3: RECORDS TABLE (BOTTOM)
+     VIEW 3: LIVE RECORDS DATABASE TABLE
   ------------------------------------------------------------- */
   .category-filter-chips {
     display: flex;
@@ -1075,6 +1200,22 @@
     font-size: 12.5px;
     color: #e2e8f0;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .mobile-table-hint {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .mobile-table-hint svg {
+    color: var(--neon-bright);
+    flex: none;
   }
 
   .table-scroll {
@@ -1152,7 +1293,7 @@
     bottom: 20px;
     display: grid;
     gap: 8px;
-    z-index: 90;
+    z-index: 1200;
     max-width: calc(100vw - 32px);
   }
   .toast {
@@ -1186,11 +1327,9 @@
   .toast small { display: block; font-weight: 500; opacity: 0.8; margin-top: 2px; font-size: 11.5px; }
 
   /* -------------------------------------------------------------
-     MOBILE SPECIFIC REFINEMENTS
+     MOBILE SPECIFIC RESPONSIVE REFINEMENTS
   ------------------------------------------------------------- */
   @media (max-width: 900px) {
-    .desktop-nav { display: none; }
-    .hamburger-btn { display: flex; }
     .entry-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
     .ticket-wrap { position: static; }
     .ticket { transform: none; }
@@ -1198,13 +1337,19 @@
     .dash-cols-layout { grid-template-columns: minmax(0, 1fr); }
   }
 
+  @media (max-width: 768px) {
+    .mobile-table-hint { display: flex; }
+    #toasts { bottom: 90px; }
+  }
+
   @media (max-width: 600px) {
-    .topbar-inner { padding: 8px 12px; }
+    .topbar-inner { padding: 8px 14px; }
     .brand-logo-img { height: 36px; max-width: 140px; }
-    main { padding: 14px 10px 32px; gap: 26px; }
-    .card { padding: 16px 14px; border-radius: var(--radius-lg); }
-    .form-card { padding: 18px 14px; }
-    .section-title { font-size: 20px; }
+    main { padding: 16px 12px 32px; }
+    .card { padding: 18px 14px; border-radius: var(--radius-lg); }
+    .form-card { padding: 18px 14px; border-radius: var(--radius-lg); }
+    .view-title { font-size: 22px; }
+    .view-desc { font-size: 12.5px; }
     .kpi-value { font-size: 26px; }
     .kpi-card { padding: 14px 12px; }
     .category-cols-wrap { gap: 4px; height: 210px; }
@@ -1212,33 +1357,45 @@
     .chart-col-num { font-size: 11px; }
     .chart-col-stem { max-width: 28px; }
     .assignee-grid { grid-template-columns: 1fr; }
+    .form-actions { flex-direction: column; }
     .form-actions .btn-submit, .form-actions .btn-reset { width: 100%; flex: 1 1 100%; }
     .table-controls { flex-direction: column; align-items: stretch; }
     .search-box { width: 100%; flex: auto; }
     .segmented-control { width: 100%; justify-content: space-between; }
     .segmented-control button { flex: 1; text-align: center; }
+    .category-pills label { padding: 7px 11px; font-size: 11.5px; }
+    .nav-shortcuts-row { flex-direction: column; }
   }
 </style>
 </head>
 <body>
 
-<!-- TOP NAVIGATION BAR -->
+<!-- STICKY TOPBAR NAVIGATION -->
 <header class="topbar">
   <div class="topbar-inner">
     
     <!-- Logo Only - No Text Label, Transparent Image -->
-    <a href="#" class="brand-logo-only" title="Support Desk">
+    <a href="#entry" class="brand-logo-only" data-view="entry" title="Support Desk">
       <img src="logo.png" alt="Support" class="brand-logo-img">
     </a>
 
-    <!-- Desktop Navigation Links -->
-    <nav class="desktop-nav">
-      <a href="#section-entry" class="nav-pill-btn active">New Entry</a>
-      <a href="#section-dashboard" class="nav-pill-btn">Dashboard</a>
-      <a href="#section-records" class="nav-pill-btn">Records Table</a>
-      <a href="https://docs.google.com/spreadsheets/d/1hP5XQ9EtMVQ5qRM0FW2GG8WQkYtXLwFisx7eh96ibz0/edit?usp=sharing" target="_blank" class="nav-pill-btn">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-        <span>Google Sheet</span>
+    <!-- Desktop Sticky Navigation Links (Center Tabs) -->
+    <nav class="desktop-nav" aria-label="Main Navigation">
+      <button type="button" class="nav-pill-btn active" data-view="entry">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+        <span>New Entry</span>
+      </button>
+      <button type="button" class="nav-pill-btn" data-view="dashboard">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        <span>Dashboard</span>
+      </button>
+      <button type="button" class="nav-pill-btn" data-view="records">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+        <span>Records Table</span>
+      </button>
+      <a href="https://docs.google.com/spreadsheets/d/1hP5XQ9EtMVQ5qRM0FW2GG8WQkYtXLwFisx7eh96ibz0/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="nav-pill-btn sheet-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        <span>Google Sheet ↗</span>
       </a>
     </nav>
 
@@ -1250,7 +1407,7 @@
       </button>
 
       <!-- Hamburger Menu Button -->
-      <button class="hamburger-btn" id="hamburgerBtn" type="button" aria-label="Open Menu">
+      <button class="hamburger-btn" id="hamburgerBtn" type="button" aria-label="Toggle Navigation Drawer">
         <svg id="hamIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
           <line x1="3" y1="12" x2="21" y2="12"></line>
           <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -1263,52 +1420,157 @@
 </header>
 
 <!-- Mobile Drawer Navigation -->
-<nav class="mobile-drawer" id="mobileDrawer">
-  <a href="#section-entry" class="drawer-link" data-close>
+<nav class="mobile-drawer" id="mobileDrawer" aria-label="Mobile Navigation">
+  <button type="button" class="drawer-link active" data-view="entry" data-close>
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
     <span>New Entry (Registration)</span>
-  </a>
-  <a href="#section-dashboard" class="drawer-link" data-close>
+  </button>
+  <button type="button" class="drawer-link" data-view="dashboard" data-close>
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
     <span>Analytics Dashboard</span>
-  </a>
-  <a href="#section-records" class="drawer-link" data-close>
+  </button>
+  <button type="button" class="drawer-link" data-view="records" data-close>
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
     <span>Records Database Table</span>
-  </a>
-  <a href="https://docs.google.com/spreadsheets/d/1hP5XQ9EtMVQ5qRM0FW2GG8WQkYtXLwFisx7eh96ibz0/edit?usp=sharing" target="_blank" class="drawer-link" data-close>
+  </button>
+  <a href="https://docs.google.com/spreadsheets/d/1hP5XQ9EtMVQ5qRM0FW2GG8WQkYtXLwFisx7eh96ibz0/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="drawer-link" data-close>
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-    <span>Open Google Sheet</span>
+    <span>Open Google Sheet ↗</span>
   </a>
+</nav>
+
+<!-- Mobile Bottom Navigation Dock -->
+<nav class="mobile-bottom-nav" id="mobileBottomNav" aria-label="Mobile Bottom Dock">
+  <button type="button" class="bottom-nav-item active" data-view="entry">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+    <span>New Entry</span>
+  </button>
+  <button type="button" class="bottom-nav-item" data-view="dashboard">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+    <span>Dashboard</span>
+  </button>
+  <button type="button" class="bottom-nav-item" data-view="records">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+    <span>Records</span>
+  </button>
 </nav>
 
 <main>
 
   <!-- =========================================================================
-       SECTION 1: DATA ENTRY FORM & LIVE TICKET PREVIEW (AT TOP)
+       PAGE / VIEW 1: DATA ENTRY FORM & LIVE TICKET PREVIEW
   ========================================================================= -->
-  <section id="section-entry" class="section-anchor">
+  <div id="view-entry" class="app-view active-view">
     
-    <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px">
+    <div class="view-header">
       <div>
-        <div class="section-tag">
+        <div class="view-tag">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
           Direct Google Sheets Capture
         </div>
-        <h1 class="section-title">New Query <span>Registration</span></h1>
-        <p class="section-desc">Every lead is permanently added to your Google Sheet with an automatic timestamp.</p>
+        <h1 class="view-title">New Query <span>Registration</span></h1>
+        <p class="view-desc">Every lead is permanently added to your Google Sheet with an automatic timestamp.</p>
       </div>
 
       <div>
-        <button type="button" class="btn-outline" id="prefillBtn" style="font-size:12px;padding:6px 12px">
-          + Sample Data
+        <button type="button" class="btn-outline" id="prefillBtn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          Sample Data
         </button>
       </div>
     </div>
 
     <div class="entry-grid">
       
-      <!-- Live Ticket Card -->
+      <!-- Left / Top: Form Card -->
+      <form class="form-card" id="entryForm" novalidate>
+        <div class="form-header">
+          <h2>Student Query Form</h2>
+          <span style="font-size:12px;color:var(--text-muted)" id="deskDateLine"></span>
+        </div>
+
+        <!-- Student Name -->
+        <div class="field-group">
+          <label class="field-label" for="name">
+            <span>Student Name <span class="req-star">*</span></span>
+          </label>
+          <input type="text" id="name" name="name" class="lg" placeholder="e.g. Rahul Sharma" required autocomplete="name">
+          <div class="field-error" id="errName" hidden>Student name is required.</div>
+        </div>
+
+        <!-- Membership Category -->
+        <div class="field-group">
+          <label class="field-label">
+            <span>Category / Membership Type <span class="req-star">*</span></span>
+          </label>
+          <div class="category-pills" id="categoryPills"></div>
+          <div class="field-error" id="errCat" hidden>Please select a membership category.</div>
+        </div>
+
+        <!-- Query Description -->
+        <div class="field-group">
+          <label class="field-label" for="query">
+            <span>Query Description</span>
+            <span class="field-counter" id="qCount">0 / 500</span>
+          </label>
+          <div class="quick-chips-row">
+            <button type="button" class="quick-chip" data-text="Course access issue">Course access</button>
+            <button type="button" class="quick-chip" data-text="Payment verification">Payment</button>
+            <button type="button" class="quick-chip" data-text="Exam schedule help">Exam schedule</button>
+            <button type="button" class="quick-chip" data-text="Certificate request">Certificate</button>
+          </div>
+          <textarea id="query" name="query" maxlength="500" placeholder="Type the student's question, problem, or request here..."></textarea>
+        </div>
+
+        <!-- Typing Time -->
+        <div class="field-group">
+          <label class="field-label" for="typingTime">
+            <span>Typing Time</span>
+            <button type="button" id="nowBtn" style="background:none;border:none;color:var(--neon-bright);font-size:11px;font-weight:700;cursor:pointer;padding:0">Set to Now</button>
+          </label>
+          <input type="datetime-local" id="typingTime" name="typingTime">
+        </div>
+
+        <!-- Assigned By -->
+        <div class="field-group">
+          <label class="field-label">
+            <span>Assigned By <span class="req-star">*</span></span>
+          </label>
+          <div class="assignee-grid">
+            <label>
+              <input type="radio" name="assignedBy" value="Sachin" checked>
+              <div class="assignee-card" style="--asg-color:#38bdf8">
+                <span class="assignee-av">S</span>
+                <div class="assignee-info">
+                  <b>Sachin</b>
+                  <small>Academic & Mentorship</small>
+                </div>
+              </div>
+            </label>
+            <label>
+              <input type="radio" name="assignedBy" value="Pragati">
+              <div class="assignee-card" style="--asg-color:#10b981">
+                <span class="assignee-av">P</span>
+                <div class="assignee-info">
+                  <b>Pragati</b>
+                  <small>Query Resolution & Exams</small>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button type="submit" class="btn-submit" id="submitBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Submit to Google Sheet</span>
+          </button>
+          <button type="button" class="btn-reset" id="resetBtn">Reset</button>
+        </div>
+      </form>
+
+      <!-- Right / Bottom: Live Ticket Card & Shortcuts -->
       <div class="ticket-wrap">
         <div class="ticket" id="ticketCard" aria-label="Query Ticket">
           <div class="ticket-top">
@@ -1344,147 +1606,91 @@
           <div class="stamp-badge" id="stampBadge">SAVED</div>
         </div>
 
-        <!-- Completion Readiness Meter -->
+        <!-- Readiness Meter -->
         <div class="ready-meter-card">
           <div class="ready-meter-top">
             <span>Form Readiness</span>
-            <span id="meterTxt">0 of 3 required</span>
+            <span id="meterPct">0%</span>
           </div>
           <div class="meter-track">
             <div class="meter-fill" id="meterFill"></div>
           </div>
         </div>
-      </div>
 
-      <!-- Registration Form -->
-      <div class="form-card">
-        <div class="form-header">
-          <h2>Entry Information</h2>
-          <span style="font-size:11px;font-weight:700;color:var(--neon-bright);background:rgba(0,255,135,0.1);padding:2px 8px;border-radius:999px" id="todayLoggedChip">0 logged today</span>
+        <!-- Quick Section Switch Shortcuts -->
+        <div class="nav-shortcuts-row">
+          <button type="button" class="shortcut-btn" data-view="dashboard">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+            <span>View Dashboard ➔</span>
+          </button>
+          <button type="button" class="shortcut-btn" data-view="records">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+            <span>View Records ➔</span>
+          </button>
         </div>
 
-        <form id="entryForm" novalidate>
-          
-          <!-- 1. NAME FIELD -->
-          <div class="field-group">
-            <label class="field-label" for="name">
-              <span>Student Full Name <span class="req-star">*</span></span>
-              <span class="field-counter">Required</span>
-            </label>
-            <input type="text" class="lg" id="name" name="name" placeholder="e.g. Aarav Sharma" autocomplete="off" maxlength="120" required>
-            <div class="field-error" id="errName" hidden>Please provide student name.</div>
-          </div>
-
-          <!-- 2. CATEGORY PILLS (Exact 7 Options) -->
-          <div class="field-group">
-            <label class="field-label" id="catLabel">
-              <span>Category / Membership Type <span class="req-star">*</span></span>
-              <span class="field-counter">Select one</span>
-            </label>
-            <div class="category-pills" role="radiogroup" aria-labelledby="catLabel" id="categoryPillsContainer"></div>
-            <div class="field-error" id="errCat" hidden>Please choose a membership category.</div>
-          </div>
-
-          <!-- 3. QUERY DESCRIPTION -->
-          <div class="field-group">
-            <label class="field-label" for="query">
-              <span>Query Description</span>
-              <span class="field-counter" id="qCount">0 / 500</span>
-            </label>
-            
-            <div class="quick-chips-row">
-              <button type="button" class="quick-chip" data-text="Portal login issue">Portal login issue</button>
-              <button type="button" class="quick-chip" data-text="Mentorship session slot">Mentorship session slot</button>
-              <button type="button" class="quick-chip" data-text="Certificate verification">Certificate verification</button>
-              <button type="button" class="quick-chip" data-text="Study notes access">Study notes access</button>
-            </div>
-
-            <textarea id="query" name="query" maxlength="500" placeholder="What is the query or request about?"></textarea>
-          </div>
-
-          <!-- 4. TYPING TIME -->
-          <div class="field-group">
-            <div class="field-label">
-              <label for="typingTime" style="margin:0">Typing Time</label>
-              <button type="button" class="quick-chip" id="nowBtn" style="padding:2px 8px;font-size:11px">Set Current Time</button>
-            </div>
-            <input type="datetime-local" id="typingTime" name="typingTime">
-          </div>
-
-          <!-- 5. ASSIGNED BY (Sachin vs Pragati) -->
-          <div class="field-group">
-            <label class="field-label" id="asgLabel">
-              <span>Assigned By <span class="req-star">*</span></span>
-              <span class="field-counter">Team Member</span>
-            </label>
-            <div class="assignee-grid" role="radiogroup" aria-labelledby="asgLabel" id="assigneeGridContainer"></div>
-            <div class="field-error" id="errAsg" hidden>Please select who assigned this.</div>
-          </div>
-
-          <!-- Action Buttons -->
-          <div class="form-actions">
-            <button type="submit" class="btn-submit" id="submitBtn">
-              Submit Entry
-            </button>
-            <button type="button" class="btn-reset" id="resetBtn">
-              Reset Form
-            </button>
-          </div>
-
-        </form>
       </div>
 
     </div>
 
-  </section>
+  </div>
 
 
   <!-- =========================================================================
-       SECTION 2: ANALYTICS DASHBOARD (BELOW FORM)
+       PAGE / VIEW 2: ANALYTICS DASHBOARD
   ========================================================================= -->
-  <section id="section-dashboard" class="section-anchor">
+  <div id="view-dashboard" class="app-view">
     
-    <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px">
+    <div class="view-header">
       <div>
-        <div class="section-tag">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M4 20V11M10 20V4M16 20v-6M22 20H2"/></svg>
-          Live Analytics
+        <div class="view-tag">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+          Live Analytics Engine
         </div>
-        <h2 class="section-title">Support <span>Performance Metrics</span></h2>
-        <p class="section-desc" id="deskDateLine"></p>
+        <h2 class="view-title">Analytics <span>Dashboard</span></h2>
+        <p class="view-desc">Real-time metrics, volume breakdown, and workload distribution.</p>
       </div>
 
-      <button type="button" class="btn-outline" id="refreshBtn">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="margin-right:4px"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
-        Refresh Data
-      </button>
+      <div style="display:flex;gap:8px">
+        <button type="button" class="btn-outline" data-view="entry" style="font-size:12px;padding:7px 12px">
+          + New Registration
+        </button>
+        <button type="button" class="btn-submit" id="refreshBtn" style="padding:7px 14px;font-size:12px;flex:none">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          Sync Now
+        </button>
+      </div>
     </div>
 
-    <!-- 4 KPI CARDS -->
+    <!-- KPI CARDS (4 on Desktop, 2x2 on Mobile) -->
     <div class="kpis-grid">
       
       <article class="kpi-card">
         <div class="kpi-card-top">
           <span class="kpi-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           </span>
           <span>Total Queries</span>
         </div>
         <div class="kpi-value" id="kTotal">0</div>
-        <div class="kpi-sub" id="kTotalSub">All time logged</div>
-        <svg class="kpi-spark" id="spTotal" viewBox="0 0 100 34" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <div class="kpi-sub" id="kTotalSub">Live sheet records</div>
+        <svg class="kpi-spark" viewBox="0 0 100 24" preserveAspectRatio="none">
+          <path d="M0,18 Q20,16 40,12 T80,8 T100,4" fill="none" stroke="#00ff87" stroke-width="2"/>
+        </svg>
       </article>
 
       <article class="kpi-card">
         <div class="kpi-card-top">
           <span class="kpi-icon blue">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           </span>
           <span>Today's Entries</span>
         </div>
         <div class="kpi-value" id="kToday">0</div>
-        <div class="kpi-sub" id="kTodaySub">Recent leads</div>
-        <svg class="kpi-spark" id="spToday" viewBox="0 0 100 34" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <div class="kpi-sub" id="kTodaySub">Submitted today</div>
+        <svg class="kpi-spark" viewBox="0 0 100 24" preserveAspectRatio="none">
+          <path d="M0,20 Q30,18 60,10 T100,6" fill="none" stroke="#38bdf8" stroke-width="2"/>
+        </svg>
       </article>
 
       <article class="kpi-card">
@@ -1536,7 +1742,7 @@
         <div class="card">
           <div style="margin-bottom:12px">
             <h3 style="margin:0;font-family:var(--font-heading);font-size:15px;color:#fff">Last 7 Days Trend</h3>
-            <p style="margin:2px 0 0;font-size:11.5px;color:var(--text-muted)">Daily volume count</p>
+            <p style="margin:2px 0 0;font-size:11.5px;color:var(--text-muted)">Daily query volume count</p>
           </div>
           <div class="week-chart" id="weekChartWrap"></div>
         </div>
@@ -1571,27 +1777,33 @@
 
     </div>
 
-  </section>
+  </div>
 
 
   <!-- =========================================================================
-       SECTION 3: LIVE RECORDS TABLE (BOTTOM)
+       PAGE / VIEW 3: LIVE RECORDS DATABASE TABLE
   ========================================================================= -->
-  <section id="section-records" class="section-anchor">
+  <div id="view-records" class="app-view">
     
-    <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px">
+    <div class="view-header">
       <div>
-        <div class="section-tag">
+        <div class="view-tag">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
           Google Sheet Database
         </div>
-        <h2 class="section-title">Support <span>Records Log</span></h2>
-        <p class="section-desc">Searchable list of all submitted entries.</p>
+        <h2 class="view-title">Support <span>Records Log</span></h2>
+        <p class="view-desc">Search, filter, and inspect all student queries stored in Google Sheets.</p>
       </div>
 
-      <button type="button" class="btn-submit" id="exportBtn" style="padding:7px 16px;font-size:12.5px;flex:none">
-        Export CSV
-      </button>
+      <div style="display:flex;gap:8px">
+        <button type="button" class="btn-outline" data-view="entry" style="font-size:12px;padding:7px 12px">
+          + New Entry
+        </button>
+        <button type="button" class="btn-submit" id="exportBtn" style="padding:7px 14px;font-size:12px;flex:none">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Export CSV
+        </button>
+      </div>
     </div>
 
     <div class="card">
@@ -1617,6 +1829,12 @@
         </button>
       </div>
 
+      <!-- Mobile Scroll Hint -->
+      <div class="mobile-table-hint">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        <span>Swipe table horizontally to see all columns</span>
+      </div>
+
       <!-- Table Scrollable Area -->
       <div class="table-scroll">
         <table>
@@ -1634,7 +1852,7 @@
         </table>
       </div>
 
-      <!-- Table Count -->
+      <!-- Table Count & Pagination -->
       <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;flex-wrap:wrap;gap:8px;font-size:12px;color:var(--text-muted)">
         <span id="tableCountLabel">Loading records...</span>
         <button type="button" class="btn-outline" id="showMoreBtn" style="padding:5px 12px;font-size:11.5px" hidden>
@@ -1644,7 +1862,7 @@
 
     </div>
 
-  </section>
+  </div>
 
 </main>
 
@@ -1655,7 +1873,7 @@
 (function () {
   'use strict';
 
-  // Permanent Google Apps Script Web App Endpoint provided by user
+  // Permanent Google Apps Script Web App Endpoint
   var SCRIPT_URL = "https://script.google.com/macros/s/AKfycby6bmjmxAkzy2aT5CGcKL30FiefsU8ITOi_EVUG4cYsGM1_BZakNiQI6oj0cNQlf9wj/exec";
   var TARGET_SPREADSHEET_ID = "1hP5XQ9EtMVQ5qRM0FW2GG8WQkYtXLwFisx7eh96ibz0";
 
@@ -1699,480 +1917,92 @@
     var mins = Math.round((Date.now() - d.getTime()) / 60000);
     if (mins < 1) return 'just now';
     if (mins < 60) return mins + 'm ago';
-    var h = Math.round(mins / 60);
-    if (h < 24) return h + 'h ago';
-    var days = Math.round(h / 24);
-    return days + 'd ago';
-  }
-  function initials(n) {
-    var p = String(n || '?').trim().split(/\s+/);
-    return ((p[0] || '?')[0] + (p.length > 1 ? p[p.length - 1][0] : '')).toUpperCase();
-  }
-  function catIdx(c) { return CATEGORIES.indexOf(c); }
-
-  /* Toast Notification */
-  function toast(kind, title, sub) {
-    var t = document.createElement('div');
-    t.className = 'toast ' + (kind === 'bad' ? 'bad' : '');
-    t.setAttribute('role', kind === 'bad' ? 'alert' : 'status');
-    t.innerHTML = '<span class="toast-icon">' + (kind === 'bad' ? '!' : '✓') + '</span><div>' + esc(title) + (sub ? '<small>' + esc(sub) + '</small>' : '') + '</div>';
-    $('toasts').appendChild(t);
-    setTimeout(function () {
-      t.style.transition = 'opacity .3s, transform .3s';
-      t.style.opacity = '0';
-      t.style.transform = 'translateY(10px)';
-      setTimeout(function () { t.remove(); }, 300);
-    }, kind === 'bad' ? 6000 : 3500);
-  }
-
-  /* Local Cache Helper */
-  function saveLocalRecords() {
-    try { localStorage.setItem('qt_leads_records', JSON.stringify(records)); } catch (e) {}
-  }
-  function loadLocalRecords() {
-    try {
-      var d = localStorage.getItem('qt_leads_records');
-      if (d) return JSON.parse(d);
-    } catch (e) {}
-    return null;
-  }
-
-  /* Fetch all live leads from the permanent Apps Script endpoint */
-  function syncLiveLeads(silent) {
-    $('connTxt').textContent = 'Syncing…';
-    var url = SCRIPT_URL + '?action=read';
-
-    return fetch(url, { method: 'GET', redirect: 'follow' })
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        if (data && data.records && Array.isArray(data.records)) {
-          records = data.records;
-          saveLocalRecords();
-          $('connTxt').textContent = 'Sheet Live · ' + records.length;
-          renderAll();
-          if (!silent) toast('ok', 'Synced with Google Sheet', records.length + ' leads active');
-          return;
-        }
-        throw new Error('No records array returned');
-      })
-      .catch(function (err) {
-        // Fallback to local cache
-        records = loadLocalRecords() || [];
-        $('connTxt').textContent = 'Sheet Live · ' + records.length;
-        renderAll();
-        if (!silent) toast('bad', 'Sync notice', 'Using cached records. Check your internet.');
-      });
-  }
-
-  /* Data Helpers */
-  function countBy(pred) {
-    var n = 0;
-    for (var i = 0; i < records.length; i++) if (pred(records[i])) n++;
-    return n;
-  }
-  function lastDays(n) {
-    var days = [], now = new Date();
-    for (var i = n - 1; i >= 0; i--) {
-      var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
-      days.push({ key: dayKey(d), d: d, n: 0 });
-    }
-    records.forEach(function (r) {
-      var k = String(r.timestamp).slice(0, 10);
-      for (var j = 0; j < days.length; j++) if (days[j].key === k) days[j].n++;
-    });
-    return days;
-  }
-
-  function spark(id, values, color) {
-    var el = $(id);
-    if (!el) return;
-    var max = Math.max.apply(null, values.concat([1]));
-    var pts = values.map(function (v, i) { return [i / (values.length - 1) * 100, 30 - v / max * 26]; });
-    var line = pts.map(function (p, i) { return (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
-    var gid = 'g' + id;
-    el.innerHTML = '<defs><linearGradient id="' + gid + '" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="' + color + '" stop-opacity=".35"/><stop offset="1" stop-color="' + color + '" stop-opacity="0"/></linearGradient></defs>' +
-      '<path d="' + line + ' L100 34 L0 34 Z" fill="url(#' + gid + ')"/>' +
-      '<path d="' + line + '" fill="none" stroke="' + color + '" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>';
-  }
-
-  function renderKPIs() {
-    var total = records.length;
-    var todayStr = dayKey(new Date());
-    var todayCount = countBy(function (r) { return String(r.timestamp).slice(0, 10) === todayStr; });
-    var sCount = countBy(function (r) { return (r.assignedBy || '').toLowerCase() === 'sachin'; });
-    var pCount = countBy(function (r) { return (r.assignedBy || '').toLowerCase() === 'pragati'; });
-
-    $('kTotal').textContent = total;
-    $('kToday').textContent = todayCount;
-    $('kSachin').textContent = sCount;
-    $('kPragati').textContent = pCount;
-
-    var sPct = total ? Math.round(sCount / total * 100) : 0;
-    var pPct = total ? Math.round(pCount / total * 100) : 0;
-
-    $('kSachinSub').textContent = sPct + '% of total workload';
-    $('kPragatiSub').textContent = pPct + '% of total workload';
-    $('shSachin').style.width = sPct + '%';
-    $('shPragati').style.width = pPct + '%';
-
-    var week = lastDays(7);
-    var counts = week.map(function (d) { return d.n; });
-    spark('spTotal', counts, '#00ff87');
-    spark('spToday', counts, '#38bdf8');
-
-    $('todayLoggedChip').textContent = todayCount + ' logged today';
-  }
-
-  function renderCategoryColumns() {
-    var counts = CATEGORIES.map(function (c) { return countBy(function (r) { return r.category === c; }); });
-    var max = Math.max.apply(null, counts.concat([1]));
-    $('catTotalChip').textContent = records.length + ' total';
-
-    $('colsWrap').innerHTML = CATEGORIES.map(function (c, i) {
-      var h = Math.max(counts[i] / max, counts[i] ? 0.05 : 0);
-      return '<div class="chart-col" title="' + esc(c) + ': ' + counts[i] + '">' +
-        '<span class="chart-col-num">' + counts[i] + '</span>' +
-        '<div class="chart-col-stem" style="height:calc((100% - 50px) * ' + h + ');background:linear-gradient(180deg,' + CAT_COLORS[i] + ',' + CAT_COLORS[i] + '55)"></div>' +
-        '<span class="chart-col-label">' + esc(c) + '</span>' +
-        '</div>';
-    }).join('');
-  }
-
-  function renderDonutAndWorkload() {
-    var s = countBy(function (r) { return (r.assignedBy || '').toLowerCase() === 'sachin'; });
-    var p = countBy(function (r) { return (r.assignedBy || '').toLowerCase() === 'pragati'; });
-    var total = s + p;
-    var cs = ASG_COLORS.Sachin, cp = ASG_COLORS.Pragati;
-
-    var svg = '<circle cx="21" cy="21" r="15.9155" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="5.5"/>';
-    if (total > 0) {
-      var sPct = s / total * 100, pPct = p / total * 100, gap = (s && p) ? 0.8 : 0;
-      if (s) svg += '<circle cx="21" cy="21" r="15.9155" fill="none" stroke="' + cs + '" stroke-width="5.5" stroke-dasharray="' + Math.max(sPct - gap, 0) + ' ' + (100 - Math.max(sPct - gap, 0)) + '" stroke-dashoffset="25"/>';
-      if (p) svg += '<circle cx="21" cy="21" r="15.9155" fill="none" stroke="' + cp + '" stroke-width="5.5" stroke-dasharray="' + Math.max(pPct - gap, 0) + ' ' + (100 - Math.max(pPct - gap, 0)) + '" stroke-dashoffset="' + (25 - sPct) + '"/>';
-    }
-    svg += '<text x="21" y="22" text-anchor="middle" font-size="7.5" font-weight="900" fill="#ffffff" font-family="Outfit, sans-serif">' + total + '</text>' +
-           '<text x="21" y="27" text-anchor="middle" font-size="2.8" fill="#64748b" font-weight="700" letter-spacing="0.08em" font-family="inherit">LEADS</text>';
-    $('donutSvg').innerHTML = svg;
-
-    function legendRow(name, n, color) {
-      var pct = total ? Math.round(n / total * 100) : 0;
-      return '<div class="legend-row">' +
-        '<span class="legend-dot" style="background:' + color + '"></span>' +
-        '<span class="legend-name">' + name + '<small>' + pct + '% of assignments</small></span>' +
-        '<span class="legend-val">' + n + '</span>' +
-        '</div>';
-    }
-    $('legendList').innerHTML = legendRow('Sachin', s, cs) + legendRow('Pragati', p, cp);
-
-    var diff = Math.abs(s - p);
-    $('wlRatioChip').textContent = total === 0 ? 'No Data' : diff === 0 ? 'Even Split' : (s > p ? 'Sachin +' + diff : 'Pragati +' + diff);
-
-    var sp = total ? s / total * 100 : 50;
-    var pp = total ? p / total * 100 : 50;
-    $('vsHorizontalBar').innerHTML = 
-      '<div class="vs-sachin" style="flex:0 0 ' + sp + '%">' + (sp >= 15 ? 'Sachin ' + Math.round(sp) + '%' : '') + '</div>' +
-      '<div class="vs-pragati" style="flex:1 1 0">' + (pp >= 15 ? Math.round(pp) + '% Pragati' : '') + '</div>';
-  }
-
-  function renderWeekChart() {
-    var week = lastDays(7), max = Math.max.apply(null, week.map(function (d) { return d.n; }).concat([1]));
-    var DN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    $('weekChartWrap').innerHTML = week.map(function (d, i) {
-      var h = d.n ? Math.max(d.n / max * 75, 6) : 0;
-      return '<div class="week-day' + (i === 6 ? ' today' : '') + '" title="' + d.key + ': ' + d.n + ' leads">' +
-        '<em>' + d.n + '</em>' +
-        '<i style="height:' + h + 'px"></i>' +
-        '<span>' + (i === 6 ? 'Today' : DN[d.d.getDay()]) + '</span>' +
-        '</div>';
-    }).join('');
-  }
-
-  function renderLatestFeed() {
-    var items = records.slice(0, 5);
-    if (!items.length) {
-      $('feedList').innerHTML = '<div class="empty-state"><b>No recent leads</b>New submissions appear here.</div>';
-      return;
-    }
-    $('feedList').innerHTML = items.map(function (r) {
-      var ci = catIdx(r.category);
-      var col = ci > -1 ? CAT_COLORS[ci] : '#94a3b8';
-      var asgInitial = (r.assignedBy || 'S')[0].toUpperCase();
-      var asgBg = (r.assignedBy === 'Pragati') ? 'background:rgba(16,185,129,0.15);color:#00ff87' : 'background:rgba(56,189,248,0.15);color:#38bdf8';
-
-      return '<div class="feed-item">' +
-        '<span class="cell-av" style="' + asgBg + '">' + asgInitial + '</span>' +
-        '<div>' +
-          '<b>' + esc(r.name) + '</b>' +
-          '<small style="color:' + col + '">' + esc(r.category) + '</small>' +
-          '<small style="color:var(--text-muted)"> · ' + esc(r.assignedBy) + '</small>' +
-        '</div>' +
-        '<span class="feed-time">' + relTime(r.timestamp) + '</span>' +
-      '</div>';
-    }).join('');
-  }
-
-  /* Table Rendering */
-  function getFilteredRecords() {
-    var q = $('searchInput').value.trim().toLowerCase();
-    return records.filter(function (r) {
-      if (filter.cat && r.category !== filter.cat) return false;
-      if (filter.asg && r.assignedBy !== filter.asg) return false;
-      if (q && String(r.name).toLowerCase().indexOf(q) === -1 && String(r.query).toLowerCase().indexOf(q) === -1) return false;
-      return true;
-    });
-  }
-
-  function renderTableFilterChips() {
-    var html = '<button type="button" class="filter-chip" data-cat="" aria-pressed="' + (filter.cat === '') + '">All Categories <i>' + records.length + '</i></button>';
-    CATEGORIES.forEach(function (c, i) {
-      var n = countBy(function (r) { return r.category === c; });
-      html += '<button type="button" class="filter-chip" style="--chip-c:' + CAT_COLORS[i] + '" data-cat="' + esc(c) + '" aria-pressed="' + (filter.cat === c) + '">' +
-        esc(c) + ' <i>' + n + '</i>' +
-      '</button>';
-    });
-    $('tableFilterChips').innerHTML = html;
-  }
-
-  function renderTable() {
-    var rows = getFilteredRecords();
-    var slice = rows.slice(0, shownCount);
-    var body = $('tableBody');
-
-    if (!slice.length) {
-      body.innerHTML = '<tr><td colspan="6"><div class="empty-state"><b>No matching leads found</b>Clear filters to show all entries.</div></td></tr>';
-      $('tableCountLabel').textContent = 'Showing 0 leads';
-      $('showMoreBtn').hidden = true;
-      return;
-    }
-
-    body.innerHTML = slice.map(function (r) {
-      var ci = catIdx(r.category);
-      var catColor = ci > -1 ? CAT_COLORS[ci] : '#94a3b8';
-      var isPragati = (r.assignedBy || '').toLowerCase() === 'pragati';
-
-      return '<tr>' +
-        '<td><div class="user-cell"><span class="cell-av" style="background:rgba(255,255,255,0.08);color:#fff">' + initials(r.name) + '</span>' + esc(r.name) + '</div></td>' +
-        '<td><span class="badge-tag" style="background:' + catColor + '18;color:' + catColor + '">' + esc(r.category) + '</span></td>' +
-        '<td style="color:#cbd5e1;line-height:1.4">' + (r.query ? esc(r.query) : '<span style="color:var(--text-muted)">No description</span>') + '</td>' +
-        '<td style="font-family:var(--font-mono);color:#94a3b8;white-space:nowrap">' + (r.typingTime ? niceTime(r.typingTime) : '-') + '</td>' +
-        '<td><span class="badge-tag who' + (isPragati ? ' p' : '') + '">' + esc(r.assignedBy) + '</span></td>' +
-        '<td style="font-family:var(--font-mono);font-size:11.5px;color:var(--text-secondary);white-space:nowrap">' + niceTime(r.timestamp) + '<span style="display:block;color:var(--text-muted);font-size:10.5px">' + relTime(r.timestamp) + '</span></td>' +
-      '</tr>';
-    }).join('');
-
-    $('tableCountLabel').textContent = 'Showing ' + slice.length + ' of ' + rows.length + (rows.length !== records.length ? ' (filtered from ' + records.length + ' total)' : '');
-    $('showMoreBtn').hidden = rows.length <= shownCount;
-  }
-
-  function renderAll() {
-    renderKPIs();
-    renderCategoryColumns();
-    renderDonutAndWorkload();
-    renderWeekChart();
-    renderLatestFeed();
-    renderTableFilterChips();
-    renderTable();
-    updateTicketPreview();
-  }
-
-  /* Form Controls Builder */
-  function buildCategoryPills() {
-    $('categoryPillsContainer').innerHTML = CATEGORIES.map(function (c, i) {
-      return '<span><input type="radio" name="category" id="catRadio' + i + '" value="' + esc(c) + '"><label for="catRadio' + i + '" style="--pill-color:' + CAT_COLORS[i] + '">' + esc(c) + '</label></span>';
-    }).join('');
-
-    $('assigneeGridContainer').innerHTML = ASSIGNEES.map(function (a, i) {
-      return '<span><input type="radio" name="assignedBy" id="asgRadio' + i + '" value="' + esc(a) + '"><label for="asgRadio' + i + '" class="assignee-card" style="--asg-color:' + ASG_COLORS[a] + '">' +
-        '<span class="assignee-av">' + a[0] + '</span>' +
-        '<span class="assignee-info"><b>' + a + '</b><small>' + ASG_ROLE[a] + '</small></span>' +
-      '</label></span>';
-    }).join('');
+    var hrs = Math.round(mins / 60);
+    if (hrs < 24) return hrs + 'h ago';
+    return Math.round(hrs / 24) + 'd ago';
   }
 
   function nowInput() {
     var d = new Date();
     return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes());
   }
-  function getChecked(name) {
-    var el = document.querySelector('input[name="' + name + '"]:checked');
-    return el ? el.value : '';
+
+  function initials(name) {
+    if (!name) return '?';
+    var p = name.trim().split(/\s+/);
+    if (p.length === 1) return p[0].slice(0, 2).toUpperCase();
+    return (p[0][0] + p[p.length - 1][0]).toUpperCase();
   }
 
-  /* Ticket Preview Sync */
-  function updateTicketPreview() {
-    var name = $('name').value.trim();
-    var cat = getChecked('category');
-    var asg = getChecked('assignedBy');
-    var q = $('query').value.trim();
-    var tt = $('typingTime').value;
-
-    $('tNo').textContent = '#' + String(records.length + 1).padStart(4, '0');
-
-    var av = $('tAv');
-    if (name) {
-      av.textContent = initials(name);
-      av.style.background = 'linear-gradient(135deg, var(--neon), #0284c7)';
-      av.style.color = '#032014';
-    } else {
-      av.textContent = '?';
-      av.style.background = 'rgba(255,255,255,0.08)';
-      av.style.color = 'var(--text-muted)';
-    }
-
-    var tn = $('tName');
-    tn.textContent = name || 'Student Name';
-    tn.className = 'ticket-name' + (name ? '' : ' placeholder');
-
-    var tc = $('tCat');
-    var ci = catIdx(cat);
-    if (ci > -1) {
-      tc.textContent = cat;
-      tc.style.color = CAT_COLORS[ci];
-      tc.style.borderColor = CAT_COLORS[ci] + '66';
-      tc.style.background = CAT_COLORS[ci] + '18';
-    } else {
-      tc.textContent = 'Pick Category';
-      tc.style.color = 'var(--text-muted)';
-      tc.style.borderColor = 'rgba(255,255,255,0.08)';
-      tc.style.background = 'rgba(255,255,255,0.06)';
-    }
-
-    var tq = $('tQuery');
-    tq.textContent = q || 'Query details will appear here as you type...';
-    tq.className = 'ticket-query' + (q ? '' : ' placeholder');
-
-    $('tTime').textContent = tt ? niceTime(tt.replace('T', ' ')) : 'Not set';
-    $('tAsg').textContent = asg || 'Not selected';
-
-    var done = (name ? 1 : 0) + (cat ? 1 : 0) + (asg ? 1 : 0);
-    $('meterFill').style.width = (done / 3 * 100) + '%';
-    $('meterTxt').textContent = done === 3 ? 'Ready to submit' : done + ' of 3 required';
+  function catColor(c) {
+    var i = CATEGORIES.indexOf(c);
+    return i >= 0 ? CAT_COLORS[i] : '#64748b';
   }
 
-  function clearErrors() {
-    ['errName', 'errCat', 'errAsg'].forEach(function (id) { $(id).hidden = true; });
-    $('name').removeAttribute('aria-invalid');
-  }
-
-  function resetForm() {
-    $('entryForm').reset();
-    $('typingTime').value = nowInput();
-    $('qCount').textContent = '0 / 500';
-    $('ticketCard').classList.remove('stamped');
-    clearErrors();
-    updateTicketPreview();
-  }
-
-  function celebrate() {
-    if (typeof confetti === 'function') {
-      confetti({ particleCount: 75, spread: 65, origin: { y: 0.6 } });
-    }
-    $('ticketCard').classList.add('stamped');
-    return new Promise(function (res) {
-      setTimeout(function () {
-        resetForm();
-        res();
-      }, 1500);
-    });
-  }
-
-  /* Form Submit - Appends to Google Sheet */
-  function onFormSubmit(e) {
-    e.preventDefault();
-    clearErrors();
-
-    var name = $('name').value.trim();
-    var category = getChecked('category');
-    var assignedBy = getChecked('assignedBy');
-    var query = $('query').value.trim();
-    var typingTime = $('typingTime').value.replace('T', ' ');
-
-    var hasErr = false;
-    if (!name) { $('errName').hidden = false; $('name').setAttribute('aria-invalid', 'true'); hasErr = true; }
-    if (!category) { $('errCat').hidden = false; hasErr = true; }
-    if (!assignedBy) { $('errAsg').hidden = false; hasErr = true; }
-
-    if (hasErr) {
-      toast('bad', 'Missing Required Fields', 'Please complete student name, category, and assignee.');
-      if (!name) $('name').focus();
-      return;
-    }
-
-    var payload = {
-      name: name,
-      category: category,
-      query: query,
-      typingTime: typingTime,
-      assignedBy: assignedBy
-    };
-
-    var btn = $('submitBtn');
-    btn.disabled = true;
-    btn.textContent = 'Saving to Google Sheet...';
-    function enableBtn() { btn.disabled = false; btn.textContent = 'Submit Entry'; }
-
-    // Direct POST to user's permanent Google Apps Script Web App
-    fetch(SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload)
-    })
-    .then(function () {
-      records.unshift({
-        id: Date.now(),
-        timestamp: fmt(new Date()),
-        name: payload.name,
-        category: payload.category,
-        query: payload.query,
-        typingTime: payload.typingTime,
-        assignedBy: payload.assignedBy
-      });
-      saveLocalRecords();
-      renderAll();
-      toast('ok', 'Saved to Google Sheet & Dashboard', name + ' (' + category + ')');
-      return celebrate();
-    })
-    .then(function () {
-      setTimeout(function () { syncLiveLeads(true); }, 1500);
-    })
-    .catch(function (err) {
-      toast('bad', 'Submission Error', err.message);
-    })
-    .then(enableBtn);
-  }
-
-  /* CSV Export */
-  function exportCsv() {
-    var rows = getFilteredRecords();
-    if (!rows.length) {
-      toast('bad', 'No records to export', 'Filtered view returned 0 rows.');
-      return;
-    }
-    function cell(v) {
-      v = String(v == null ? '' : v);
-      if (/^[=+\-@]/.test(v)) v = "'" + v;
-      return '"' + v.replace(/"/g, '""') + '"';
-    }
-    var lines = [['Timestamp', 'Student Name', 'Category', 'Query', 'Typing Time', 'Assigned By'].map(cell).join(',')];
-    rows.forEach(function (r) {
-      lines.push([r.timestamp, r.name, r.category, r.query, r.typingTime, r.assignedBy].map(cell).join(','));
-    });
-    var blob = new Blob(['\uFEFF' + lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
-    var a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'support_leads_' + dayKey(new Date()) + '.csv';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
-    toast('ok', 'CSV Export Complete', rows.length + ' leads exported');
-  }
-
-  /* Hamburger Menu Toggler */
+  /* -------------------------------------------------------------
+     MULTI-PAGE VIEW SWITCHER
+  ------------------------------------------------------------- */
   var hamBtn = $('hamburgerBtn');
   var mobileDrawer = $('mobileDrawer');
 
+  function switchView(viewId) {
+    if (!viewId || ['entry', 'dashboard', 'records'].indexOf(viewId) === -1) {
+      viewId = 'entry';
+    }
+
+    var views = ['entry', 'dashboard', 'records'];
+    views.forEach(function (v) {
+      var el = $('view-' + v);
+      if (el) {
+        if (v === viewId) {
+          el.style.display = 'block';
+          el.classList.add('active-view');
+        } else {
+          el.style.display = 'none';
+          el.classList.remove('active-view');
+        }
+      }
+    });
+
+    // Update Desktop Nav Pills
+    document.querySelectorAll('.nav-pill-btn[data-view]').forEach(function (btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-view') === viewId);
+    });
+
+    // Update Mobile Drawer Links
+    document.querySelectorAll('.drawer-link[data-view]').forEach(function (link) {
+      link.classList.toggle('active', link.getAttribute('data-view') === viewId);
+    });
+
+    // Update Mobile Bottom Nav Dock Items
+    document.querySelectorAll('.bottom-nav-item[data-view]').forEach(function (btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-view') === viewId);
+    });
+
+    // Close Mobile Drawer if open
+    if (mobileDrawer.classList.contains('open')) {
+      mobileDrawer.classList.remove('open');
+      hamBtn.setAttribute('aria-expanded', 'false');
+      $('hamIcon').innerHTML = '<line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>';
+    }
+
+    // Scroll smoothly to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Update URL hash
+    if (history.replaceState) {
+      history.replaceState(null, '', '#' + viewId);
+    }
+
+    // Refresh components
+    if (viewId === 'dashboard') {
+      updateDashboard();
+    } else if (viewId === 'records') {
+      renderTable();
+    }
+  }
+
+  // Hamburger Menu Toggler
   hamBtn.addEventListener('click', function () {
     var isOpen = mobileDrawer.classList.toggle('open');
     hamBtn.setAttribute('aria-expanded', isOpen);
@@ -2181,15 +2011,584 @@
       : '<line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>';
   });
 
-  document.querySelectorAll('[data-close]').forEach(function (link) {
-    link.addEventListener('click', function () {
-      mobileDrawer.classList.remove('open');
-      hamBtn.setAttribute('aria-expanded', 'false');
-      $('hamIcon').innerHTML = '<line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>';
+  // Attach all data-view buttons/links
+  document.querySelectorAll('[data-view]').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      var v = el.getAttribute('data-view');
+      if (v) {
+        e.preventDefault();
+        switchView(v);
+      }
     });
   });
 
-  /* Setup & Listeners */
+  // Handle URL hash on initial load
+  var initialHash = (window.location.hash || '').replace('#', '');
+  if (['entry', 'dashboard', 'records'].indexOf(initialHash) !== -1) {
+    switchView(initialHash);
+  } else {
+    switchView('entry');
+  }
+
+  window.addEventListener('hashchange', function () {
+    var h = (window.location.hash || '').replace('#', '');
+    if (['entry', 'dashboard', 'records'].indexOf(h) !== -1) {
+      switchView(h);
+    }
+  });
+
+  /* -------------------------------------------------------------
+     TOAST ALERTS
+  ------------------------------------------------------------- */
+  function toast(type, title, msg) {
+    var wrap = $('toasts');
+    var el = document.createElement('div');
+    el.className = 'toast ' + (type === 'bad' ? 'bad' : 'ok');
+    el.innerHTML =
+      '<div class="toast-icon">' + (type === 'bad' ? '!' : '✓') + '</div>' +
+      '<div><div>' + esc(title) + '</div>' +
+      (msg ? '<small>' + esc(msg) + '</small>' : '') + '</div>';
+    wrap.appendChild(el);
+    setTimeout(function () {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(8px)';
+      el.style.transition = 'all 0.3s';
+      setTimeout(function () { el.remove(); }, 300);
+    }, 4500);
+  }
+
+  /* -------------------------------------------------------------
+     BUILD CATEGORY PILLS
+  ------------------------------------------------------------- */
+  function buildCategoryPills() {
+    var wrap = $('categoryPills');
+    wrap.innerHTML = '';
+    CATEGORIES.forEach(function (cat, i) {
+      var id = 'cat_opt_' + i;
+      var color = CAT_COLORS[i];
+      var div = document.createElement('div');
+      div.innerHTML =
+        '<input type="radio" name="category" id="' + id + '" value="' + cat + '" ' + (i === 0 ? 'checked' : '') + '>' +
+        '<label for="' + id + '" style="--pill-color:' + color + '">' + cat + '</label>';
+      while (div.firstChild) wrap.appendChild(div.firstChild);
+    });
+  }
+
+  function getSelectedCat() {
+    var el = document.querySelector('input[name="category"]:checked');
+    return el ? el.value : '';
+  }
+
+  function getSelectedAsg() {
+    var el = document.querySelector('input[name="assignedBy"]:checked');
+    return el ? el.value : '';
+  }
+
+  /* -------------------------------------------------------------
+     LIVE TICKET PREVIEW & READINESS METER
+  ------------------------------------------------------------- */
+  function updateTicketPreview() {
+    var name = $('name').value.trim();
+    var cat = getSelectedCat();
+    var q = $('query').value.trim();
+    var tt = $('typingTime').value;
+    var asg = getSelectedAsg();
+
+    var score = 0;
+    if (name) score += 35;
+    if (cat) score += 20;
+    if (asg) score += 20;
+    if (q) score += 15;
+    if (tt) score += 10;
+    $('meterPct').textContent = score + '%';
+    $('meterFill').style.width = score + '%';
+
+    var av = $('tAv');
+    var tName = $('tName');
+    if (name) {
+      av.textContent = initials(name);
+      tName.textContent = name;
+      tName.classList.remove('placeholder');
+    } else {
+      av.textContent = '?';
+      tName.textContent = 'Student Name';
+      tName.classList.add('placeholder');
+    }
+
+    var tCat = $('tCat');
+    if (cat) {
+      tCat.textContent = cat;
+      tCat.style.color = '#fff';
+      tCat.style.borderColor = catColor(cat);
+      tCat.style.background = 'rgba(255,255,255,0.08)';
+    } else {
+      tCat.textContent = 'Pick Category';
+      tCat.style.color = 'var(--text-secondary)';
+      tCat.style.borderColor = 'rgba(255,255,255,0.08)';
+    }
+
+    var tQ = $('tQuery');
+    if (q) {
+      tQ.textContent = q;
+      tQ.classList.remove('placeholder');
+    } else {
+      tQ.textContent = 'Query details will appear here as you type...';
+      tQ.classList.add('placeholder');
+    }
+
+    $('tTime').textContent = tt ? niceTime(tt) : 'Not set';
+    $('tAsg').textContent = asg || 'Not selected';
+
+    var nextNo = (records.length + 1);
+    $('tNo').textContent = '#' + (nextNo < 10 ? '000' + nextNo : (nextNo < 100 ? '00' + nextNo : '0' + nextNo));
+  }
+
+  /* -------------------------------------------------------------
+     FORM VALIDATION & SUBMISSION
+  ------------------------------------------------------------- */
+  function clearErrors() {
+    $('errName').hidden = true;
+    $('errCat').hidden = true;
+    $('name').removeAttribute('aria-invalid');
+  }
+
+  function resetForm() {
+    $('entryForm').reset();
+    clearErrors();
+    buildCategoryPills();
+    $('typingTime').value = nowInput();
+    $('qCount').textContent = '0 / 500';
+    var defaultAsg = document.querySelector('input[name="assignedBy"][value="Sachin"]');
+    if (defaultAsg) defaultAsg.checked = true;
+    updateTicketPreview();
+  }
+
+  function triggerConfetti() {
+    if (window.confetti) {
+      window.confetti({
+        particleCount: 75,
+        spread: 60,
+        origin: { y: 0.7 },
+        colors: ['#00ff87', '#10b981', '#38bdf8', '#ffffff']
+      });
+    }
+  }
+
+  function onFormSubmit(e) {
+    e.preventDefault();
+    clearErrors();
+
+    var name = $('name').value.trim();
+    var cat = getSelectedCat();
+    var q = $('query').value.trim();
+    var tt = $('typingTime').value;
+    var asg = getSelectedAsg();
+
+    var hasErr = false;
+    if (!name) {
+      $('errName').hidden = false;
+      $('name').setAttribute('aria-invalid', 'true');
+      $('name').focus();
+      hasErr = true;
+    }
+    if (!cat) {
+      $('errCat').hidden = false;
+      hasErr = true;
+    }
+    if (hasErr) {
+      toast('bad', 'Incomplete Form', 'Please fill in all required fields.');
+      return;
+    }
+
+    var now = new Date();
+    var timestampStr = fmt(now);
+
+    var newRecord = {
+      timestamp: timestampStr,
+      name: name,
+      category: cat,
+      query: q || '-',
+      typingTime: tt ? tt.replace('T', ' ') : fmt(now).slice(0, 16),
+      assignedBy: asg || 'Sachin'
+    };
+
+    records.unshift(newRecord);
+    updateDashboard();
+    renderTable();
+
+    // Trigger visual stamped animation
+    var ticket = $('ticketCard');
+    ticket.classList.remove('stamped');
+    void ticket.offsetWidth;
+    ticket.classList.add('stamped');
+    triggerConfetti();
+
+    var btn = $('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="pulse-dot"></span><span>Saving to Google Sheet...</span>';
+
+    // Submit directly to Google Apps Script Web App
+    submitToGoogleSheets(newRecord, function (err, res) {
+      btn.disabled = false;
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span>Submit to Google Sheet</span>';
+
+      if (err) {
+        toast('bad', 'Local Only', 'Saved in dashboard. Check Web App permissions if sheet did not append.');
+      } else {
+        toast('ok', 'Saved to Google Sheet & Dashboard', name + ' (' + cat + ')');
+        setTimeout(function () {
+          resetForm();
+          ticket.classList.remove('stamped');
+        }, 1800);
+      }
+    });
+  }
+
+  function submitToGoogleSheets(record, cb) {
+    var payload = {
+      action: 'create',
+      timestamp: record.timestamp,
+      name: record.name,
+      category: record.category,
+      query: record.query,
+      typingTime: record.typingTime,
+      assignedBy: record.assignedBy
+    };
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (data && data.status === 'success') {
+        cb(null, data);
+        setTimeout(function () { syncLiveLeads(false); }, 1200);
+      } else {
+        cb(new Error(data ? data.message : 'Unknown response'));
+      }
+    })
+    .catch(function (err) {
+      // Fallback Image Ping Webhook
+      try {
+        var qs = 'action=create' +
+          '&name=' + encodeURIComponent(record.name) +
+          '&category=' + encodeURIComponent(record.category) +
+          '&query=' + encodeURIComponent(record.query) +
+          '&typingTime=' + encodeURIComponent(record.typingTime) +
+          '&assignedBy=' + encodeURIComponent(record.assignedBy) +
+          '&timestamp=' + encodeURIComponent(record.timestamp);
+        var img = new Image();
+        img.src = SCRIPT_URL + (SCRIPT_URL.indexOf('?') >= 0 ? '&' : '?') + qs + '&_t=' + Date.now();
+        cb(null, { status: 'success', via: 'ping' });
+      } catch (e) {
+        cb(err);
+      }
+    });
+  }
+
+  /* -------------------------------------------------------------
+     FETCH LIVE RECORDS FROM GOOGLE SHEETS
+  ------------------------------------------------------------- */
+  function syncLiveLeads(silent) {
+    var badgeTxt = $('connTxt');
+    if (!silent) badgeTxt.textContent = 'Syncing...';
+
+    var readUrl = SCRIPT_URL + (SCRIPT_URL.indexOf('?') >= 0 ? '&' : '?') + 'action=read&_t=' + Date.now();
+    fetch(readUrl)
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (data && data.status === 'success' && Array.isArray(data.records)) {
+          records = data.records;
+          updateDashboard();
+          renderTable();
+          badgeTxt.textContent = 'Sheet Live · ' + records.length;
+          if (!silent) toast('ok', 'Live Sync Complete', records.length + ' records active from Google Sheet');
+        } else {
+          badgeTxt.textContent = 'Sheet Live';
+        }
+      })
+      .catch(function () {
+        badgeTxt.textContent = 'Sheet Live';
+      });
+  }
+
+  /* -------------------------------------------------------------
+     ANALYTICS DASHBOARD ENGINE
+  ------------------------------------------------------------- */
+  function updateDashboard() {
+    var total = records.length;
+    var todayKeyStr = dayKey(new Date());
+    var todayCount = 0;
+    var asgCount = { Sachin: 0, Pragati: 0 };
+    var catCount = {};
+    CATEGORIES.forEach(function (c) { catCount[c] = 0; });
+
+    var days7 = {};
+    for (var i = 6; i >= 0; i--) {
+      var d = new Date();
+      d.setDate(d.getDate() - i);
+      days7[dayKey(d)] = 0;
+    }
+
+    records.forEach(function (r) {
+      if (r.timestamp && r.timestamp.slice(0, 10) === todayKeyStr) todayCount++;
+      if (asgCount[r.assignedBy] !== undefined) asgCount[r.assignedBy]++;
+      if (catCount[r.category] !== undefined) catCount[r.category]++;
+      else catCount[r.category] = 1;
+
+      var dk = (r.timestamp || '').slice(0, 10);
+      if (days7[dk] !== undefined) days7[dk]++;
+    });
+
+    $('kTotal').textContent = total;
+    $('kToday').textContent = todayCount;
+    $('kSachin').textContent = asgCount.Sachin;
+    $('kPragati').textContent = asgCount.Pragati;
+
+    var sPct = total ? Math.round((asgCount.Sachin / total) * 100) : 0;
+    var pPct = total ? (100 - sPct) : 0;
+    $('kSachinSub').textContent = sPct + '% workload';
+    $('kPragatiSub').textContent = pPct + '% workload';
+    $('shSachin').style.width = sPct + '%';
+    $('shPragati').style.width = pPct + '%';
+
+    $('catTotalChip').textContent = total + ' queries';
+    renderCategoryColumns(catCount, total);
+    renderWorkloadDonut(asgCount.Sachin, asgCount.Pragati, total);
+    renderWeekChart(days7);
+    renderRecentFeed();
+  }
+
+  function renderCategoryColumns(counts, total) {
+    var wrap = $('colsWrap');
+    wrap.innerHTML = '';
+    var max = 1;
+    CATEGORIES.forEach(function (c) {
+      if ((counts[c] || 0) > max) max = counts[c];
+    });
+
+    CATEGORIES.forEach(function (c, idx) {
+      var val = counts[c] || 0;
+      var pct = Math.max(8, Math.round((val / max) * 100));
+      var col = document.createElement('div');
+      col.className = 'chart-col';
+      col.innerHTML =
+        '<span class="chart-col-num">' + val + '</span>' +
+        '<div class="chart-col-stem" style="height:' + pct + '%;background:' + CAT_COLORS[idx] + ';box-shadow:0 0 12px ' + CAT_COLORS[idx] + '40"></div>' +
+        '<span class="chart-col-label">' + esc(c) + '</span>';
+      wrap.appendChild(col);
+    });
+  }
+
+  function renderWorkloadDonut(sCount, pCount, total) {
+    var svg = $('donutSvg');
+    var sPct = total ? (sCount / total) : 0.5;
+    var sArc = sPct * 100;
+    var pArc = 100 - sArc;
+
+    svg.innerHTML =
+      '<circle cx="21" cy="21" r="15.91549430918954" fill="none" stroke="#162231" stroke-width="4.5"></circle>' +
+      '<circle cx="21" cy="21" r="15.91549430918954" fill="none" stroke="#38bdf8" stroke-width="4.5" ' +
+        'stroke-dasharray="' + sArc + ' ' + (100 - sArc) + '" stroke-dashoffset="25"></circle>' +
+      '<circle cx="21" cy="21" r="15.91549430918954" fill="none" stroke="#00ff87" stroke-width="4.5" ' +
+        'stroke-dasharray="' + pArc + ' ' + (100 - pArc) + '" stroke-dashoffset="' + (25 - sArc) + '"></circle>' +
+      '<text x="21" y="22" text-anchor="middle" font-size="7" font-weight="800" fill="#fff" font-family="var(--font-heading)">' + total + '</text>' +
+      '<text x="21" y="27" text-anchor="middle" font-size="3" fill="#64748b" font-weight="700">TOTAL</text>';
+
+    $('legendList').innerHTML =
+      '<div class="legend-row">' +
+        '<span class="legend-dot" style="background:#38bdf8"></span>' +
+        '<div class="legend-name">Sachin <small>' + (total ? Math.round(sPct * 100) : 0) + '% · Mentorship</small></div>' +
+        '<span class="legend-val">' + sCount + '</span>' +
+      '</div>' +
+      '<div class="legend-row">' +
+        '<span class="legend-dot" style="background:#00ff87"></span>' +
+        '<div class="legend-name">Pragati <small>' + (total ? (100 - Math.round(sPct * 100)) : 0) + '% · Query Resolution</small></div>' +
+        '<span class="legend-val">' + pCount + '</span>' +
+      '</div>';
+
+    var ratioChip = $('wlRatioChip');
+    if (!total) ratioChip.textContent = 'No Data';
+    else if (Math.abs(sCount - pCount) <= 1) ratioChip.textContent = 'Balanced';
+    else if (sCount > pCount) ratioChip.textContent = 'Sachin Lead';
+    else ratioChip.textContent = 'Pragati Lead';
+
+    var vsBar = $('vsHorizontalBar');
+    var sW = total ? Math.max(15, Math.round((sCount / total) * 100)) : 50;
+    var pW = 100 - sW;
+    vsBar.innerHTML =
+      '<div class="vs-sachin" style="flex-basis:' + sW + '%">Sachin ' + (total ? Math.round((sCount / total) * 100) : 50) + '%</div>' +
+      '<div class="vs-pragati" style="flex-basis:' + pW + '%">' + (total ? (100 - Math.round((sCount / total) * 100)) : 50) + '% Pragati</div>';
+  }
+
+  function renderWeekChart(daysObj) {
+    var wrap = $('weekChartWrap');
+    wrap.innerHTML = '';
+    var keys = Object.keys(daysObj);
+    var max = 1;
+    keys.forEach(function (k) { if (daysObj[k] > max) max = daysObj[k]; });
+    var todayStr = dayKey(new Date());
+
+    keys.forEach(function (k) {
+      var val = daysObj[k];
+      var isToday = k === todayStr;
+      var d = parseTs(k + ' 00:00:00');
+      var label = d ? ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][d.getDay()] : k.slice(8);
+      var pct = Math.max(6, Math.round((val / max) * 100));
+
+      var day = document.createElement('div');
+      day.className = 'week-day' + (isToday ? ' today' : '');
+      day.innerHTML =
+        '<em>' + val + '</em>' +
+        '<i style="height:' + pct + '%"></i>' +
+        '<span>' + label + '</span>';
+      wrap.appendChild(day);
+    });
+  }
+
+  function renderRecentFeed() {
+    var wrap = $('feedList');
+    var recents = records.slice(0, 4);
+    if (!recents.length) {
+      wrap.innerHTML = '<div style="color:var(--text-muted);font-size:12px;padding:10px 0">No queries submitted yet.</div>';
+      return;
+    }
+    wrap.innerHTML = recents.map(function (r) {
+      var isSachin = r.assignedBy === 'Sachin';
+      return (
+        '<div class="feed-item">' +
+          '<span class="cell-av" style="background:' + (isSachin ? '#38bdf8' : '#10b981') + ';color:#032014">' + initials(r.name) + '</span>' +
+          '<div>' +
+            '<b>' + esc(r.name) + ' <span style="font-weight:500;color:var(--text-secondary);font-size:12px">· ' + esc(r.category) + '</span></b>' +
+            '<small>' + esc(r.query.slice(0, 45)) + (r.query.length > 45 ? '...' : '') + '</small>' +
+          '</div>' +
+          '<span class="feed-time">' + relTime(r.timestamp) + '</span>' +
+        '</div>'
+      );
+    }).join('');
+  }
+
+  /* -------------------------------------------------------------
+     RECORDS TABLE ENGINE
+  ------------------------------------------------------------- */
+  function renderTableFilterChips() {
+    var wrap = $('tableFilterChips');
+    wrap.innerHTML = '';
+    var counts = {};
+    CATEGORIES.forEach(function (c) { counts[c] = 0; });
+    records.forEach(function (r) {
+      if (counts[r.category] !== undefined) counts[r.category]++;
+    });
+
+    var allChip = document.createElement('button');
+    allChip.type = 'button';
+    allChip.className = 'filter-chip';
+    allChip.setAttribute('aria-pressed', filter.cat === '' ? 'true' : 'false');
+    allChip.setAttribute('data-cat', '');
+    allChip.innerHTML = 'All Categories <i>' + records.length + '</i>';
+    wrap.appendChild(allChip);
+
+    CATEGORIES.forEach(function (c, i) {
+      var chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'filter-chip';
+      chip.style.setProperty('--chip-c', CAT_COLORS[i]);
+      chip.setAttribute('aria-pressed', filter.cat === c ? 'true' : 'false');
+      chip.setAttribute('data-cat', c);
+      chip.innerHTML = esc(c) + ' <i>' + (counts[c] || 0) + '</i>';
+      wrap.appendChild(chip);
+    });
+  }
+
+  function renderTable() {
+    renderTableFilterChips();
+    var q = ($('searchInput').value || '').trim().toLowerCase();
+    var filtered = records.filter(function (r) {
+      if (filter.cat && r.category !== filter.cat) return false;
+      if (filter.asg && r.assignedBy !== filter.asg) return false;
+      if (q) {
+        var match = (r.name && r.name.toLowerCase().indexOf(q) >= 0) ||
+                    (r.query && r.query.toLowerCase().indexOf(q) >= 0) ||
+                    (r.category && r.category.toLowerCase().indexOf(q) >= 0);
+        if (!match) return false;
+      }
+      return true;
+    });
+
+    var tbody = $('tableBody');
+    var slice = filtered.slice(0, shownCount);
+
+    if (!slice.length) {
+      tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state">No matching records found.</div></td></tr>';
+      $('tableCountLabel').textContent = 'Showing 0 of ' + records.length + ' records';
+      $('showMoreBtn').hidden = true;
+      return;
+    }
+
+    tbody.innerHTML = slice.map(function (r) {
+      var isSachin = r.assignedBy === 'Sachin';
+      return (
+        '<tr>' +
+          '<td>' +
+            '<div class="user-cell">' +
+              '<span class="cell-av" style="background:' + catColor(r.category) + ';color:#032014">' + initials(r.name) + '</span>' +
+              '<span>' + esc(r.name) + '</span>' +
+            '</div>' +
+          '</td>' +
+          '<td><span class="badge-tag" style="background:rgba(255,255,255,0.06);color:' + catColor(r.category) + '">' + esc(r.category) + '</span></td>' +
+          '<td style="max-width:320px;word-break:break-word">' + esc(r.query) + '</td>' +
+          '<td style="white-space:nowrap;font-family:var(--font-mono);font-size:12px">' + niceTime(r.typingTime) + '</td>' +
+          '<td>' +
+            '<span class="badge-tag who ' + (isSachin ? '' : 'p') + '">' + esc(r.assignedBy) + '</span>' +
+          '</td>' +
+          '<td style="white-space:nowrap;font-family:var(--font-mono);font-size:12px;color:var(--text-muted)">' + niceTime(r.timestamp) + '</td>' +
+        '</tr>'
+      );
+    }).join('');
+
+    $('tableCountLabel').textContent = 'Showing ' + slice.length + ' of ' + filtered.length + ' records' + (filtered.length !== records.length ? ' (filtered from ' + records.length + ')' : '');
+    $('showMoreBtn').hidden = (shownCount >= filtered.length);
+  }
+
+  function exportCsv() {
+    if (!records.length) {
+      toast('bad', 'No Data', 'There are no records to export.');
+      return;
+    }
+    var rows = [
+      ['Timestamp', 'Student Name', 'Category', 'Query', 'Typing Time', 'Assigned By']
+    ];
+    records.forEach(function (r) {
+      rows.push([
+        r.timestamp || '',
+        r.name || '',
+        r.category || '',
+        (r.query || '').replace(/\r?\n/g, ' '),
+        r.typingTime || '',
+        r.assignedBy || ''
+      ]);
+    });
+    var csvContent = 'data:text/csv;charset=utf-8,' + rows.map(function (e) {
+      return e.map(function (val) {
+        return '"' + String(val).replace(/"/g, '""') + '"';
+      }).join(',');
+    }).join('\n');
+
+    var uri = encodeURI(csvContent);
+    var link = document.createElement('a');
+    link.setAttribute('href', uri);
+    link.setAttribute('download', 'Support_Desk_Records_' + fmt(new Date()).slice(0, 10) + '.csv');
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    toast('ok', 'CSV Exported', records.length + ' records downloaded');
+  }
+
+  /* -------------------------------------------------------------
+     SETUP EVENT LISTENERS
+  ------------------------------------------------------------- */
   var now = new Date();
   $('deskDateLine').textContent = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
 
@@ -2293,22 +2692,6 @@
   $('showMoreBtn').addEventListener('click', function () {
     shownCount += PAGE_SIZE;
     renderTable();
-  });
-
-  // Active Navigation Pill Spy on Scroll
-  window.addEventListener('scroll', function () {
-    var scrollPos = window.scrollY + 120;
-    var sections = ['section-entry', 'section-dashboard', 'section-records'];
-    var current = 'section-entry';
-
-    sections.forEach(function (secId) {
-      var el = $(secId);
-      if (el && el.offsetTop <= scrollPos) current = secId;
-    });
-
-    document.querySelectorAll('.nav-pill-btn').forEach(function (btn) {
-      btn.classList.toggle('active', btn.getAttribute('href') === ('#' + current));
-    });
   });
 
   // Initial Sync from Permanent Google Apps Script Web App
