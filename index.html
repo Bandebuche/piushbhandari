@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Piush Bhandari — Senior Projects Leader & Water Treatment Professional</title>
+  <meta name="description" content="Executive portfolio of Piush Bhandari — Chemical Engineer, CAPM®, and ISO 9001 Lead Auditor with 25+ years delivering critical water, wastewater, desalination, and industrial infrastructure across India, Qatar, Maldives, and the Middle East.">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              cream: '#FAF9F5',
+              parchment: '#F3F1EB',
+              sage: '#E8F1EC',
+              forest: {
+                950: '#041812',
+                900: '#07281F',
+                800: '#0C382C',
+                700: '#124B3C',
+                600: '#1A624F',
+              },
+              teal: '#0D9488',
+              emerald: '#059669',
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            syne: ['Syne', 'sans-serif'],
+            serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-brand-cream dark:bg-[#061511] text-[#121A16] dark:text-[#F0FDF8] antialiased selection:bg-emerald-600 selection:text-white transition-colors duration-400">
+
+  <!-- Custom Water Follower Cursor -->
+  <div id="cursor-dot" class="cursor-dot"></div>
+  <div id="cursor-follower" class="cursor-follower"></div>
+
+  <!-- Ambient Sound Floating Control -->
+  <div class="fixed bottom-6 left-6 z-50">
+    <button id="audio-toggle-btn" class="sound-inactive flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-white/90 dark:bg-emerald-950/80 backdrop-blur-md border border-emerald-900/10 dark:border-emerald-500/30 text-xs font-semibold shadow-lg hover:scale-105 transition group" title="Toggle ambient water audio stream">
+      <div class="flex items-end gap-1 h-4">
+        <span class="sound-bar bg-emerald-600 dark:bg-emerald-400"></span>
+        <span class="sound-bar bg-emerald-600 dark:bg-emerald-400"></span>
+        <span class="sound-bar bg-emerald-600 dark:bg-emerald-400"></span>
+        <span class="sound-bar bg-emerald-600 dark:bg-emerald-400"></span>
+      </div>
+      <span class="text-emerald-900 dark:text-emerald-200">Ambient Flow</span>
+    </button>
+  </div>
+
+  <!-- Floating WhatsApp Quick Connect Button -->
+  <div class="fixed bottom-6 right-6 z-50">
+    <a href="https://wa.me/917231005354" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-gray-950 font-bold text-xs shadow-xl hover:scale-105 transition group" title="Chat on WhatsApp (+91 72310 05354)">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.53c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.5-1.41-1.75-.14-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.13-.14.17-.25.25-.42.08-.17.04-.31-.02-.44s-.56-1.35-.77-1.85c-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.16 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.17-.48-.29z"/>
+      </svg>
+      <span>WhatsApp</span>
+    </a>
+  </div>
+
+  <!-- Header / Navigation -->
+  <header class="sticky top-0 z-40 w-full backdrop-blur-md bg-white/80 dark:bg-[#061511]/85 border-b border-black/[0.06] dark:border-white/[0.08] transition-colors">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-2.5 group">
+        <div class="w-8 h-8 rounded-full bg-emerald-800 dark:bg-emerald-500 text-white flex items-center justify-center transition-transform group-hover:scale-110 shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+          </svg>
+        </div>
+        <span class="text-lg lg:text-xl font-bold tracking-tight text-[#121A16] dark:text-white font-syne">
+          Piush Bhandari<span class="text-emerald-600 dark:text-emerald-400">.</span>
+        </span>
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-700 dark:text-gray-300">
+        <a href="#profile" class="nav-anchor hover:text-emerald-700 dark:hover:text-emerald-300 transition">About</a>
+        <a href="#expertise" class="nav-anchor hover:text-emerald-700 dark:hover:text-emerald-300 transition">Expertise</a>
+        <a href="#impact" class="nav-anchor hover:text-emerald-700 dark:hover:text-emerald-300 transition flex items-center gap-1.5">
+          <span>Impact</span>
+          <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300">Scale</span>
+        </a>
+        <a href="#projects" class="nav-anchor hover:text-emerald-700 dark:hover:text-emerald-300 transition">Projects</a>
+        <a href="#experience" class="nav-anchor hover:text-emerald-700 dark:hover:text-emerald-300 transition">Experience</a>
+      </nav>
+
+      <!-- Right Controls & CTA -->
+      <div class="flex items-center gap-3">
+        <!-- Theme Switcher Toggle -->
+        <button id="theme-toggle" class="p-2.5 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300 transition" aria-label="Toggle dark mode">
+          <span id="theme-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z"/></svg>
+          </span>
+        </button>
+
+        <!-- CTA Button -->
+        <a href="#contact" class="hidden sm:inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-semibold tracking-wide border border-emerald-900/20 dark:border-emerald-400/30 text-emerald-950 dark:text-white hover:bg-emerald-900 hover:text-white dark:hover:bg-emerald-500 dark:hover:text-gray-950 transition-all shadow-sm">
+          <span>Let's connect</span>
+          <span class="font-mono text-sm">↗</span>
+        </a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-700 dark:text-gray-200">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"/></svg>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden px-6 py-6 border-t border-black/[0.06] dark:border-white/[0.08] bg-white/95 dark:bg-[#061511]/95 space-y-4">
+      <a href="#profile" class="nav-anchor block text-base font-medium py-1">About</a>
+      <a href="#expertise" class="nav-anchor block text-base font-medium py-1">Expertise</a>
+      <a href="#impact" class="nav-anchor block text-base font-medium py-1">Water Impact Scale</a>
+      <a href="#projects" class="nav-anchor block text-base font-medium py-1">Projects</a>
+      <a href="#experience" class="nav-anchor block text-base font-medium py-1">Experience & Credentials</a>
+      <a href="#contact" class="nav-anchor block text-base font-medium py-1 text-emerald-700 dark:text-emerald-400">Let's connect ↗</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden bg-parchment-pattern">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        
+        <!-- Hero Left Column: Narrative & Headline -->
+        <div class="lg:col-span-7 space-y-8">
+          
+          <!-- Eyebrow Badge -->
+          <div class="inline-flex items-center gap-3">
+            <span class="h-px w-8 bg-emerald-700/60 dark:bg-emerald-400/60"></span>
+            <span class="text-xs font-semibold tracking-widest uppercase text-emerald-800 dark:text-emerald-300 font-mono">
+              SENIOR PROJECTS LEADER &amp; WATER TREATMENT PROFESSIONAL
+            </span>
+          </div>
+
+          <!-- Main Headline with Editorial Serif Emphasis -->
+          <h1 class="text-4xl sm:text-5xl lg:text-[4.25rem] font-bold tracking-tight text-[#111A16] dark:text-white leading-[1.08] font-syne">
+            Building the<br>
+            systems that<br>
+            keep <span class="font-editorial-serif text-emerald-800 dark:text-emerald-400 font-normal">life moving.</span>
+          </h1>
+
+          <!-- Subtitle / Bio summary -->
+          <p class="text-base sm:text-lg text-gray-700 dark:text-gray-300 max-w-2xl leading-relaxed">
+            I'm <strong>Piush Bhandari</strong> — a chemical engineer and project management professional with <strong>25+ years</strong> delivering critical water, wastewater, desalination, and industrial infrastructure across India, Qatar, Maldives, and the Middle East.
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a href="#projects" class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-brand-forest-900 hover:bg-brand-forest-800 dark:bg-emerald-500 dark:hover:bg-emerald-400 text-white dark:text-gray-950 font-semibold text-sm transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5">
+              <span>Explore my work</span>
+              <span class="font-mono text-base">↗</span>
+            </a>
+            <a href="#profile" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full border border-gray-300 dark:border-white/20 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-white/5 font-semibold text-sm transition">
+              <span>More about me</span>
+              <span class="font-mono">&gt;</span>
+            </a>
+          </div>
+
+          <!-- Quick Trust Badges -->
+          <div class="pt-4 flex flex-wrap items-center gap-6 text-xs text-gray-500 dark:text-gray-400 font-mono border-t border-black/[0.06] dark:border-white/[0.08]">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span>Chemical Engineer</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-teal-500"></span>
+              <span>CAPM® Project Management Institute</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+              <span>ISO 9001:2015 Lead Auditor</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Hero Right Column: Interactive Fluid Water Orb Graphic -->
+        <div class="lg:col-span-5 relative flex justify-center">
+          <div class="hero-canvas-wrap relative">
+            
+            <!-- Canvas for Interactive Waves, Concentric Rings & Ripples -->
+            <canvas id="hero-fluid-canvas" class="w-full h-full block cursor-pointer" title="Move or click cursor to generate fluid ripples"></canvas>
+
+            <!-- Center Frosted Impact Badge -->
+            <div class="absolute inset-0 m-auto w-36 h-36 rounded-full bg-white/70 dark:bg-brand-forest-900/80 backdrop-blur-md border border-emerald-600/30 dark:border-emerald-400/40 shadow-xl flex flex-col items-center justify-center text-center p-3 pointer-events-none transition-transform">
+              <div class="text-emerald-700 dark:text-emerald-400 mb-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                  <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                </svg>
+              </div>
+              <div class="text-2xl font-extrabold text-brand-forest-950 dark:text-white font-syne leading-none">
+                25+
+              </div>
+              <div class="text-[9px] uppercase tracking-wider font-mono text-emerald-800 dark:text-emerald-300 font-semibold mt-1">
+                YEARS OF IMPACT
+              </div>
+            </div>
+
+            <!-- Floating Orbital Badge 1 (Capacity) -->
+            <div class="orbit-badge -top-2 right-0 sm:right-2">
+              <span class="pulse-dot bg-amber-500"></span>
+              <span class="text-xs">100-200 MLD treatment capacity</span>
+            </div>
+
+            <!-- Floating Orbital Badge 2 (Global Footprint) -->
+            <div class="orbit-badge bottom-4 left-0 sm:-left-2">
+              <span class="pulse-dot bg-teal-500"></span>
+              <span class="text-xs">04 countries projects delivered</span>
+            </div>
+
+            <!-- Floating Orbital Badge 3 (Capital Volume) -->
+            <div class="orbit-badge top-4 -left-6 hidden sm:flex">
+              <span class="pulse-dot bg-emerald-500"></span>
+              <span class="text-xs">$600M+ capital managed</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Metrics Ribbon Strip (Deep Pine Forest Green) -->
+  <section id="metrics-strip" class="bg-brand-forest-900 dark:bg-[#03140F] text-white py-14 border-y border-emerald-900/50">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12 divide-y md:divide-y-0 md:divide-x divide-emerald-800/40">
+        
+        <!-- Stat 1: $600M+ -->
+        <div class="pt-4 md:pt-0 md:px-6 first:pl-0">
+          <div class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight font-syne text-white flex items-baseline">
+            <span data-counter-target="600" data-counter-prefix="$" data-counter-suffix="M+">$600M+</span>
+          </div>
+          <div class="text-xs font-mono uppercase tracking-widest text-emerald-300/80 mt-2">
+            PROJECTS MANAGED
+          </div>
+          <div class="text-[11px] text-emerald-100/60 mt-1">
+            Across international EPC &amp; O&amp;M contracts
+          </div>
+        </div>
+
+        <!-- Stat 2: 200 MLD -->
+        <div class="pt-4 md:pt-0 md:px-6">
+          <div class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight font-syne text-white flex items-baseline">
+            <span data-counter-target="200" data-counter-suffix=" MLD">200 MLD</span>
+          </div>
+          <div class="text-xs font-mono uppercase tracking-widest text-emerald-300/80 mt-2">
+            LARGEST CAPACITY
+          </div>
+          <div class="text-[11px] text-emerald-100/60 mt-1">
+            Single treatment plant footprint
+          </div>
+        </div>
+
+        <!-- Stat 3: 75 Professionals -->
+        <div class="pt-4 md:pt-0 md:px-6">
+          <div class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight font-syne text-white flex items-baseline">
+            <span data-counter-target="75" data-counter-suffix="">75</span>
+          </div>
+          <div class="text-xs font-mono uppercase tracking-widest text-emerald-300/80 mt-2">
+            PROFESSIONALS LED
+          </div>
+          <div class="text-[11px] text-emerald-100/60 mt-1">
+            Multidisciplinary engineering teams
+          </div>
+        </div>
+
+        <!-- Stat 4: 04 Countries -->
+        <div class="pt-4 md:pt-0 md:px-6">
+          <div class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight font-syne text-white flex items-baseline">
+            <span data-counter-target="4" data-counter-prefix="0" data-counter-suffix="">04</span>
+          </div>
+          <div class="text-xs font-mono uppercase tracking-widest text-emerald-300/80 mt-2">
+            COUNTRIES SERVED
+          </div>
+          <div class="text-[11px] text-emerald-100/60 mt-1">
+            India, Qatar, Maldives, Middle East
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 01 / PROFILE -->
+  <section id="profile" class="py-24 lg:py-32 bg-white dark:bg-[#071914] transition-colors">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      
+      <!-- Section Header -->
+      <div class="inline-flex items-center gap-3 mb-10">
+        <span class="h-px w-8 bg-emerald-700/60 dark:bg-emerald-400/60"></span>
+        <span class="text-xs font-semibold tracking-widest uppercase text-emerald-800 dark:text-emerald-300 font-mono">
+          01 / PROFILE
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        
+        <!-- Left Column: Bold Headline -->
+        <div class="lg:col-span-5">
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#111A16] dark:text-white leading-[1.15] font-syne">
+            Engineering better outcomes for <span class="font-editorial-serif text-emerald-800 dark:text-emerald-400 font-normal">people &amp; planet.</span>
+          </h2>
+
+          <div class="mt-8 space-y-4">
+            <div class="p-4 rounded-xl bg-brand-sage/40 dark:bg-emerald-950/40 border border-emerald-900/10 dark:border-emerald-500/20">
+              <div class="text-xs font-mono text-emerald-800 dark:text-emerald-300 uppercase tracking-wider font-semibold">Core Philosophy</div>
+              <p class="text-sm text-gray-700 dark:text-gray-300 mt-1">
+                "Water infrastructure isn't just about pumps and piping; it is the fundamental circulatory system of modern society."
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Narrative & Signature -->
+        <div class="lg:col-span-7 space-y-6 text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+          <p>
+            From a treatment plant's first process design to the moment it starts serving a community, I bring clarity to complex projects and accountability to every outcome.
+          </p>
+          <p>
+            My work sits at the intersection of engineering, leadership, and long-term value. I build teams that deliver, systems that last, and partnerships that make ambitious infrastructure possible.
+          </p>
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            Over two and a half decades, I have spearheaded mega-turnkey water installations across the Persian Gulf, Maldives atolls, and heavy industrial petrochemical corridors in India. Whether orchestrating seawater desalination in high-salinity marine basins or recovering pure condensate through Zero Liquid Discharge (ZLD), my focus is absolute operational reliability and environmental stewardship.
+          </p>
+
+          <!-- Signature Block with Animated SVG -->
+          <div class="pt-8 border-t border-black/[0.08] dark:border-white/[0.1] flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div>
+              <!-- Stylized Handwritten Signature SVG -->
+              <svg id="signature-svg" class="w-44 h-16 text-emerald-900 dark:text-emerald-300" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path class="signature-path" d="M15 45 C 10 25, 25 10, 35 15 C 45 20, 30 50, 25 55 M 25 25 C 40 20, 55 22, 60 35 C 65 48, 55 52, 70 30 M 75 22 L 75 48 M 75 32 C 85 24, 95 24, 100 48 M 105 35 C 110 25, 125 25, 120 45 C 128 32, 138 25, 145 42 M 150 20 L 150 48 M 150 35 C 160 25, 175 28, 170 48 M 180 48 L 182 48" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div class="text-sm font-bold text-gray-900 dark:text-white font-syne mt-1">Piush Bhandari</div>
+              <div class="text-xs text-emerald-800 dark:text-emerald-400 font-mono font-medium">
+                Chemical Engineer · CAPM® · ISO 9001 Lead Auditor
+              </div>
+            </div>
+
+            <!-- Verified Credentials Ribbon -->
+            <div class="flex items-center gap-2">
+              <span class="px-3 py-1.5 rounded-full text-xs font-mono bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-600/20">
+                Grade A UPDA Qatar
+              </span>
+              <span class="px-3 py-1.5 rounded-full text-xs font-mono bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-600/20">
+                TÜV Certified
+              </span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 02 / EXPERTISE -->
+  <section id="expertise" class="py-24 lg:py-32 bg-brand-parchment dark:bg-[#0A1E19] transition-colors">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-16">
+        <div>
+          <div class="inline-flex items-center gap-3 mb-4">
+            <span class="h-px w-8 bg-emerald-700/60 dark:bg-emerald-400/60"></span>
+            <span class="text-xs font-semibold tracking-widest uppercase text-emerald-800 dark:text-emerald-300 font-mono">
+              02 / EXPERTISE
+            </span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#111A16] dark:text-white font-syne">
+            Where experience<br>meets execution.
+          </h2>
+        </div>
+        <p class="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-md leading-relaxed">
+          Deep technical knowledge, operational perspective, and a bias toward solutions that work in the real world.
+        </p>
+      </div>
+
+      <!-- 4 Core Expertise Pillars Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Pillar 01: Water & Wastewater -->
+        <div class="glass-panel p-8 flex flex-col justify-between group relative overflow-hidden bg-white/90 dark:bg-[#0E241E]/90">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono font-bold text-emerald-700 dark:text-emerald-400">01</span>
+              <div class="w-10 h-10 rounded-full bg-emerald-50 dark:bg-emerald-950/60 flex items-center justify-center text-emerald-700 dark:text-emerald-300 group-hover:scale-110 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+              </div>
+            </div>
+            <h3 class="text-xl font-bold font-syne text-gray-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition">
+              Water &amp; wastewater
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+              Treatment systems from 100 KLD to 200 MLD, designed for performance, resilience, and regulatory compliance.
+            </p>
+          </div>
+          <div class="pt-6 mt-6 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between text-xs font-mono text-emerald-800 dark:text-emerald-300">
+            <span>MBR · SBR · DAF</span>
+            <span class="font-bold group-hover:translate-x-1 transition-transform">↗</span>
+          </div>
+        </div>
+
+        <!-- Pillar 02: Desalination -->
+        <div class="glass-panel p-8 flex flex-col justify-between group relative overflow-hidden bg-white/90 dark:bg-[#0E241E]/90">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono font-bold text-emerald-700 dark:text-emerald-400">02</span>
+              <div class="w-10 h-10 rounded-full bg-emerald-50 dark:bg-emerald-950/60 flex items-center justify-center text-emerald-700 dark:text-emerald-300 group-hover:scale-110 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M2 6c4 0 6 4 10 4s6-4 10-4M2 18c4 0 6 4 10 4s6-4 10-4"/></svg>
+              </div>
+            </div>
+            <h3 class="text-xl font-bold font-syne text-gray-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition">
+              Desalination
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+              End-to-end seawater intake, pretreatment, RO, remineralization, and environmental outfall systems.
+            </p>
+          </div>
+          <div class="pt-6 mt-6 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between text-xs font-mono text-emerald-800 dark:text-emerald-300">
+            <span>SWRO · ERD · Remin</span>
+            <span class="font-bold group-hover:translate-x-1 transition-transform">↗</span>
+          </div>
+        </div>
+
+        <!-- Pillar 03: EPC & PPP Delivery -->
+        <div class="glass-panel p-8 flex flex-col justify-between group relative overflow-hidden bg-white/90 dark:bg-[#0E241E]/90">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono font-bold text-emerald-700 dark:text-emerald-400">03</span>
+              <div class="w-10 h-10 rounded-full bg-emerald-50 dark:bg-emerald-950/60 flex items-center justify-center text-emerald-700 dark:text-emerald-300 group-hover:scale-110 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18M3 9h18"/></svg>
+              </div>
+            </div>
+            <h3 class="text-xl font-bold font-syne text-gray-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition">
+              EPC &amp; PPP delivery
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+              Full project lifecycle ownership across engineering, procurement, construction, and O&amp;M handover.
+            </p>
+          </div>
+          <div class="pt-6 mt-6 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between text-xs font-mono text-emerald-800 dark:text-emerald-300">
+            <span>FIDIC · Turnkey · PPP</span>
+            <span class="font-bold group-hover:translate-x-1 transition-transform">↗</span>
+          </div>
+        </div>
+
+        <!-- Pillar 04: Operations Excellence -->
+        <div class="glass-panel p-8 flex flex-col justify-between group relative overflow-hidden bg-white/90 dark:bg-[#0E241E]/90">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono font-bold text-emerald-700 dark:text-emerald-400">04</span>
+              <div class="w-10 h-10 rounded-full bg-emerald-50 dark:bg-emerald-950/60 flex items-center justify-center text-emerald-700 dark:text-emerald-300 group-hover:scale-110 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+              </div>
+            </div>
+            <h3 class="text-xl font-bold font-syne text-gray-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition">
+              Operations excellence
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+              Asset management, reliability programs, commissioning, and leading high-performing engineering teams.
+            </p>
+          </div>
+          <div class="pt-6 mt-6 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between text-xs font-mono text-emerald-800 dark:text-emerald-300">
+            <span>ISO 9001 · SCADA · O&amp;M</span>
+            <span class="font-bold group-hover:translate-x-1 transition-transform">↗</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CREATIVE SHOWPIECE: Section 2.5 / Water Scale & Impact Interactive Visualizer -->
+  <section id="impact" class="py-24 lg:py-32 bg-white dark:bg-[#061511] border-y border-black/[0.06] dark:border-white/[0.08] transition-colors">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      
+      <div class="inline-flex items-center gap-3 mb-6">
+        <span class="h-px w-8 bg-emerald-700/60 dark:bg-emerald-400/60"></span>
+        <span class="text-xs font-semibold tracking-widest uppercase text-emerald-800 dark:text-emerald-300 font-mono">
+          INTERACTIVE SCALE VISUALIZER
+        </span>
+      </div>
+
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+        <div>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#111A16] dark:text-white font-syne">
+            Measuring the real-world <span class="font-editorial-serif text-emerald-800 dark:text-emerald-400 font-normal">magnitude.</span>
+          </h2>
+          <p class="text-base text-gray-600 dark:text-gray-300 mt-2 max-w-xl">
+            Numbers in water infrastructure translate to human lives, ecological conservation, and industrial longevity. Explore the dimensions of Piush's career delivery.
+          </p>
+        </div>
+
+        <!-- Interactive Switcher Tabs -->
+        <div class="flex flex-wrap gap-2">
+          <button data-impact="mld" class="impact-tab-btn active px-4 py-2 rounded-full border border-emerald-600 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 text-xs font-semibold transition">
+            200 MLD Capacity
+          </button>
+          <button data-impact="investment" class="impact-tab-btn px-4 py-2 rounded-full border border-gray-300 dark:border-white/10 hover:border-emerald-600 text-xs font-semibold transition">
+            $600M+ Capital
+          </button>
+          <button data-impact="zld" class="impact-tab-btn px-4 py-2 rounded-full border border-gray-300 dark:border-white/10 hover:border-emerald-600 text-xs font-semibold transition">
+            100,000 m³/day ZLD
+          </button>
+          <button data-impact="island" class="impact-tab-btn px-4 py-2 rounded-full border border-gray-300 dark:border-white/10 hover:border-emerald-600 text-xs font-semibold transition">
+            35 MLD Pearl Qatar
+          </button>
+        </div>
+      </div>
+
+      <!-- Interactive Impact Display Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-brand-parchment/60 dark:bg-[#091D18] p-8 lg:p-12 rounded-3xl border border-emerald-900/10 dark:border-emerald-500/20">
+        
+        <!-- Left: Dynamic Visualizer Stats -->
+        <div class="lg:col-span-7 space-y-6">
+          <div>
+            <div id="impact-metric-unit" class="text-xs uppercase tracking-widest font-mono text-emerald-700 dark:text-emerald-400 font-semibold">
+              MLD (Million Liters/Day)
+            </div>
+            <div id="impact-metric-num" class="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-[#111A16] dark:text-white font-syne tracking-tight mt-1">
+              200
+            </div>
+          </div>
+
+          <p id="impact-metric-desc" class="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+            Single largest municipal water treatment facility overseen, engineering complete intake, coagulation, filtration, and potable delivery networks.
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-black/[0.08] dark:border-white/[0.1]">
+            <div class="bg-white/80 dark:bg-emerald-950/40 p-4 rounded-xl border border-emerald-600/10">
+              <div class="text-xs font-mono text-emerald-800 dark:text-emerald-300 uppercase">Population Served Daily</div>
+              <div id="impact-people-count" class="text-xl font-bold text-gray-900 dark:text-white font-syne mt-1">1,420,000+ Citizens</div>
+            </div>
+            <div class="bg-white/80 dark:bg-emerald-950/40 p-4 rounded-xl border border-emerald-600/10">
+              <div class="text-xs font-mono text-emerald-800 dark:text-emerald-300 uppercase">Volumetric Equivalence</div>
+              <div id="impact-equiv-text" class="text-xs font-medium text-gray-700 dark:text-gray-300 mt-1">Equal to 80 Olympic-sized swimming pools of pure potable water every single day.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Animated Fluid Water Tank -->
+        <div class="lg:col-span-5 flex justify-center">
+          <div class="w-full max-w-xs h-72 water-tank shadow-inner flex flex-col justify-between p-4">
+            <div class="flex justify-between items-center text-[10px] font-mono text-gray-500 dark:text-gray-400 z-10">
+              <span>PEAK CAPACITY</span>
+              <span>100% SPEC</span>
+            </div>
+
+            <!-- Liquid Level Container -->
+            <div id="visualizer-water-fill" class="water-fill" style="height: 92%;">
+              <div class="water-wave-top"></div>
+            </div>
+
+            <div class="flex justify-between items-center text-[10px] font-mono text-white/90 z-10 pt-2 border-t border-white/20">
+              <span>AUTOMATED SCADA</span>
+              <span>LIVE INTEGRATION</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 03 / SELECTED PROJECTS -->
+  <section id="projects" class="py-24 lg:py-32 bg-brand-cream dark:bg-[#071914] transition-colors">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+        <div>
+          <div class="inline-flex items-center gap-3 mb-4">
+            <span class="h-px w-8 bg-emerald-700/60 dark:bg-emerald-400/60"></span>
+            <span class="text-xs font-semibold tracking-widest uppercase text-emerald-800 dark:text-emerald-300 font-mono">
+              03 / SELECTED PROJECTS
+            </span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#111A16] dark:text-white font-syne">
+            Projects with<br>lasting impact.
+          </h2>
+        </div>
+        <div>
+          <p class="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-md leading-relaxed mb-4">
+            A selection of the plants, programs, and partnerships I've helped bring to life.
+          </p>
+          <div class="text-xs font-mono text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span>Click any project to inspect engineering blueprint &amp; PFD</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Category Filters -->
+      <div class="flex flex-wrap gap-2 mb-8 border-b border-black/[0.06] dark:border-white/[0.08] pb-4">
+        <button data-filter="all" class="project-filter-btn active px-4 py-1.5 rounded-full text-xs font-semibold bg-brand-forest-800 text-white transition">
+          All Sectors (04)
+        </button>
+        <button data-filter="desalination" class="project-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold hover:bg-emerald-100 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 transition">
+          Desalination
+        </button>
+        <button data-filter="water-treatment" class="project-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold hover:bg-emerald-100 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 transition">
+          Water Treatment
+        </button>
+        <button data-filter="wastewater" class="project-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold hover:bg-emerald-100 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 transition">
+          Wastewater
+        </button>
+        <button data-filter="industrial" class="project-filter-btn px-4 py-1.5 rounded-full text-xs font-semibold hover:bg-emerald-100 dark:hover:bg-white/10 text-gray-700 dark:text-gray-300 transition">
+          Industrial Water &amp; ZLD
+        </button>
+      </div>
+
+      <!-- Project Showcase List (Table / Row Architecture matching Mockup) -->
+      <div class="space-y-2">
+        
+        <!-- Project 01: Pearl Qatar Desalination Plant -->
+        <div data-id="pearl-qatar" data-category="desalination" class="project-row grid grid-cols-1 md:grid-cols-12 items-center py-7 px-6 rounded-2xl cursor-pointer hover:bg-white dark:hover:bg-[#0C241E]/80 transition">
+          <div class="md:col-span-1 text-xs font-mono font-bold text-gray-400 dark:text-gray-500">01</div>
+          <div class="md:col-span-1 hidden md:block">
+            <div class="w-9 h-9 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            </div>
+          </div>
+          <div class="md:col-span-6 space-y-1">
+            <div class="text-[11px] font-mono uppercase tracking-wider text-emerald-800 dark:text-emerald-400 font-semibold">
+              DESALINATION
+            </div>
+            <h3 class="text-xl sm:text-2xl font-bold font-syne text-gray-900 dark:text-white">
+              Pearl Qatar Desalination Plant
+            </h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              UDC (United Development Company) · Qatar
+            </p>
+          </div>
+          <div class="md:col-span-3 mt-3 md:mt-0 text-left md:text-right">
+            <div class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white font-syne">
+              35 MLD
+            </div>
+            <div class="text-[11px] font-mono text-gray-400">SWRO + Energy Recovery</div>
+          </div>
+          <div class="md:col-span-1 text-right hidden md:block">
+            <span class="text-xl font-mono text-emerald-700 dark:text-emerald-400">↗</span>
+          </div>
+        </div>
+
+        <!-- Project 02: Qatar Energy Water Treatment Plant -->
+        <div data-id="qatar-energy" data-category="water-treatment" class="project-row grid grid-cols-1 md:grid-cols-12 items-center py-7 px-6 rounded-2xl cursor-pointer hover:bg-white dark:hover:bg-[#0C241E]/80 transition">
+          <div class="md:col-span-1 text-xs font-mono font-bold text-gray-400 dark:text-gray-500">02</div>
+          <div class="md:col-span-1 hidden md:block">
+            <div class="w-9 h-9 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            </div>
+          </div>
+          <div class="md:col-span-6 space-y-1">
+            <div class="text-[11px] font-mono uppercase tracking-wider text-emerald-800 dark:text-emerald-400 font-semibold">
+              WATER TREATMENT
+            </div>
+            <h3 class="text-xl sm:text-2xl font-bold font-syne text-gray-900 dark:text-white">
+              Qatar Energy Water Treatment Plant
+            </h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              Qatar Energy · Qatar
+            </p>
+          </div>
+          <div class="md:col-span-3 mt-3 md:mt-0 text-left md:text-right">
+            <div class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white font-syne">
+              5 MLD
+            </div>
+            <div class="text-[11px] font-mono text-gray-400">Demineralization &amp; Boiler Feed</div>
+          </div>
+          <div class="md:col-span-1 text-right hidden md:block">
+            <span class="text-xl font-mono text-emerald-700 dark:text-emerald-400">↗</span>
+          </div>
+        </div>
+
+        <!-- Project 03: Velana International Airport WWTP -->
+        <div data-id="velana-airport" data-category="wastewater" class="project-row grid grid-cols-1 md:grid-cols-12 items-center py-7 px-6 rounded-2xl cursor-pointer hover:bg-white dark:hover:bg-[#0C241E]/80 transition">
+          <div class="md:col-span-1 text-xs font-mono font-bold text-gray-400 dark:text-gray-500">03</div>
+          <div class="md:col-span-1 hidden md:block">
+            <div class="w-9 h-9 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            </div>
+          </div>
+          <div class="md:col-span-6 space-y-1">
+            <div class="text-[11px] font-mono uppercase tracking-wider text-emerald-800 dark:text-emerald-400 font-semibold">
+              WASTEWATER
+            </div>
+            <h3 class="text-xl sm:text-2xl font-bold font-syne text-gray-900 dark:text-white">
+              Velana International Airport WWTP
+            </h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              Maldives Government
+            </p>
+          </div>
+          <div class="md:col-span-3 mt-3 md:mt-0 text-left md:text-right">
+            <div class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white font-syne">
+              6,000 m³/day
+            </div>
+            <div class="text-[11px] font-mono text-gray-400">Membrane Bioreactor (MBR)</div>
+          </div>
+          <div class="md:col-span-1 text-right hidden md:block">
+            <span class="text-xl font-mono text-emerald-700 dark:text-emerald-400">↗</span>
+          </div>
+        </div>
+
+        <!-- Project 04: IOCL ETP / STP / ZLD -->
+        <div data-id="iocl-zld" data-category="industrial" class="project-row grid grid-cols-1 md:grid-cols-12 items-center py-7 px-6 rounded-2xl cursor-pointer hover:bg-white dark:hover:bg-[#0C241E]/80 transition">
+          <div class="md:col-span-1 text-xs font-mono font-bold text-gray-400 dark:text-gray-500">04</div>
+          <div class="md:col-span-1 hidden md:block">
+            <div class="w-9 h-9 rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            </div>
+          </div>
+          <div class="md:col-span-6 space-y-1">
+            <div class="text-[11px] font-mono uppercase tracking-wider text-emerald-800 dark:text-emerald-400 font-semibold">
+              INDUSTRIAL WATER &amp; ZLD
+            </div>
+            <h3 class="text-xl sm:text-2xl font-bold font-syne text-gray-900 dark:text-white">
+              IOCL ETP / STP / ZLD
+            </h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              Indian Oil Corporation · India
+            </p>
+          </div>
+          <div class="md:col-span-3 mt-3 md:mt-0 text-left md:text-right">
+            <div class="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white font-syne">
+              100,000 m³/day
+            </div>
+            <div class="text-[11px] font-mono text-gray-400">Zero Liquid Discharge Complex</div>
+          </div>
+          <div class="md:col-span-1 text-right hidden md:block">
+            <span class="text-xl font-mono text-emerald-700 dark:text-emerald-400">↗</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 04 / EXPERIENCE & CREDENTIALS -->
+  <section id="experience" class="py-24 lg:py-32 bg-brand-sage/60 dark:bg-[#091F19] transition-colors border-t border-black/[0.06] dark:border-white/[0.08]">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+      
+      <!-- Section Header -->
+      <div class="inline-flex items-center gap-3 mb-6">
+        <span class="h-px w-8 bg-emerald-700/60 dark:bg-emerald-400/60"></span>
+        <span class="text-xs font-semibold tracking-widest uppercase text-emerald-800 dark:text-emerald-300 font-mono">
+          04 / EXPERIENCE
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        
+        <!-- Left Column: Narrative & Formal Accreditations -->
+        <div class="lg:col-span-5 space-y-8">
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#111A16] dark:text-white leading-[1.12] font-syne">
+            A career built around <span class="font-editorial-serif text-emerald-800 dark:text-emerald-400 font-normal">responsibility.</span>
+          </h2>
+          <p class="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+            25+ years of leading projects where technical excellence and public value are inseparable.
+          </p>
+
+          <!-- Formal Accreditations & Certifications List -->
+          <div class="space-y-3 pt-4">
+            <div class="text-xs font-mono uppercase tracking-wider text-emerald-900 dark:text-emerald-300 font-bold mb-2">
+              CERTIFICATIONS &amp; ACCREDITATIONS
+            </div>
+
+            <!-- Credential 1: CAPM -->
+            <div class="flex items-center gap-3 p-3.5 rounded-xl bg-white/80 dark:bg-[#0E2721] border border-emerald-900/10 dark:border-emerald-500/20 shadow-sm">
+              <div class="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 flex items-center justify-center shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div>
+                <div class="text-sm font-bold text-gray-900 dark:text-white font-syne">CAPM®</div>
+                <div class="text-xs text-gray-600 dark:text-gray-400">Project Management Institute (PMI)</div>
+              </div>
+            </div>
+
+            <!-- Credential 2: ISO 9001 -->
+            <div class="flex items-center gap-3 p-3.5 rounded-xl bg-white/80 dark:bg-[#0E2721] border border-emerald-900/10 dark:border-emerald-500/20 shadow-sm">
+              <div class="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 flex items-center justify-center shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+              </div>
+              <div>
+                <div class="text-sm font-bold text-gray-900 dark:text-white font-syne">Lead Auditor ISO 9001:2015</div>
+                <div class="text-xs text-gray-600 dark:text-gray-400">TÜV Rheinland Quality Certification</div>
+              </div>
+            </div>
+
+            <!-- Credential 3: MMUP UPDA -->
+            <div class="flex items-center gap-3 p-3.5 rounded-xl bg-white/80 dark:bg-[#0E2721] border border-emerald-900/10 dark:border-emerald-500/20 shadow-sm">
+              <div class="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 flex items-center justify-center shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
+              </div>
+              <div>
+                <div class="text-sm font-bold text-gray-900 dark:text-white font-syne">MMUP UPDA Certified Engineer</div>
+                <div class="text-xs text-gray-600 dark:text-gray-400">Grade A Chemical Engineer · State of Qatar</div>
+              </div>
+            </div>
+
+            <!-- Credential 4: PGDM -->
+            <div class="flex items-center gap-3 p-3.5 rounded-xl bg-white/80 dark:bg-[#0E2721] border border-emerald-900/10 dark:border-emerald-500/20 shadow-sm">
+              <div class="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 flex items-center justify-center shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.42 10.922a1 1 0 0 0-.019-.838L12.83 3.18a2 2 0 0 0-1.66 0L2.6 10.084a1 1 0 0 0 0 1.832l8.57 6.904a2 2 0 0 0 1.66 0l8.59-6.904Z"/></svg>
+              </div>
+              <div>
+                <div class="text-sm font-bold text-gray-900 dark:text-white font-syne">PGDM</div>
+                <div class="text-xs text-gray-600 dark:text-gray-400">Post Graduate Diploma in Management (Operations)</div>
+              </div>
+            </div>
+
+            <!-- Credential 5: CII -->
+            <div class="flex items-center gap-3 p-3.5 rounded-xl bg-white/80 dark:bg-[#0E2721] border border-emerald-900/10 dark:border-emerald-500/20 shadow-sm">
+              <div class="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 flex items-center justify-center shrink-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 1 10 10c0 5.523-4.477 10-10 10S2 17.523 2 12A10 10 0 0 1 12 2Z"/></svg>
+              </div>
+              <div>
+                <div class="text-sm font-bold text-gray-900 dark:text-white font-syne">CII Approved Environmental Professional</div>
+                <div class="text-xs text-gray-600 dark:text-gray-400">Confederation of Indian Industry</div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Right Column: Interactive Career Journey Timeline -->
+        <div class="lg:col-span-7 space-y-12">
+          
+          <!-- Career Role 1: Mohan Mutha Infra -->
+          <div class="relative pl-8 border-l-2 border-emerald-700/40 dark:border-emerald-500/40 space-y-2 group">
+            <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-emerald-600 border-4 border-brand-sage dark:border-[#091F19]"></div>
+            <div class="text-xs font-mono text-emerald-800 dark:text-emerald-400 font-semibold tracking-wider">
+              2023 — Present
+            </div>
+            <h3 class="text-2xl font-bold font-syne text-gray-900 dark:text-white">
+              CTO &amp; Head — Water Vertical
+            </h3>
+            <div class="text-sm font-semibold text-emerald-900 dark:text-emerald-300">
+              Mohan Mutha Infra Pvt Ltd.
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed pt-1">
+              Leading a 75-person team across water and wastewater projects. Delivering desalination, ZLD, airport, and package treatment systems. Directing international EPC execution across India and the Maldives.
+            </p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <span class="px-2.5 py-1 rounded text-[11px] font-mono bg-white/70 dark:bg-emerald-950 text-gray-700 dark:text-gray-300 border border-emerald-900/10">75 Engineers Led</span>
+              <span class="px-2.5 py-1 rounded text-[11px] font-mono bg-white/70 dark:bg-emerald-950 text-gray-700 dark:text-gray-300 border border-emerald-900/10">Maldives EPC</span>
+              <span class="px-2.5 py-1 rounded text-[11px] font-mono bg-white/70 dark:bg-emerald-950 text-gray-700 dark:text-gray-300 border border-emerald-900/10">Strategic P&amp;L</span>
+            </div>
+          </div>
+
+          <!-- Career Role 2: Metito Overseas Qatar -->
+          <div class="relative pl-8 border-l-2 border-emerald-700/40 dark:border-emerald-500/40 space-y-2 group">
+            <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-emerald-600/70 border-4 border-brand-sage dark:border-[#091F19]"></div>
+            <div class="text-xs font-mono text-emerald-800 dark:text-emerald-400 font-semibold tracking-wider">
+              2015 — 2023
+            </div>
+            <h3 class="text-2xl font-bold font-syne text-gray-900 dark:text-white">
+              Project Operations &amp; Maintenance Manager
+            </h3>
+            <div class="text-sm font-semibold text-emerald-900 dark:text-emerald-300">
+              Metito Overseas Qatar WLL
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed pt-1">
+              Managed water infrastructure projects exceeding USD 600M, including Qatar Energy, Hamad International Airport, and Pearl Qatar. Ensured continuous operational uptime and ISO-grade environmental regulatory compliance across critical state infrastructure.
+            </p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <span class="px-2.5 py-1 rounded text-[11px] font-mono bg-white/70 dark:bg-emerald-950 text-gray-700 dark:text-gray-300 border border-emerald-900/10">$600M+ Portfolio</span>
+              <span class="px-2.5 py-1 rounded text-[11px] font-mono bg-white/70 dark:bg-emerald-950 text-gray-700 dark:text-gray-300 border border-emerald-900/10">Hamad Airport</span>
+              <span class="px-2.5 py-1 rounded text-[11px] font-mono bg-white/70 dark:bg-emerald-950 text-gray-700 dark:text-gray-300 border border-emerald-900/10">Qatar Energy</span>
+            </div>
+          </div>
+
+          <!-- Career Role 3: UEM India -->
+          <div class="relative pl-8 border-l-2 border-emerald-700/40 dark:border-emerald-500/40 space-y-2 group">
+            <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-emerald-600/40 border-4 border-brand-sage dark:border-[#091F19]"></div>
+            <div class="text-xs font-mono text-emerald-800 dark:text-emerald-400 font-semibold tracking-wider">
+              2012 — 2015
+            </div>
+            <h3 class="text-2xl font-bold font-syne text-gray-900 dark:text-white">
+              General Manager — Projects &amp; Engineering
+            </h3>
+            <div class="text-sm font-semibold text-emerald-900 dark:text-emerald-300">
+              UEM India Pvt. Ltd.
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed pt-1">
+              Directed major refinery and industrial water projects, from engineering and procurement through commissioning and O&amp;M. Led heavy EPC turnkeys for Indian Oil Corporation Limited (IOCL) and state municipal water utilities.
+            </p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <span class="px-2.5 py-1 rounded text-[11px] font-mono bg-white/70 dark:bg-emerald-950 text-gray-700 dark:text-gray-300 border border-emerald-900/10">IOCL Refineries</span>
+              <span class="px-2.5 py-1 rounded text-[11px] font-mono bg-white/70 dark:bg-emerald-950 text-gray-700 dark:text-gray-300 border border-emerald-900/10">100,000 m³/day</span>
+              <span class="px-2.5 py-1 rounded text-[11px] font-mono bg-white/70 dark:bg-emerald-950 text-gray-700 dark:text-gray-300 border border-emerald-900/10">Heavy Industrial EPC</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 05 / CONTACT & ADVISORY DESK -->
+  <section id="contact" class="py-24 lg:py-32 bg-brand-forest-950 text-white relative overflow-hidden">
+    
+    <!-- Ambient Fluid Gradient Glow -->
+    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-teal-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+      
+      <!-- Section Header -->
+      <div class="inline-flex items-center gap-3 mb-8">
+        <span class="h-px w-8 bg-emerald-400/60"></span>
+        <span class="text-xs font-semibold tracking-widest uppercase text-emerald-400 font-mono">
+          05 / CONTACT &amp; ADVISORY
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        
+        <!-- Left: Direct Channels & Headline -->
+        <div class="lg:col-span-6 space-y-8">
+          
+          <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.08] font-syne">
+            Let's make<br>
+            <span class="font-editorial-serif text-emerald-300 font-normal">water work better.</span>
+          </h2>
+
+          <p class="text-base sm:text-lg text-emerald-100/80 max-w-lg leading-relaxed">
+            For project leadership, technical advisory, or a conversation about the future of water infrastructure, I'd be glad to hear from you.
+          </p>
+
+          <!-- Direct Channels Grid -->
+          <div class="space-y-4 pt-4">
+            
+            <!-- Email Card -->
+            <div class="p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-emerald-400/40 transition flex items-center justify-between group">
+              <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                </div>
+                <div>
+                  <div class="text-xs font-mono text-emerald-400">EMAIL ADDRESS</div>
+                  <a href="mailto:piushbhandari14@gmail.com" class="text-sm sm:text-base font-semibold text-white hover:text-emerald-300 transition">
+                    piushbhandari14@gmail.com
+                  </a>
+                </div>
+              </div>
+              <button data-copy-text="piushbhandari14@gmail.com" data-copy-label="Email" class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-emerald-600 text-xs font-mono text-white transition flex items-center gap-1.5" title="Copy email address">
+                <span>Copy</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              </button>
+            </div>
+
+            <!-- Phone / WhatsApp Card -->
+            <div class="p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-emerald-400/40 transition flex items-center justify-between group">
+              <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-[#25D366] flex items-center justify-center shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.53c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.5-1.41-1.75-.14-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.13-.14.17-.25.25-.42.08-.17.04-.31-.02-.44s-.56-1.35-.77-1.85c-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.16 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.17-.48-.29z"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-xs font-mono text-emerald-400">PHONE &amp; WHATSAPP</div>
+                  <a href="https://wa.me/917231005354" target="_blank" rel="noopener noreferrer" class="text-sm sm:text-base font-semibold text-white hover:text-emerald-300 transition">
+                    +91 72310 05354
+                  </a>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <a href="https://wa.me/917231005354" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg bg-[#25D366] hover:bg-[#20ba59] text-gray-950 font-bold text-xs font-mono transition flex items-center gap-1.5 shadow-md">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.53c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.5-1.41-1.75-.14-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.13-.14.17-.25.25-.42.08-.17.04-.31-.02-.44s-.56-1.35-.77-1.85c-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.16 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.17-.48-.29z"/>
+                  </svg>
+                  <span>Chat</span>
+                  <span>↗</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- LinkedIn Profile Card -->
+            <div class="p-5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-emerald-400/40 transition flex items-center justify-between group">
+              <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-xl bg-[#0077B5]/20 text-[#0077B5] flex items-center justify-center shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.45 1.45 0 0 0 0-2.9 1.45 1.45 0 0 0 0 2.9M7.86 18.5V10.13H5.07V18.5h2.79z"/></svg>
+                </div>
+                <div>
+                  <div class="text-xs font-mono text-emerald-400">PROFESSIONAL NETWORK</div>
+                  <a href="https://www.linkedin.com/in/piush-bhandari-62b99224" target="_blank" rel="noopener noreferrer" class="text-sm sm:text-base font-semibold text-white hover:text-emerald-300 transition">
+                    linkedin.com/in/piush-bhandari-62b99224
+                  </a>
+                </div>
+              </div>
+              <a href="https://www.linkedin.com/in/piush-bhandari-62b99224" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-[#0077B5]/30 hover:bg-[#0077B5] text-xs font-mono text-white transition flex items-center gap-1.5">
+                <span>View Profile</span>
+                <span>↗</span>
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Right: Interactive Mandate Inquiry Form -->
+        <div class="lg:col-span-6">
+          <div class="p-8 sm:p-10 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-xl shadow-2xl">
+            <div class="mb-6">
+              <h3 class="text-2xl font-bold font-syne text-white">
+                Send an executive inquiry
+              </h3>
+              <p class="text-xs text-gray-400 font-mono mt-1">
+                DIRECT REACHOUT FOR EPC, ADVISORY &amp; STRATEGIC MANDATES
+              </p>
+            </div>
+
+            <form id="mandate-inquiry-form" class="space-y-4">
+              <div>
+                <label for="form-name" class="block text-xs font-mono text-emerald-300 uppercase mb-1.5">Your Name / Organization</label>
+                <input type="text" id="form-name" required placeholder="e.g. Elena Rostova / Infrastructure Partners" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-emerald-400 transition">
+              </div>
+
+              <div>
+                <label for="form-email" class="block text-xs font-mono text-emerald-300 uppercase mb-1.5">Email Address</label>
+                <input type="email" id="form-email" required placeholder="e.g. elena@infrapartners.com" class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-emerald-400 transition">
+              </div>
+
+              <div>
+                <label for="form-subject" class="block text-xs font-mono text-emerald-300 uppercase mb-1.5">Engagement Focus</label>
+                <select id="form-subject" class="w-full px-4 py-3 rounded-xl bg-brand-forest-900 border border-white/10 text-white text-sm focus:outline-none focus:border-emerald-400 transition">
+                  <option value="Executive Advisory & Technical Review">Executive Technical Advisory &amp; Review</option>
+                  <option value="EPC Project Leadership & Governance">EPC Turnkey Leadership &amp; Delivery</option>
+                  <option value="Desalination / ZLD Engineering Mandate">Desalination / ZLD Engineering Mandate</option>
+                  <option value="Operations & Maintenance Optimization">O&amp;M Reliability &amp; Asset Optimization</option>
+                  <option value="General Executive Inquiry">General Discussion</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="form-message" class="block text-xs font-mono text-emerald-300 uppercase mb-1.5">Project Scope or Brief</label>
+                <textarea id="form-message" rows="4" required placeholder="Describe your plant capacity, geographic location, or advisory scope..." class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-emerald-400 transition"></textarea>
+              </div>
+
+              <button type="submit" class="w-full py-3.5 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-brand-forest-950 font-bold text-sm tracking-wide transition shadow-lg flex items-center justify-center gap-2">
+                <span>Initiate Mandate Discussion</span>
+                <span class="font-mono">↗</span>
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-brand-cream dark:bg-[#04120E] border-t border-black/[0.06] dark:border-white/[0.08] py-12 transition-colors">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
+      
+      <!-- Logo & Copyright -->
+      <div class="flex items-center gap-3">
+        <div class="w-7 h-7 rounded-full bg-emerald-800 dark:bg-emerald-500 text-white flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+        </div>
+        <span class="text-base font-bold font-syne text-gray-900 dark:text-white">Piush Bhandari.</span>
+      </div>
+
+      <div class="text-xs font-mono text-gray-500 dark:text-gray-400 text-center">
+        &copy; 2026 Piush Bhandari. Water, engineered with purpose.
+      </div>
+
+      <!-- Quick Back to Top -->
+      <a href="#" class="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-emerald-800 dark:text-emerald-300 hover:underline">
+        <span>Get in touch / Back to top</span>
+        <span>↑</span>
+      </a>
+
+    </div>
+  </footer>
+
+  <!-- Interactive Project Blueprint Deep Dive Modal -->
+  <div id="project-modal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/75 backdrop-blur-md">
+    <div class="modal-content relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-brand-forest-900 border border-emerald-500/30 rounded-3xl p-6 sm:p-8 text-white shadow-2xl">
+      <button id="close-project-modal" class="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white transition" aria-label="Close modal">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+      <div id="project-modal-body">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Mount -->
+  <div id="toast-container"></div>
+
+  <!-- Core JavaScript Script -->
+  <script src="app.js"></script>
+  <script>
+    // Initialize Lucide icons on load
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+  </script>
+</body>
+</html>
