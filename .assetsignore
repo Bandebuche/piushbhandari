@@ -1,0 +1,7 @@
+.git
+.vercel
+node_modules
+*.log
+wrangler.jsonc
+worker.js
+google-apps-script.js
