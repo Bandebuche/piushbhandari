@@ -1,7 +1,11 @@
-# 🎓 Student Support Desk & Analytics Tracker
-### Complete Web Application with Google Sheets Live Backend & Interactive Visual Dashboard
+# 🎓 Support Desk • Query Tracker & Live Analytics
+### Live Production Web Application: [https://support-student-data.vercel.app](https://support-student-data.vercel.app)
 
-A clean, modern, and responsive web application designed for tracking student support queries, analyzing team workloads, and syncing every submission directly with a live Google Sheet via Google Apps Script.
+A clean, modern, and mobile-friendly web application designed for tracking student support queries, analyzing team workloads, and syncing every submission directly with a live Google Sheet.
+
+- **🌐 Live Production URL**: [https://support-student-data.vercel.app](https://support-student-data.vercel.app)
+- **📄 Connected Google Sheet**: [Student Support Tracker](https://docs.google.com/spreadsheets/d/1hP5XQ9EtMVQ5qRM0FW2GG8WQkYtXLwFisx7eh96ibz0/edit?usp=sharing)
+- **📁 GitHub Repository**: `https://github.com/Bandebuche/support-student-data.git`
 
 ---
 
