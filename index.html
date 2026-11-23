@@ -1965,7 +1965,7 @@
   var SCRIPT_URL = "https://script.google.com/macros/s/AKfycby6bmjmxAkzy2aT5CGcKL30FiefsU8ITOi_EVUG4cYsGM1_BZakNiQI6oj0cNQlf9wj/exec";
   var TARGET_SPREADSHEET_ID = "1hP5XQ9EtMVQ5qRM0FW2GG8WQkYtXLwFisx7eh96ibz0";
 
-  var CATEGORIES = ['Diamond Member', 'Silver Member', 'Gold', 'Diamond', 'Silver', 'PMP', 'Cyclic'];
+  var CATEGORIES = ['Diamond Member', 'Silver Member', 'Gold', 'Diamond', 'Silver', 'PMP', 'Chakravyuh'];
   var CAT_COLORS = ['#38bdf8', '#94a3b8', '#f59e0b', '#818cf8', '#cbd5e1', '#10b981', '#14b8a6'];
   var ASSIGNEES = ['Sachin', 'Pragati'];
   var ASG_COLORS = { Sachin: '#38bdf8', Pragati: '#10b981' };
@@ -2022,6 +2022,7 @@
   }
 
   function catColor(c) {
+    if (c === 'Cyclic') c = 'Chakravyuh';
     var i = CATEGORIES.indexOf(c);
     return i >= 0 ? CAT_COLORS[i] : '#64748b';
   }
@@ -2390,7 +2391,10 @@
       .then(function (res) { return res.json(); })
       .then(function (data) {
         if (data && data.status === 'success' && Array.isArray(data.records)) {
-          records = data.records;
+          records = data.records.map(function (r) {
+            if (r.category === 'Cyclic') r.category = 'Chakravyuh';
+            return r;
+          });
           updateDashboard();
           renderTable();
           badgeTxt.textContent = 'Sheet Live · ' + records.length;

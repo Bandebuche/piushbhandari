@@ -22,7 +22,7 @@ A clean, modern, and mobile-friendly web application designed for tracking stude
     - `Diamond`
     - `Silver`
     - `PMP`
-    - `Cyclic`
+    - `Chakravyuh`
   - **Query (क्वेरी विवरण)**: Auto-sizing textarea with 1-click topic suggestions (Portal Login Issue, Mentorship Slot, Certificate Request, Study Notes Access) and character counter.
   - **Typing Time (टाइपिंग समय)**: Time picker with a 1-click **"Set Current Time"** button.
   - **Assigned By (सौंपा गया)**: Custom radio pill cards with avatars for **Sachin** & **Pragati**.
