@@ -1364,6 +1364,149 @@
     color: var(--text-muted);
   }
 
+  
+  /* -------------------------------------------------------------
+     BOX (CARDS) VIEW & LIST VIEW TOGGLE
+  ------------------------------------------------------------- */
+  .view-mode-toggle {
+    display: inline-flex;
+    background: var(--bg-surface);
+    padding: 3px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    gap: 2px;
+  }
+  .view-mode-btn {
+    border: 0;
+    background: none;
+    padding: 7px 12px;
+    border-radius: 9px;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s;
+  }
+  .view-mode-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+  .view-mode-btn[aria-pressed="true"] {
+    background: linear-gradient(135deg, var(--neon), #059669);
+    color: #042517;
+    font-weight: 800;
+  }
+  .view-mode-btn[aria-pressed="true"] svg {
+    color: #042517;
+  }
+
+  .records-box-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 14px;
+    width: 100%;
+    margin-bottom: 6px;
+  }
+
+  @media (max-width: 600px) {
+    .records-box-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  }
+
+  .record-box-card {
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    position: relative;
+  }
+  .record-box-card:hover {
+    border-color: rgba(0, 255, 135, 0.35);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .box-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .box-card-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .box-user-name {
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.2;
+  }
+  .box-user-time {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    margin-top: 2px;
+  }
+
+  .box-card-body {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 12px 14px;
+    flex: 1;
+  }
+
+  .box-query-text {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: #e2e8f0;
+    word-break: break-word;
+  }
+
+  .box-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.08);
+  }
+
+  .box-assigned-wrap small, .box-time-wrap small {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+  }
+  .box-time-wrap {
+    text-align: right;
+  }
+  .box-time-wrap b {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: #cbd5e1;
+  }
+
   /* -------------------------------------------------------------
      TOASTS
   ------------------------------------------------------------- */
@@ -1912,19 +2055,34 @@
           <button type="button" data-asg="Pragati" aria-pressed="false">Pragati</button>
         </div>
 
+        <!-- Box (Card) vs List (Table) View Mode Switcher -->
+        <div class="view-mode-toggle" id="viewModeToggle" aria-label="Layout View Mode">
+          <button type="button" class="view-mode-btn" data-mode="box" aria-pressed="true" title="Box / Card View">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+            <span>Box</span>
+          </button>
+          <button type="button" class="view-mode-btn" data-mode="list" aria-pressed="false" title="List / Table View">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            <span>List</span>
+          </button>
+        </div>
+
         <button type="button" class="btn-outline" id="clearFiltersBtn">
           Clear
         </button>
       </div>
 
-      <!-- Mobile Scroll Hint -->
-      <div class="mobile-table-hint">
+      <!-- Mobile Scroll Hint (Shown only when List mode is active on mobile) -->
+      <div class="mobile-table-hint" id="tableSwipeHint" style="display:none">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
         <span>Swipe table horizontally to see all columns</span>
       </div>
 
-      <!-- Table Scrollable Area -->
-      <div class="table-scroll">
+      <!-- Option 1: Box (Cards) View Container -->
+      <div class="records-box-grid" id="recordsBoxGrid"></div>
+
+      <!-- Option 2: Table Scrollable Area (List View) -->
+      <div class="table-scroll" id="tableScrollWrap" style="display:none">
         <table>
           <thead>
             <tr>
@@ -2613,15 +2771,31 @@
     });
 
     var tbody = $('tableBody');
+    var boxGrid = $('recordsBoxGrid');
+    var tableWrap = $('tableScrollWrap');
+    var swipeHint = $('tableSwipeHint');
     var slice = filtered.slice(0, shownCount);
+
+    // Apply active view mode (box vs list)
+    if (currentViewMode === 'box') {
+      boxGrid.style.display = 'grid';
+      tableWrap.style.display = 'none';
+      swipeHint.style.display = 'none';
+    } else {
+      boxGrid.style.display = 'none';
+      tableWrap.style.display = 'block';
+      swipeHint.style.display = (window.innerWidth <= 768 ? 'flex' : 'none');
+    }
 
     if (!slice.length) {
       tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state">No matching records found.</div></td></tr>';
+      boxGrid.innerHTML = '<div class="empty-state" style="grid-column:1/-1">No matching records found.</div>';
       $('tableCountLabel').textContent = 'Showing 0 of ' + records.length + ' records';
       $('showMoreBtn').hidden = true;
       return;
     }
 
+    // Render List (Table Rows)
     tbody.innerHTML = slice.map(function (r) {
       var isSachin = r.assignedBy === 'Sachin';
       return (
@@ -2640,6 +2814,38 @@
           '</td>' +
           '<td style="white-space:nowrap;font-family:var(--font-mono);font-size:12px;color:var(--text-muted)">' + niceTime(r.timestamp) + '</td>' +
         '</tr>'
+      );
+    }).join('');
+
+    // Render Box (Card Boxes)
+    boxGrid.innerHTML = slice.map(function (r) {
+      var isSachin = r.assignedBy === 'Sachin';
+      return (
+        '<article class="record-box-card">' +
+          '<div class="box-card-header">' +
+            '<div class="box-card-user">' +
+              '<span class="cell-av" style="background:' + catColor(r.category) + ';color:#032014">' + initials(r.name) + '</span>' +
+              '<div>' +
+                '<div class="box-user-name">' + esc(r.name) + '</div>' +
+                '<div class="box-user-time">' + (relTime(r.timestamp) || niceTime(r.timestamp)) + '</div>' +
+              '</div>' +
+            '</div>' +
+            '<span class="badge-tag" style="background:rgba(255,255,255,0.06);color:' + catColor(r.category) + '">' + esc(r.category) + '</span>' +
+          '</div>' +
+          '<div class="box-card-body">' +
+            '<p class="box-query-text">' + esc(r.query) + '</p>' +
+          '</div>' +
+          '<div class="box-card-footer">' +
+            '<div class="box-assigned-wrap">' +
+              '<small>Assigned By</small>' +
+              '<span class="badge-tag who ' + (isSachin ? '' : 'p') + '">' + esc(r.assignedBy) + '</span>' +
+            '</div>' +
+            '<div class="box-time-wrap">' +
+              '<small>Typing Time</small>' +
+              '<b>' + niceTime(r.typingTime) + '</b>' +
+            '</div>' +
+          '</div>' +
+        '</article>'
       );
     }).join('');
 
@@ -2788,6 +2994,27 @@
     shownCount += PAGE_SIZE;
     renderTable();
   });
+
+  // View Mode for Records (Box vs List)
+  var currentViewMode = localStorage.getItem('records_view_mode') || (window.innerWidth <= 768 ? 'box' : 'list');
+
+  function setRecordsViewMode(mode) {
+    currentViewMode = mode;
+    localStorage.setItem('records_view_mode', mode);
+    document.querySelectorAll('#viewModeToggle button').forEach(function (btn) {
+      btn.setAttribute('aria-pressed', btn.getAttribute('data-mode') === mode ? 'true' : 'false');
+    });
+    renderTable();
+  }
+
+  $('viewModeToggle').addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b) return;
+    var mode = b.getAttribute('data-mode');
+    if (mode) setRecordsViewMode(mode);
+  });
+
+  setRecordsViewMode(currentViewMode);
 
   // Initial Sync from Permanent Google Apps Script Web App
   syncLiveLeads(true);
