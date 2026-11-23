@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "name": "support-student-data",
+  "cleanUrls": true,
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
