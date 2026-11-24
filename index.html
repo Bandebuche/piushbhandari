@@ -2611,8 +2611,8 @@
   var SCRIPT_URL = "https://script.google.com/macros/s/AKfycby6bmjmxAkzy2aT5CGcKL30FiefsU8ITOi_EVUG4cYsGM1_BZakNiQI6oj0cNQlf9wj/exec";
   var TARGET_SPREADSHEET_ID = "1hP5XQ9EtMVQ5qRM0FW2GG8WQkYtXLwFisx7eh96ibz0";
 
-  var CATEGORIES = ['Gold', 'Diamond', 'Silver', 'PM Ke Chakravyuh'];
-  var CAT_COLORS = ['#f59e0b', '#38bdf8', '#94a3b8', '#10b981'];
+  var CATEGORIES = ['Gold', 'Diamond', 'Silver', 'PMP', 'Chakravyuh'];
+  var CAT_COLORS = ['#f59e0b', '#38bdf8', '#94a3b8', '#10b981', '#a855f7'];
   var ASSIGNEES = ['Sachin', 'Pragati'];
   var ASG_COLORS = { Sachin: '#38bdf8', Pragati: '#10b981' };
   var PAGE_SIZE = 15;
@@ -2673,7 +2673,8 @@
     if (s === 'Diamond Member' || s === 'डायमंड' || s.toLowerCase() === 'diamond') return 'Diamond';
     if (s === 'Silver Member' || s === 'सिल्वर' || s.toLowerCase() === 'silver') return 'Silver';
     if (s === 'Gold' || s === 'गोल्ड' || s.toLowerCase() === 'gold') return 'Gold';
-    if (s === 'Cyclic' || s === 'Chakravyuh' || s === 'PMP' || s === 'पीएम के चक्रव्यूह' || s.toLowerCase().includes('chakravyuh')) return 'PM Ke Chakravyuh';
+    if (s === 'PMP' || s.toLowerCase() === 'pmp' || s === 'पीएमपी') return 'PMP';
+    if (s === 'Cyclic' || s === 'Chakravyuh' || s === 'चक्रव्यूह' || s === 'PM Ke Chakravyuh' || s === 'पीएम के चक्रव्यूह' || s.toLowerCase().includes('chakravyuh')) return 'Chakravyuh';
     return s;
   }
 
@@ -2805,7 +2806,7 @@
   }
 
   /* -------------------------------------------------------------
-     BUILD CATEGORY PILLS (ONLY GOLD, DIAMOND, SILVER, PM KE CHAKRAVYUH)
+     BUILD CATEGORY PILLS (GOLD, DIAMOND, SILVER, PMP, CHAKRAVYUH)
   ------------------------------------------------------------- */
   function buildCategoryPills() {
     var wrap = $('categoryPills');
@@ -2814,7 +2815,8 @@
       'Gold': 'Gold (गोल्ड)',
       'Diamond': 'Diamond (डायमंड)',
       'Silver': 'Silver (सिल्वर)',
-      'PM Ke Chakravyuh': 'PM Ke Chakravyuh (पीएम के चक्रव्यूह)'
+      'PMP': 'PMP (पीएमपी)',
+      'Chakravyuh': 'Chakravyuh (चक्रव्यूह)'
     };
     CATEGORIES.forEach(function (cat, i) {
       var id = 'cat_opt_' + i;
@@ -3503,12 +3505,13 @@
     });
   });
 
-  // Sample Data Prefill (Gold, Diamond, Silver, PM Ke Chakravyuh with Phone & Gmail)
+  // Sample Data Prefill (Gold, Diamond, Silver, PMP, Chakravyuh with Phone & Gmail)
   $('prefillBtn').addEventListener('click', function () {
     var samples = [
       { name: 'Aarav Sharma', phone: '+91 98201 54321', email: 'aarav.sharma@gmail.com', cat: 'Diamond', q: 'Requesting 1-on-1 mentorship session for portfolio and project code review.', asg: 'Sachin' },
       { name: 'Pooja Deshmukh', phone: '+91 94220 89123', email: 'pooja.deshmukh@gmail.com', cat: 'Gold', q: 'Unable to view recorded session of yesterday; page shows 403 authorization error.', asg: 'Pragati' },
-      { name: 'Rohan Kulkarni', phone: '+91 97654 32109', email: 'rohan.kulkarni@gmail.com', cat: 'PM Ke Chakravyuh', q: 'Mock exam score report verification and eligibility check for next round.', asg: 'Sachin' },
+      { name: 'Rohan Kulkarni', phone: '+91 97654 32109', email: 'rohan.kulkarni@gmail.com', cat: 'PMP', q: 'Mock exam score report verification and eligibility check for next round.', asg: 'Sachin' },
+      { name: 'Vikram Malhotra', phone: '+91 98112 34567', email: 'vikram.malhotra@gmail.com', cat: 'Chakravyuh', q: 'Chakravyuh mentorship rotation schedule clarification for batch A.', asg: 'Sachin' },
       { name: 'Sneha Patel', phone: '+91 99887 76655', email: 'sneha.patel@gmail.com', cat: 'Silver', q: 'Extension request for assignment submission due to university exams.', asg: 'Pragati' }
     ];
     var s = samples[Math.floor(Math.random() * samples.length)];

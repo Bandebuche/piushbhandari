@@ -17,11 +17,12 @@ A clean, modern, and mobile-friendly web application designed for tracking stude
   - **Student Name (नाम)**: Required text input with real-time validation.
   - **Phone / WhatsApp Number (नंबर)**: Required phone number field with validation.
   - **Gmail / Email ID (जीमेल)**: Required email/Gmail input with validation.
-  - **Category / Membership Type (सदस्यता प्रकार)**: Interactive pill chips with exact 4 options:
+  - **Category / Membership Type (सदस्यता प्रकार)**: Interactive pill chips with exact 5 options:
     - `Gold` (गोल्ड)
     - `Diamond` (डायमंड)
     - `Silver` (सिल्वर)
-    - `PM Ke Chakravyuh` (पीएम के चक्रव्यूह)
+    - `PMP` (पीएमपी)
+    - `Chakravyuh` (चक्रव्यूह)
   - **Query (क्वेरी विवरण)**: Auto-sizing textarea with 1-click topic suggestions (Portal Login Issue, Mentorship Slot, Certificate Request, Study Notes Access) and character counter.
   - **Typing Time (टाइपिंग समय)**: Time picker with a 1-click **"Set Current Time"** button.
   - **Assigned By (सौंपा गया)**: Custom radio pill cards with avatars for **Sachin** & **Pragati**.

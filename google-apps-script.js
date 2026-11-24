@@ -33,13 +33,14 @@ const HEADERS = [
   "Assigned By"
 ];
 
-// Clean category normalization (Only Gold, Diamond, Silver, PM Ke Chakravyuh)
+// Clean category normalization (Gold, Diamond, Silver, PMP, Chakravyuh)
 function normalizeCategory(cat) {
   var s = String(cat || "").trim();
   if (s === "Diamond Member" || s === "डायमंड" || s.toLowerCase() === "diamond") return "Diamond";
   if (s === "Silver Member" || s === "सिल्वर" || s.toLowerCase() === "silver") return "Silver";
   if (s === "Gold" || s === "गोल्ड" || s.toLowerCase() === "gold") return "Gold";
-  if (s === "Cyclic" || s === "Chakravyuh" || s === "PMP" || s === "पीएम के चक्रव्यूह" || s.toLowerCase().indexOf("chakravyuh") >= 0) return "PM Ke Chakravyuh";
+  if (s === "PMP" || s.toLowerCase() === "pmp" || s === "पीएमपी") return "PMP";
+  if (s === "Cyclic" || s === "Chakravyuh" || s === "चक्रव्यूह" || s === "PM Ke Chakravyuh" || s === "पीएम के चक्रव्यूह" || s.toLowerCase().indexOf("chakravyuh") >= 0) return "Chakravyuh";
   return s || "Gold";
 }
 

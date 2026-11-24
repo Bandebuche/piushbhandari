@@ -11,21 +11,24 @@ const CATEGORIES = [
   "Gold",
   "Diamond",
   "Silver",
-  "PM Ke Chakravyuh"
+  "PMP",
+  "Chakravyuh"
 ];
 
 const CATEGORY_COLORS = {
   "Gold": "#f59e0b",           // Amber
   "Diamond": "#38bdf8",        // Cyan
   "Silver": "#94a3b8",         // Slate
-  "PM Ke Chakravyuh": "#10b981" // Emerald
+  "PMP": "#10b981",            // Emerald
+  "Chakravyuh": "#a855f7"      // Purple
 };
 
 const CATEGORY_BADGE_CLASSES = {
   "Gold": "badge-category-gold",
   "Diamond": "badge-category-diamond",
   "Silver": "badge-category-silver",
-  "PM Ke Chakravyuh": "badge-category-pm-chakravyuh"
+  "PMP": "badge-category-pmp",
+  "Chakravyuh": "badge-category-chakravyuh"
 };
 
 // Realistic seed records covering all 4 categories & assignees with Phone & Gmail
