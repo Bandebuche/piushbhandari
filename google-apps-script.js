@@ -100,12 +100,17 @@ function getOrCreateSheet() {
     const curHeaders = sheet.getRange(1, 1, 1, Math.max(sheet.getLastColumn(), 6)).getValues()[0];
     const headerStr = curHeaders.map(function(h) { return String(h).toLowerCase(); }).join(",");
     if (headerStr.indexOf("phone") === -1 && headerStr.indexOf("number") === -1) {
-      // Upgrade header row to new standard schema
+      // If previous table had Category in column 3, insert 2 new columns after Name (column 2)
+      if (sheet.getLastColumn() >= 3 && headerStr.indexOf("category") !== -1) {
+        sheet.insertColumnsAfter(2, 2);
+      }
+      // Upgrade header row to standard 8-column schema
       const headerRange = sheet.getRange(1, 1, 1, HEADERS.length);
       headerRange.setValues([HEADERS]);
       headerRange.setFontWeight("bold");
       headerRange.setBackground("#0f766e");
       headerRange.setFontColor("#ffffff");
+      sheet.setFrozenRows(1);
     }
   }
   
@@ -113,9 +118,67 @@ function getOrCreateSheet() {
 }
 
 /**
+ * Shared helper to append a record into Google Sheet
+ */
+function appendEntry(data, callback) {
+  const sheet = getOrCreateSheet();
+  const name = String(data.name || "").trim();
+  const phone = String(data.phone || data.number || "").trim();
+  const email = String(data.email || data.gmail || "").trim();
+  const category = normalizeCategory(data.category);
+  const query = String(data.query || "").trim();
+  const typingTime = String(data.typingTime || "").trim();
+  const assignedBy = String(data.assignedBy || "").trim();
+
+  if (!name) {
+    return createOutput({
+      status: "error",
+      message: "Name field is required."
+    }, callback);
+  }
+
+  // Format current timestamp
+  const now = new Date();
+  const timestampStr = Utilities.formatDate(now, Session.getScriptTimeZone(), "yyyy-MM-dd HH:mm:ss");
+
+  // Prepare row matching HEADERS order:
+  // [Timestamp, Name, Phone, Email, Category, Query, Typing Time, Assigned By]
+  const newRow = [
+    timestampStr,
+    name,
+    phone,
+    email,
+    category,
+    query,
+    typingTime,
+    assignedBy
+  ];
+
+  sheet.appendRow(newRow);
+
+  const response = {
+    status: "success",
+    message: "Entry successfully saved to Google Sheet!",
+    entry: {
+      timestamp: timestampStr,
+      name: name,
+      phone: phone,
+      email: email,
+      category: category,
+      query: query,
+      typingTime: typingTime,
+      assignedBy: assignedBy
+    }
+  };
+
+  return createOutput(response, callback);
+}
+
+/**
  * Handles HTTP GET requests
  * - Used to fetch all live records for dashboard & table
  * - Supports action=ping for connection testing
+ * - Supports action=create / action=insert for web beacon submissions
  * - Supports JSONP callback parameter if needed
  */
 function doGet(e) {
@@ -133,6 +196,11 @@ function doGet(e) {
         serverTime: new Date().toISOString()
       };
       return createOutput(response, callback);
+    }
+
+    // Support GET-based creation / fallback ping
+    if (action === "create" || action === "insert") {
+      return appendEntry(e.parameter || {}, callback);
     }
 
     // Default action: read all records
@@ -206,71 +274,21 @@ function doGet(e) {
  */
 function doPost(e) {
   try {
-    const sheet = getOrCreateSheet();
     let data = {};
 
     // Parse incoming data (JSON or Form URL Encoded)
-    if (e.postData && e.postData.contents) {
+    if (e && e.postData && e.postData.contents) {
       try {
         data = JSON.parse(e.postData.contents);
       } catch (err) {
         // Fallback to parameter parsing
         data = e.parameter || {};
       }
-    } else if (e.parameter) {
+    } else if (e && e.parameter) {
       data = e.parameter;
     }
 
-    const name = String(data.name || "").trim();
-    const phone = String(data.phone || data.number || "").trim();
-    const email = String(data.email || data.gmail || "").trim();
-    const category = normalizeCategory(data.category);
-    const query = String(data.query || "").trim();
-    const typingTime = String(data.typingTime || "").trim();
-    const assignedBy = String(data.assignedBy || "").trim();
-
-    if (!name) {
-      return createOutput({
-        status: "error",
-        message: "Name field is required."
-      });
-    }
-
-    // Format current timestamp
-    const now = new Date();
-    const timestampStr = Utilities.formatDate(now, Session.getScriptTimeZone(), "yyyy-MM-dd HH:mm:ss");
-
-    // Prepare row matching HEADERS order:
-    // [Timestamp, Name, Phone, Email, Category, Query, Typing Time, Assigned By]
-    const newRow = [
-      timestampStr,
-      name,
-      phone,
-      email,
-      category,
-      query,
-      typingTime,
-      assignedBy
-    ];
-
-    sheet.appendRow(newRow);
-
-    const response = {
-      status: "success",
-      message: "Entry successfully saved to Google Sheet!",
-      entry: {
-        timestamp: timestampStr,
-        name: name,
-        phone: phone,
-        email: email,
-        category: category,
-        query: query,
-        typingTime: typingTime,
-        assignedBy: assignedBy
-      }
-    };
-
-    return createOutput(response);
+    return appendEntry(data);
 
   } catch (error) {
     return createOutput({
@@ -278,7 +296,6 @@ function doPost(e) {
       message: error.toString()
     });
   }
-}
 }
 
 /**

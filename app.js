@@ -517,7 +517,7 @@ function initFormInteractivity() {
     // Reset UI loading state
     submitBtn.disabled = false;
     submitSpinner.classList.add("hidden");
-    submitText.textContent = "जमा करें / Submit Query";
+    submitText.textContent = "Submit Query";
 
     if (googleSheetsSynced) {
       showToast(`Success! Query for "${nameVal}" appended to Google Sheet & Dashboard.`, "success");
@@ -1357,8 +1357,8 @@ window.viewRecordDetail = function(id) {
   modalCat.innerHTML = `<span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold ${badgeClass}">${escapeHtml(item.category)}</span>`;
 
   document.getElementById("modal-assigned").innerHTML = item.assignedBy === "Sachin"
-    ? `<span class="inline-flex items-center text-xs font-bold text-emerald-700">Sachin (सचिन)</span>`
-    : `<span class="inline-flex items-center text-xs font-bold text-sky-700">Pragati (प्रगति)</span>`;
+    ? `<span class="inline-flex items-center text-xs font-bold text-emerald-700">Sachin</span>`
+    : `<span class="inline-flex items-center text-xs font-bold text-sky-700">Pragati</span>`;
 
   document.getElementById("modal-timestamp").textContent = item.timestamp || "-";
   document.getElementById("modal-typing-time").textContent = item.typingTime || "-";

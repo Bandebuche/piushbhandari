@@ -11,24 +11,24 @@ A clean, modern, and mobile-friendly web application designed for tracking stude
 
 ## 🌟 Key Features
 
-### 1. Data Entry Form (डेटा प्रविष्टि)
-- **Bilingual & Intuitive UI**: Soft emerald (`#10b981`) and sky blue (`#0ea5e9`) light theme with English & Hindi labels.
+### 1. Data Entry Form
+- **Modern & Intuitive UI**: Soft emerald (`#10b981`) and sky blue (`#0ea5e9`) theme with clean English labels.
 - **Fields Included**:
-  - **Student Name (नाम)**: Required text input with real-time validation.
-  - **Phone / WhatsApp Number (नंबर)**: Required phone number field with validation.
-  - **Gmail / Email ID (जीमेल)**: Required email/Gmail input with validation.
-  - **Category / Membership Type (सदस्यता प्रकार)**: Interactive pill chips with exact 5 options:
-    - `Gold` (गोल्ड)
-    - `Diamond` (डायमंड)
-    - `Silver` (सिल्वर)
-    - `PMP` (पीएमपी)
-    - `Chakravyuh` (चक्रव्यूह)
-  - **Query (क्वेरी विवरण)**: Auto-sizing textarea with 1-click topic suggestions (Portal Login Issue, Mentorship Slot, Certificate Request, Study Notes Access) and character counter.
-  - **Typing Time (टाइपिंग समय)**: Time picker with a 1-click **"Set Current Time"** button.
-  - **Assigned By (सौंपा गया)**: Custom radio pill cards with avatars for **Sachin** & **Pragati**.
-  - **Actions**: "जमा करें / Submit Query" button with loading spinner & confetti animation; "रीसेट / Reset" button.
+  - **Student Name**: Required text input with real-time validation.
+  - **Phone / WhatsApp Number**: Required phone number field with validation.
+  - **Gmail / Email ID**: Required email/Gmail input with validation.
+  - **Category / Membership Type**: Interactive pill chips with exact 5 options:
+    - `Gold`
+    - `Diamond`
+    - `Silver`
+    - `PMP`
+    - `Chakravyuh`
+  - **Query**: Auto-sizing textarea with 1-click topic suggestions (Portal Login Issue, Mentorship Slot, Certificate Request, Study Notes Access) and character counter.
+  - **Typing Time**: Time picker with a 1-click **"Set Current Time"** button.
+  - **Assigned By**: Custom radio pill cards with avatars for **Sachin** & **Pragati**.
+  - **Actions**: "Submit to Google Sheet" button with loading spinner & confetti animation; "Reset" button.
 
-### 2. Live Google Sheets Integration (गूगल शीट्स इंटीग्रेशन)
+### 2. Live Google Sheets Integration
 - **Google Apps Script Web App**: Zero external hosting or database required!
 - **`doPost` Webhook**: Automatically appends submitted entries with server timestamp, phone number, and gmail.
 - **`doGet` API**: Provides real-time synchronization to fetch all live sheet records.
@@ -36,17 +36,17 @@ A clean, modern, and mobile-friendly web application designed for tracking stude
   `[Timestamp, Name, Phone, Email, Category, Query, Typing Time, Assigned By]`
 - **Local Fallback Cache**: Runs seamlessly offline or in demo mode even before connecting Google Sheets.
 
-### 3. Interactive Analytics Dashboard (एनालिटिक्स डैशबोर्ड)
+### 3. Interactive Analytics Dashboard
 - **4 Summary KPI Cards**:
   1. **Total Queries** (All-time recorded count)
   2. **Today's Entries** (Live count of queries received today)
   3. **Assigned to Sachin** (Count & percentage share)
   4. **Assigned to Pragati** (Count & percentage share)
 - **Two Interactive Charts**:
-  1. **Category Distribution Bar Chart**: Exact breakdown across the 4 membership categories (Gold, Diamond, Silver, PM Ke Chakravyuh).
+  1. **Category Distribution Bar Chart**: Exact breakdown across the 5 membership categories (Gold, Diamond, Silver, PMP, Chakravyuh).
   2. **Workload Donut Chart**: Workload comparison between Sachin and Pragati.
 
-### 4. Searchable & Filterable Live Data Table (डेटा तालिका)
+### 4. Searchable & Filterable Live Data Table
 - **Multi-Filter Toolbar**:
   - Real-time instant search by **Student Name** or **Query keywords**.
   - Category filter dropdown.
@@ -70,7 +70,7 @@ Connecting the Web App takes less than **2 minutes**:
 1. Open [your Google Sheet](https://docs.google.com/spreadsheets/d/1hP5XQ9EtMVQ5qRM0FW2GG8WQkYtXLwFisx7eh96ibz0/edit?usp=sharing) in your browser.
 
 ### Step 2: Open Google Apps Script
-1. In the Google Sheets menu, click **Extensions (एक्सटेंशन)** &rarr; **Apps Script (ऐप्स स्क्रिप्ट)**.
+1. In the Google Sheets menu, click **Extensions** &rarr; **Apps Script**.
 2. A new script editor tab will open.
 
 ### Step 3: Paste the Backend Code

@@ -2182,7 +2182,7 @@
           <!-- Student Name -->
           <div class="field-group">
             <label class="field-label" for="name">
-              <span>Student Name (नाम) <span class="req-star">*</span></span>
+              <span>Student Name <span class="req-star">*</span></span>
             </label>
             <input type="text" id="name" name="name" class="lg" placeholder="e.g. Rahul Sharma" required autocomplete="name">
             <div class="field-error" id="errName" hidden>Student name is required.</div>
@@ -2191,7 +2191,7 @@
           <!-- Phone Number -->
           <div class="field-group">
             <label class="field-label" for="phone">
-              <span>Phone / WhatsApp Number (नंबर) <span class="req-star">*</span></span>
+              <span>Phone / WhatsApp Number <span class="req-star">*</span></span>
             </label>
             <input type="tel" id="phone" name="phone" class="lg" placeholder="e.g. 9876543210" required autocomplete="tel">
             <div class="field-error" id="errPhone" hidden>Phone number is required.</div>
@@ -2200,7 +2200,7 @@
           <!-- Gmail / Email -->
           <div class="field-group">
             <label class="field-label" for="email">
-              <span>Gmail / Email ID (जीमेल) <span class="req-star">*</span></span>
+              <span>Gmail / Email ID <span class="req-star">*</span></span>
             </label>
             <input type="email" id="email" name="email" class="lg" placeholder="e.g. rahul@gmail.com" required autocomplete="email">
             <div class="field-error" id="errEmail" hidden>Valid Gmail / Email is required.</div>
@@ -2574,8 +2574,8 @@
         <table>
           <thead>
             <tr>
-              <th>Student & Contact (नंबर / जीमेल)</th>
-              <th>Category (प्रकार)</th>
+              <th>Student & Contact</th>
+              <th>Category</th>
               <th style="min-width:240px">Query Description</th>
               <th>Typing Time</th>
               <th>Assigned By</th>
@@ -2812,11 +2812,11 @@
     var wrap = $('categoryPills');
     wrap.innerHTML = '';
     var labelMap = {
-      'Gold': 'Gold (गोल्ड)',
-      'Diamond': 'Diamond (डायमंड)',
-      'Silver': 'Silver (सिल्वर)',
-      'PMP': 'PMP (पीएमपी)',
-      'Chakravyuh': 'Chakravyuh (चक्रव्यूह)'
+      'Gold': 'Gold',
+      'Diamond': 'Diamond',
+      'Silver': 'Silver',
+      'PMP': 'PMP',
+      'Chakravyuh': 'Chakravyuh'
     };
     CATEGORIES.forEach(function (cat, i) {
       var id = 'cat_opt_' + i;
