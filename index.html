@@ -2200,10 +2200,10 @@
           <!-- Gmail / Email -->
           <div class="field-group">
             <label class="field-label" for="email">
-              <span>Gmail / Email ID <span class="req-star">*</span></span>
+              <span>Gmail / Email ID <small style="font-weight:500;color:var(--text-muted);font-size:12px;margin-left:4px">(Optional)</small></span>
             </label>
-            <input type="email" id="email" name="email" class="lg" placeholder="e.g. rahul@gmail.com" required autocomplete="email">
-            <div class="field-error" id="errEmail" hidden>Valid Gmail / Email is required.</div>
+            <input type="email" id="email" name="email" class="lg" placeholder="e.g. rahul@gmail.com (Optional)" autocomplete="email">
+            <div class="field-error" id="errEmail" hidden>Please enter a valid Gmail / Email address.</div>
           </div>
 
           <!-- Membership Category -->
@@ -2882,8 +2882,13 @@
 
     var tEmail = $('tEmail');
     if (tEmail) {
-      tEmail.textContent = email ? ('✉️ ' + email) : '✉️ No Gmail';
-      tEmail.style.color = email ? '#38bdf8' : 'var(--text-muted)';
+      if (email) {
+        tEmail.textContent = '✉️ ' + email;
+        tEmail.style.color = '#38bdf8';
+      } else {
+        tEmail.textContent = '✉️ Optional (None)';
+        tEmail.style.color = 'var(--text-muted)';
+      }
     }
 
     var tCat = $('tCat');
@@ -2977,8 +2982,12 @@
       }
       hasErr = true;
     }
-    if (!email) {
-      if ($('errEmail')) $('errEmail').hidden = false;
+    // Email is optional; if entered, do basic format check
+    if (email && email.indexOf('@') === -1) {
+      if ($('errEmail')) {
+        $('errEmail').textContent = 'Please enter a valid Gmail / Email address.';
+        $('errEmail').hidden = false;
+      }
       if ($('email')) {
         $('email').setAttribute('aria-invalid', 'true');
         if (!hasErr) $('email').focus();
@@ -2990,7 +2999,7 @@
       hasErr = true;
     }
     if (hasErr) {
-      toast('bad', 'Incomplete Form', 'Please fill in Name, Phone, Gmail, and Category.');
+      toast('bad', 'Incomplete Form', 'Please fill in Student Name, Phone Number, and Category.');
       return;
     }
 

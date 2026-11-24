@@ -16,7 +16,7 @@ A clean, modern, and mobile-friendly web application designed for tracking stude
 - **Fields Included**:
   - **Student Name**: Required text input with real-time validation.
   - **Phone / WhatsApp Number**: Required phone number field with validation.
-  - **Gmail / Email ID**: Required email/Gmail input with validation.
+  - **Gmail / Email ID**: Optional email/Gmail input (if provided, saved to Google Sheet; otherwise skipped).
   - **Category / Membership Type**: Interactive pill chips with exact 5 options:
     - `Gold`
     - `Diamond`
