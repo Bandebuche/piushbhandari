@@ -669,7 +669,39 @@ async function syncFromGoogleSheets() {
       if (res.ok) {
         const data = await res.json();
         if (data && data.records && Array.isArray(data.records) && data.records.length > 0) {
-          state.records = data.records;
+          const validCats = ["gold", "diamond", "silver", "pmp", "chakravyuh", "cyclic"];
+          state.records = data.records.map(r => {
+            const rawPhone = String(r.phone || r.number || "").trim();
+            const rawEmail = String(r.email || r.gmail || "").trim();
+            const rawCat = String(r.category || "").trim();
+            const rawQuery = String(r.query || "").trim();
+            const rawTime = String(r.typingTime || "").trim();
+            const rawAsg = String(r.assignedBy || "").trim();
+
+            const phoneIsCat = validCats.includes(rawPhone.toLowerCase());
+            const catIsDate = rawCat.includes("202") || rawCat.includes("GMT");
+
+            if (phoneIsCat && (catIsDate || !rawTime || !rawAsg)) {
+              return {
+                ...r,
+                phone: "-",
+                email: "-",
+                category: normalizeCategory(rawPhone),
+                query: rawEmail,
+                typingTime: rawCat,
+                assignedBy: rawQuery || "Sachin"
+              };
+            }
+            return {
+              ...r,
+              phone: rawPhone === "-" ? "-" : (rawPhone || "-"),
+              email: rawEmail === "-" ? "-" : (rawEmail || "-"),
+              category: normalizeCategory(rawCat),
+              query: rawQuery,
+              typingTime: rawTime,
+              assignedBy: rawAsg || "Sachin"
+            };
+          });
           saveRecordsToStorage();
           const nowStr = new Date().toLocaleTimeString();
           state.config.lastSynced = nowStr;

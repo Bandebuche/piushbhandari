@@ -3100,10 +3100,34 @@
       .then(function (res) { return res.json(); })
       .then(function (data) {
         if (data && data.status === 'success' && Array.isArray(data.records)) {
+          var validCats = ['gold', 'diamond', 'silver', 'pmp', 'chakravyuh', 'cyclic'];
           records = data.records.map(function (r) {
-            r.category = normalizeCategory(r.category);
-            r.phone = r.phone || r.number || '';
-            r.email = r.email || r.gmail || '';
+            var rawPhone = String(r.phone || r.number || '').trim();
+            var rawEmail = String(r.email || r.gmail || '').trim();
+            var rawCat = String(r.category || '').trim();
+            var rawQuery = String(r.query || '').trim();
+            var rawTime = String(r.typingTime || '').trim();
+            var rawAsg = String(r.assignedBy || '').trim();
+
+            // Self-healing: Detect if row was shifted due to legacy 6-column write
+            var phoneIsCat = validCats.indexOf(rawPhone.toLowerCase()) !== -1;
+            var catIsDate = rawCat.indexOf('202') >= 0 || rawCat.indexOf('GMT') >= 0;
+
+            if (phoneIsCat && (catIsDate || !rawTime || !rawAsg)) {
+              r.phone = '';
+              r.email = '';
+              r.category = normalizeCategory(rawPhone);
+              r.query = rawEmail;
+              r.typingTime = rawCat;
+              r.assignedBy = rawQuery || 'Sachin';
+            } else {
+              r.category = normalizeCategory(rawCat);
+              r.phone = (rawPhone === '-' ? '' : rawPhone);
+              r.email = (rawEmail === '-' ? '' : rawEmail);
+              r.query = rawQuery;
+              r.typingTime = rawTime;
+              r.assignedBy = rawAsg || 'Sachin';
+            }
             return r;
           });
           updateDashboard();
