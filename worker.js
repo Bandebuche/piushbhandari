@@ -96,6 +96,8 @@ export default {
           action: "create",
           spreadsheetId: TARGET_SPREADSHEET_ID,
           name: String(body.name).trim(),
+          phone: String(body.phone || body.number || "").trim(),
+          email: String(body.email || body.gmail || "").trim(),
           category: String(body.category).trim(),
           query: String(body.query || "").trim(),
           typingTime: body.typingTime || new Date().toISOString(),

@@ -536,7 +536,7 @@
   .req-star { color: var(--rose); margin-left: 2px; }
   .field-counter { font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); }
 
-  input[type=text], input[type=datetime-local], textarea {
+  input[type=text], input[type=tel], input[type=email], input[type=password], input[type=datetime-local], textarea {
     width: 100%;
     background: var(--bg-surface);
     border: 1.5px solid var(--border);
@@ -547,7 +547,7 @@
     transition: all 0.2s ease;
     -webkit-appearance: none;
   }
-  input[type=text].lg {
+  input[type=text].lg, input[type=tel].lg, input[type=email].lg {
     font-size: 15px;
     font-weight: 600;
   }
@@ -2182,10 +2182,28 @@
           <!-- Student Name -->
           <div class="field-group">
             <label class="field-label" for="name">
-              <span>Student Name <span class="req-star">*</span></span>
+              <span>Student Name (नाम) <span class="req-star">*</span></span>
             </label>
             <input type="text" id="name" name="name" class="lg" placeholder="e.g. Rahul Sharma" required autocomplete="name">
             <div class="field-error" id="errName" hidden>Student name is required.</div>
+          </div>
+
+          <!-- Phone Number -->
+          <div class="field-group">
+            <label class="field-label" for="phone">
+              <span>Phone / WhatsApp Number (नंबर) <span class="req-star">*</span></span>
+            </label>
+            <input type="tel" id="phone" name="phone" class="lg" placeholder="e.g. 9876543210" required autocomplete="tel">
+            <div class="field-error" id="errPhone" hidden>Phone number is required.</div>
+          </div>
+
+          <!-- Gmail / Email -->
+          <div class="field-group">
+            <label class="field-label" for="email">
+              <span>Gmail / Email ID (जीमेल) <span class="req-star">*</span></span>
+            </label>
+            <input type="email" id="email" name="email" class="lg" placeholder="e.g. rahul@gmail.com" required autocomplete="email">
+            <div class="field-error" id="errEmail" hidden>Valid Gmail / Email is required.</div>
           </div>
 
           <!-- Membership Category -->
@@ -2271,8 +2289,12 @@
 
             <div class="ticket-user">
               <span class="ticket-avatar" id="tAv">?</span>
-              <div>
+              <div style="min-width:0;flex:1">
                 <div class="ticket-name placeholder" id="tName">Student Name</div>
+                <div class="ticket-contact-line" id="tContact" style="font-size:11px;color:var(--text-muted);display:flex;gap:8px;margin:3px 0 5px;font-family:var(--font-mono);flex-wrap:wrap">
+                  <span id="tPhone">📞 No Number</span>
+                  <span id="tEmail">✉️ No Gmail</span>
+                </div>
                 <span class="ticket-tag" id="tCat">Pick Category</span>
               </div>
             </div>
@@ -2552,8 +2574,8 @@
         <table>
           <thead>
             <tr>
-              <th>Student Name</th>
-              <th>Category</th>
+              <th>Student & Contact (नंबर / जीमेल)</th>
+              <th>Category (प्रकार)</th>
               <th style="min-width:240px">Query Description</th>
               <th>Typing Time</th>
               <th>Assigned By</th>
@@ -2589,8 +2611,8 @@
   var SCRIPT_URL = "https://script.google.com/macros/s/AKfycby6bmjmxAkzy2aT5CGcKL30FiefsU8ITOi_EVUG4cYsGM1_BZakNiQI6oj0cNQlf9wj/exec";
   var TARGET_SPREADSHEET_ID = "1hP5XQ9EtMVQ5qRM0FW2GG8WQkYtXLwFisx7eh96ibz0";
 
-  var CATEGORIES = ['Diamond Member', 'Silver Member', 'Gold', 'Diamond', 'Silver', 'PMP', 'Chakravyuh'];
-  var CAT_COLORS = ['#38bdf8', '#94a3b8', '#f59e0b', '#818cf8', '#cbd5e1', '#10b981', '#14b8a6'];
+  var CATEGORIES = ['Gold', 'Diamond', 'Silver', 'PM Ke Chakravyuh'];
+  var CAT_COLORS = ['#f59e0b', '#38bdf8', '#94a3b8', '#10b981'];
   var ASSIGNEES = ['Sachin', 'Pragati'];
   var ASG_COLORS = { Sachin: '#38bdf8', Pragati: '#10b981' };
   var PAGE_SIZE = 15;
@@ -2645,8 +2667,18 @@
     return (p[0][0] + p[p.length - 1][0]).toUpperCase();
   }
 
+  function normalizeCategory(c) {
+    if (!c) return 'Gold';
+    var s = String(c).trim();
+    if (s === 'Diamond Member' || s === 'डायमंड' || s.toLowerCase() === 'diamond') return 'Diamond';
+    if (s === 'Silver Member' || s === 'सिल्वर' || s.toLowerCase() === 'silver') return 'Silver';
+    if (s === 'Gold' || s === 'गोल्ड' || s.toLowerCase() === 'gold') return 'Gold';
+    if (s === 'Cyclic' || s === 'Chakravyuh' || s === 'PMP' || s === 'पीएम के चक्रव्यूह' || s.toLowerCase().includes('chakravyuh')) return 'PM Ke Chakravyuh';
+    return s;
+  }
+
   function catColor(c) {
-    if (c === 'Cyclic') c = 'Chakravyuh';
+    c = normalizeCategory(c);
     var i = CATEGORIES.indexOf(c);
     return i >= 0 ? CAT_COLORS[i] : '#64748b';
   }
@@ -2773,25 +2805,31 @@
   }
 
   /* -------------------------------------------------------------
-     BUILD CATEGORY PILLS
+     BUILD CATEGORY PILLS (ONLY GOLD, DIAMOND, SILVER, PM KE CHAKRAVYUH)
   ------------------------------------------------------------- */
   function buildCategoryPills() {
     var wrap = $('categoryPills');
     wrap.innerHTML = '';
+    var labelMap = {
+      'Gold': 'Gold (गोल्ड)',
+      'Diamond': 'Diamond (डायमंड)',
+      'Silver': 'Silver (सिल्वर)',
+      'PM Ke Chakravyuh': 'PM Ke Chakravyuh (पीएम के चक्रव्यूह)'
+    };
     CATEGORIES.forEach(function (cat, i) {
       var id = 'cat_opt_' + i;
       var color = CAT_COLORS[i];
       var div = document.createElement('div');
       div.innerHTML =
         '<input type="radio" name="category" id="' + id + '" value="' + cat + '" ' + (i === 0 ? 'checked' : '') + '>' +
-        '<label for="' + id + '" style="--pill-color:' + color + '">' + cat + '</label>';
+        '<label for="' + id + '" style="--pill-color:' + color + '">' + (labelMap[cat] || cat) + '</label>';
       while (div.firstChild) wrap.appendChild(div.firstChild);
     });
   }
 
   function getSelectedCat() {
     var el = document.querySelector('input[name="category"]:checked');
-    return el ? el.value : '';
+    return el ? normalizeCategory(el.value) : '';
   }
 
   function getSelectedAsg() {
@@ -2804,17 +2842,21 @@
   ------------------------------------------------------------- */
   function updateTicketPreview() {
     var name = $('name').value.trim();
+    var phone = $('phone') ? $('phone').value.trim() : '';
+    var email = $('email') ? $('email').value.trim() : '';
     var cat = getSelectedCat();
     var q = $('query').value.trim();
     var tt = $('typingTime').value;
     var asg = getSelectedAsg();
 
     var score = 0;
-    if (name) score += 35;
-    if (cat) score += 20;
-    if (asg) score += 20;
-    if (q) score += 15;
-    if (tt) score += 10;
+    if (name) score += 25;
+    if (phone) score += 15;
+    if (email) score += 15;
+    if (cat) score += 15;
+    if (asg) score += 15;
+    if (q) score += 10;
+    if (tt) score += 5;
     $('meterPct').textContent = score + '%';
     $('meterFill').style.width = score + '%';
 
@@ -2828,6 +2870,18 @@
       av.textContent = '?';
       tName.textContent = 'Student Name';
       tName.classList.add('placeholder');
+    }
+
+    var tPhone = $('tPhone');
+    if (tPhone) {
+      tPhone.textContent = phone ? ('📞 ' + phone) : '📞 No Number';
+      tPhone.style.color = phone ? 'var(--neon-bright)' : 'var(--text-muted)';
+    }
+
+    var tEmail = $('tEmail');
+    if (tEmail) {
+      tEmail.textContent = email ? ('✉️ ' + email) : '✉️ No Gmail';
+      tEmail.style.color = email ? '#38bdf8' : 'var(--text-muted)';
     }
 
     var tCat = $('tCat');
@@ -2863,8 +2917,12 @@
   ------------------------------------------------------------- */
   function clearErrors() {
     $('errName').hidden = true;
+    if ($('errPhone')) $('errPhone').hidden = true;
+    if ($('errEmail')) $('errEmail').hidden = true;
     $('errCat').hidden = true;
     $('name').removeAttribute('aria-invalid');
+    if ($('phone')) $('phone').removeAttribute('aria-invalid');
+    if ($('email')) $('email').removeAttribute('aria-invalid');
   }
 
   function resetForm() {
@@ -2895,6 +2953,8 @@
     clearErrors();
 
     var name = $('name').value.trim();
+    var phone = $('phone') ? $('phone').value.trim() : '';
+    var email = $('email') ? $('email').value.trim() : '';
     var cat = getSelectedCat();
     var q = $('query').value.trim();
     var tt = $('typingTime').value;
@@ -2907,12 +2967,28 @@
       $('name').focus();
       hasErr = true;
     }
+    if (!phone) {
+      if ($('errPhone')) $('errPhone').hidden = false;
+      if ($('phone')) {
+        $('phone').setAttribute('aria-invalid', 'true');
+        if (!hasErr) $('phone').focus();
+      }
+      hasErr = true;
+    }
+    if (!email) {
+      if ($('errEmail')) $('errEmail').hidden = false;
+      if ($('email')) {
+        $('email').setAttribute('aria-invalid', 'true');
+        if (!hasErr) $('email').focus();
+      }
+      hasErr = true;
+    }
     if (!cat) {
       $('errCat').hidden = false;
       hasErr = true;
     }
     if (hasErr) {
-      toast('bad', 'Incomplete Form', 'Please fill in all required fields.');
+      toast('bad', 'Incomplete Form', 'Please fill in Name, Phone, Gmail, and Category.');
       return;
     }
 
@@ -2922,7 +2998,9 @@
     var newRecord = {
       timestamp: timestampStr,
       name: name,
-      category: cat,
+      phone: phone,
+      email: email,
+      category: normalizeCategory(cat),
       query: q || '-',
       typingTime: tt ? tt.replace('T', ' ') : fmt(now).slice(0, 16),
       assignedBy: asg || 'Sachin'
@@ -2965,6 +3043,8 @@
       action: 'create',
       timestamp: record.timestamp,
       name: record.name,
+      phone: record.phone || '',
+      email: record.email || '',
       category: record.category,
       query: record.query,
       typingTime: record.typingTime,
@@ -2990,6 +3070,8 @@
       try {
         var qs = 'action=create' +
           '&name=' + encodeURIComponent(record.name) +
+          '&phone=' + encodeURIComponent(record.phone || '') +
+          '&email=' + encodeURIComponent(record.email || '') +
           '&category=' + encodeURIComponent(record.category) +
           '&query=' + encodeURIComponent(record.query) +
           '&typingTime=' + encodeURIComponent(record.typingTime) +
@@ -3017,7 +3099,9 @@
       .then(function (data) {
         if (data && data.status === 'success' && Array.isArray(data.records)) {
           records = data.records.map(function (r) {
-            if (r.category === 'Cyclic') r.category = 'Chakravyuh';
+            r.category = normalizeCategory(r.category);
+            r.phone = r.phone || r.number || '';
+            r.email = r.email || r.gmail || '';
             return r;
           });
           updateDashboard();
@@ -3230,6 +3314,8 @@
       if (filter.asg && r.assignedBy !== filter.asg) return false;
       if (q) {
         var match = (r.name && r.name.toLowerCase().indexOf(q) >= 0) ||
+                    (r.phone && r.phone.toLowerCase().indexOf(q) >= 0) ||
+                    (r.email && r.email.toLowerCase().indexOf(q) >= 0) ||
                     (r.query && r.query.toLowerCase().indexOf(q) >= 0) ||
                     (r.category && r.category.toLowerCase().indexOf(q) >= 0);
         if (!match) return false;
@@ -3270,7 +3356,13 @@
           '<td>' +
             '<div class="user-cell">' +
               '<span class="cell-av" style="background:' + catColor(r.category) + ';color:#032014">' + initials(r.name) + '</span>' +
-              '<span>' + esc(r.name) + '</span>' +
+              '<div>' +
+                '<div style="font-weight:700">' + esc(r.name) + '</div>' +
+                '<div style="font-size:11px;color:var(--text-muted);display:flex;gap:8px;margin-top:2px;font-family:var(--font-mono);flex-wrap:wrap">' +
+                  (r.phone ? '<span>📞 ' + esc(r.phone) + '</span>' : '') +
+                  (r.email ? '<span>✉️ ' + esc(r.email) + '</span>' : '') +
+                '</div>' +
+              '</div>' +
             '</div>' +
           '</td>' +
           '<td><span class="badge-tag" style="background:rgba(255,255,255,0.06);color:' + catColor(r.category) + '">' + esc(r.category) + '</span></td>' +
@@ -3294,6 +3386,10 @@
               '<span class="cell-av" style="background:' + catColor(r.category) + ';color:#032014">' + initials(r.name) + '</span>' +
               '<div>' +
                 '<div class="box-user-name">' + esc(r.name) + '</div>' +
+                '<div style="font-size:11px;color:var(--text-muted);display:flex;gap:8px;margin-top:3px;font-family:var(--font-mono);flex-wrap:wrap">' +
+                  (r.phone ? '<span>📞 ' + esc(r.phone) + '</span>' : '') +
+                  (r.email ? '<span>✉️ ' + esc(r.email) + '</span>' : '') +
+                '</div>' +
                 '<div class="box-user-time">' + (relTime(r.timestamp) || niceTime(r.timestamp)) + '</div>' +
               '</div>' +
             '</div>' +
@@ -3326,12 +3422,14 @@
       return;
     }
     var rows = [
-      ['Timestamp', 'Student Name', 'Category', 'Query', 'Typing Time', 'Assigned By']
+      ['Timestamp', 'Student Name', 'Phone Number', 'Gmail / Email', 'Category', 'Query', 'Typing Time', 'Assigned By']
     ];
     records.forEach(function (r) {
       rows.push([
         r.timestamp || '',
         r.name || '',
+        r.phone || '',
+        r.email || '',
         r.category || '',
         (r.query || '').replace(/\r?\n/g, ' '),
         r.typingTime || '',
@@ -3372,6 +3470,18 @@
     $('errName').hidden = true;
     $('name').removeAttribute('aria-invalid');
   });
+  if ($('phone')) {
+    $('phone').addEventListener('input', function () {
+      if ($('errPhone')) $('errPhone').hidden = true;
+      $('phone').removeAttribute('aria-invalid');
+    });
+  }
+  if ($('email')) {
+    $('email').addEventListener('input', function () {
+      if ($('errEmail')) $('errEmail').hidden = true;
+      $('email').removeAttribute('aria-invalid');
+    });
+  }
   $('query').addEventListener('input', function () {
     $('qCount').textContent = $('query').value.length + ' / 500';
   });
@@ -3393,16 +3503,18 @@
     });
   });
 
-  // Sample Data Prefill
+  // Sample Data Prefill (Gold, Diamond, Silver, PM Ke Chakravyuh with Phone & Gmail)
   $('prefillBtn').addEventListener('click', function () {
     var samples = [
-      { name: 'Aarav Sharma', cat: 'Diamond Member', q: 'Requesting 1-on-1 mentorship session for portfolio and project code review.', asg: 'Sachin' },
-      { name: 'Pooja Deshmukh', cat: 'Gold', q: 'Unable to view recorded session of yesterday; page shows 403 authorization error.', asg: 'Pragati' },
-      { name: 'Rohan Kulkarni', cat: 'PMP', q: 'Mock exam score report verification and eligibility check for next round.', asg: 'Sachin' },
-      { name: 'Sneha Patel', cat: 'Silver Member', q: 'Extension request for assignment submission due to university exams.', asg: 'Pragati' }
+      { name: 'Aarav Sharma', phone: '+91 98201 54321', email: 'aarav.sharma@gmail.com', cat: 'Diamond', q: 'Requesting 1-on-1 mentorship session for portfolio and project code review.', asg: 'Sachin' },
+      { name: 'Pooja Deshmukh', phone: '+91 94220 89123', email: 'pooja.deshmukh@gmail.com', cat: 'Gold', q: 'Unable to view recorded session of yesterday; page shows 403 authorization error.', asg: 'Pragati' },
+      { name: 'Rohan Kulkarni', phone: '+91 97654 32109', email: 'rohan.kulkarni@gmail.com', cat: 'PM Ke Chakravyuh', q: 'Mock exam score report verification and eligibility check for next round.', asg: 'Sachin' },
+      { name: 'Sneha Patel', phone: '+91 99887 76655', email: 'sneha.patel@gmail.com', cat: 'Silver', q: 'Extension request for assignment submission due to university exams.', asg: 'Pragati' }
     ];
     var s = samples[Math.floor(Math.random() * samples.length)];
     $('name').value = s.name;
+    if ($('phone')) $('phone').value = s.phone;
+    if ($('email')) $('email').value = s.email;
     var catRadio = document.querySelector('input[name="category"][value="' + s.cat + '"]');
     if (catRadio) catRadio.checked = true;
     $('query').value = s.q;

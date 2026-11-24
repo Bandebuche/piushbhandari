@@ -15,14 +15,13 @@ A clean, modern, and mobile-friendly web application designed for tracking stude
 - **Bilingual & Intuitive UI**: Soft emerald (`#10b981`) and sky blue (`#0ea5e9`) light theme with English & Hindi labels.
 - **Fields Included**:
   - **Student Name (नाम)**: Required text input with real-time validation.
-  - **Category / Membership Type (सदस्यता प्रकार)**: Interactive pill chips & synchronized dropdown with exact options:
-    - `Diamond Member`
-    - `Silver Member`
-    - `Gold`
-    - `Diamond`
-    - `Silver`
-    - `PMP`
-    - `Chakravyuh`
+  - **Phone / WhatsApp Number (नंबर)**: Required phone number field with validation.
+  - **Gmail / Email ID (जीमेल)**: Required email/Gmail input with validation.
+  - **Category / Membership Type (सदस्यता प्रकार)**: Interactive pill chips with exact 4 options:
+    - `Gold` (गोल्ड)
+    - `Diamond` (डायमंड)
+    - `Silver` (सिल्वर)
+    - `PM Ke Chakravyuh` (पीएम के चक्रव्यूह)
   - **Query (क्वेरी विवरण)**: Auto-sizing textarea with 1-click topic suggestions (Portal Login Issue, Mentorship Slot, Certificate Request, Study Notes Access) and character counter.
   - **Typing Time (टाइपिंग समय)**: Time picker with a 1-click **"Set Current Time"** button.
   - **Assigned By (सौंपा गया)**: Custom radio pill cards with avatars for **Sachin** & **Pragati**.
@@ -30,10 +29,10 @@ A clean, modern, and mobile-friendly web application designed for tracking stude
 
 ### 2. Live Google Sheets Integration (गूगल शीट्स इंटीग्रेशन)
 - **Google Apps Script Web App**: Zero external hosting or database required!
-- **`doPost` Webhook**: Automatically appends submitted entries with server timestamp.
+- **`doPost` Webhook**: Automatically appends submitted entries with server timestamp, phone number, and gmail.
 - **`doGet` API**: Provides real-time synchronization to fetch all live sheet records.
-- **Automatic Column Headers**: If your spreadsheet is blank, the backend automatically generates styled headers:
-  `[Timestamp, Name, Category, Query, Typing Time, Assigned By]`
+- **Automatic Column Headers**: If your spreadsheet is blank or newly initialized, the backend automatically generates styled headers:
+  `[Timestamp, Name, Phone, Email, Category, Query, Typing Time, Assigned By]`
 - **Local Fallback Cache**: Runs seamlessly offline or in demo mode even before connecting Google Sheets.
 
 ### 3. Interactive Analytics Dashboard (एनालिटिक्स डैशबोर्ड)
@@ -42,8 +41,8 @@ A clean, modern, and mobile-friendly web application designed for tracking stude
   2. **Today's Entries** (Live count of queries received today)
   3. **Assigned to Sachin** (Count & percentage share)
   4. **Assigned to Pragati** (Count & percentage share)
-- **Two Interactive Charts (Chart.js)**:
-  1. **Category Distribution Bar Chart**: Exact breakdown across all 7 membership categories.
+- **Two Interactive Charts**:
+  1. **Category Distribution Bar Chart**: Exact breakdown across the 4 membership categories (Gold, Diamond, Silver, PM Ke Chakravyuh).
   2. **Workload Donut Chart**: Workload comparison between Sachin and Pragati.
 
 ### 4. Searchable & Filterable Live Data Table (डेटा तालिका)

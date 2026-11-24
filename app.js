@@ -8,36 +8,27 @@
 // ============================================================================
 
 const CATEGORIES = [
-  "Diamond Member",
-  "Silver Member",
   "Gold",
   "Diamond",
   "Silver",
-  "PMP",
-  "Cyclic"
+  "PM Ke Chakravyuh"
 ];
 
 const CATEGORY_COLORS = {
-  "Diamond Member": "#06b6d4", // Cyan
-  "Silver Member": "#94a3b8",  // Slate light
   "Gold": "#f59e0b",           // Amber
-  "Diamond": "#6366f1",        // Indigo
-  "Silver": "#64748b",         // Slate dark
-  "PMP": "#10b981",            // Emerald
-  "Cyclic": "#a855f7"          // Purple
+  "Diamond": "#38bdf8",        // Cyan
+  "Silver": "#94a3b8",         // Slate
+  "PM Ke Chakravyuh": "#10b981" // Emerald
 };
 
 const CATEGORY_BADGE_CLASSES = {
-  "Diamond Member": "badge-category-diamond-member",
-  "Silver Member": "badge-category-silver-member",
   "Gold": "badge-category-gold",
   "Diamond": "badge-category-diamond",
   "Silver": "badge-category-silver",
-  "PMP": "badge-category-pmp",
-  "Cyclic": "badge-category-cyclic"
+  "PM Ke Chakravyuh": "badge-category-pm-chakravyuh"
 };
 
-// Realistic seed records covering all categories & assignees
+// Realistic seed records covering all 4 categories & assignees with Phone & Gmail
 function getInitialSeedData() {
   const today = new Date();
   const formatDateTime = (date, timeStr) => {
@@ -55,7 +46,9 @@ function getInitialSeedData() {
       id: 1,
       timestamp: formatDateTime(today, "10:15:20"),
       name: "Aarav Sharma",
-      category: "Diamond Member",
+      phone: "+91 98201 54321",
+      email: "aarav.sharma@gmail.com",
+      category: "Diamond",
       query: "Requested 1-on-1 mentorship session with senior advisor regarding system architecture review.",
       typingTime: "10:15",
       assignedBy: "Sachin"
@@ -64,6 +57,8 @@ function getInitialSeedData() {
       id: 2,
       timestamp: formatDateTime(today, "11:42:10"),
       name: "Pooja Deshmukh",
+      phone: "+91 94220 89123",
+      email: "pooja.deshmukh@gmail.com",
       category: "Gold",
       query: "Unable to download full course module slides; receiving 403 access forbidden error.",
       typingTime: "11:40",
@@ -73,7 +68,9 @@ function getInitialSeedData() {
       id: 3,
       timestamp: formatDateTime(today, "12:30:45"),
       name: "Rohan Kulkarni",
-      category: "PMP",
+      phone: "+91 97654 32109",
+      email: "rohan.kulkarni@gmail.com",
+      category: "PM Ke Chakravyuh",
       query: "Mock exam test score report verification and certificate eligibility inquiry.",
       typingTime: "12:30",
       assignedBy: "Sachin"
@@ -82,7 +79,9 @@ function getInitialSeedData() {
       id: 4,
       timestamp: formatDateTime(today, "14:10:00"),
       name: "Sneha Patel",
-      category: "Silver Member",
+      phone: "+91 99887 76655",
+      email: "sneha.patel@gmail.com",
+      category: "Silver",
       query: "Extension required for assignment submission due to university semester exams.",
       typingTime: "14:00",
       assignedBy: "Pragati"
@@ -91,7 +90,9 @@ function getInitialSeedData() {
       id: 5,
       timestamp: formatDateTime(yesterday, "09:30:15"),
       name: "Vikram Malhotra",
-      category: "Cyclic",
+      phone: "+91 98112 34567",
+      email: "vikram.malhotra@gmail.com",
+      category: "PM Ke Chakravyuh",
       query: "Cycle rotation schedule clarification for batch A weekend classes.",
       typingTime: "09:30",
       assignedBy: "Sachin"
@@ -100,6 +101,8 @@ function getInitialSeedData() {
       id: 6,
       timestamp: formatDateTime(yesterday, "13:20:00"),
       name: "Ananya Iyer",
+      phone: "+91 98450 12345",
+      email: "ananya.iyer@gmail.com",
       category: "Diamond",
       query: "VIP community discord invite link expired, requested fresh permanent access token.",
       typingTime: "13:15",
@@ -109,6 +112,8 @@ function getInitialSeedData() {
       id: 7,
       timestamp: formatDateTime(yesterday, "16:45:10"),
       name: "Karan Mehta",
+      phone: "+91 97234 56789",
+      email: "karan.mehta@gmail.com",
       category: "Silver",
       query: "Payment receipt generation for tax deduction submission to employer.",
       typingTime: "16:40",
@@ -118,7 +123,9 @@ function getInitialSeedData() {
       id: 8,
       timestamp: formatDateTime(yesterday, "17:15:30"),
       name: "Meera Nair",
-      category: "Diamond Member",
+      phone: "+91 98950 67890",
+      email: "meera.nair@gmail.com",
+      category: "Gold",
       query: "Resume evaluation feedback request before upcoming campus drive.",
       typingTime: "17:00",
       assignedBy: "Pragati"
@@ -1380,10 +1387,12 @@ function exportToCSV() {
     return;
   }
 
-  const headers = ["Timestamp", "Student Name", "Category", "Query", "Typing Time", "Assigned By"];
+  const headers = ["Timestamp", "Student Name", "Phone Number", "Gmail / Email", "Category", "Query", "Typing Time", "Assigned By"];
   const rows = state.records.map(r => [
     `"${(r.timestamp || "").replace(/"/g, '""')}"`,
     `"${(r.name || "").replace(/"/g, '""')}"`,
+    `"${(r.phone || "").replace(/"/g, '""')}"`,
+    `"${(r.email || "").replace(/"/g, '""')}"`,
     `"${(r.category || "").replace(/"/g, '""')}"`,
     `"${(r.query || "").replace(/"/g, '""')}"`,
     `"${(r.typingTime || "").replace(/"/g, '""')}"`,

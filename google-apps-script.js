@@ -21,15 +21,27 @@
 const TARGET_SPREADSHEET_ID = "1hP5XQ9EtMVQ5qRM0FW2GG8WQkYtXLwFisx7eh96ibz0";
 const SHEET_NAME = "SupportData";
 
-// Headers configuration for the Google Sheet
+// Headers configuration for the Google Sheet (Including Phone Number & Gmail)
 const HEADERS = [
   "Timestamp",
   "Name",
+  "Phone",
+  "Email",
   "Category",
   "Query",
   "Typing Time",
   "Assigned By"
 ];
+
+// Clean category normalization (Only Gold, Diamond, Silver, PM Ke Chakravyuh)
+function normalizeCategory(cat) {
+  var s = String(cat || "").trim();
+  if (s === "Diamond Member" || s === "डायमंड" || s.toLowerCase() === "diamond") return "Diamond";
+  if (s === "Silver Member" || s === "सिल्वर" || s.toLowerCase() === "silver") return "Silver";
+  if (s === "Gold" || s === "गोल्ड" || s.toLowerCase() === "gold") return "Gold";
+  if (s === "Cyclic" || s === "Chakravyuh" || s === "PMP" || s === "पीएम के चक्रव्यूह" || s.toLowerCase().indexOf("chakravyuh") >= 0) return "PM Ke Chakravyuh";
+  return s || "Gold";
+}
 
 /**
  * Helper to get or create target sheet with proper headers
@@ -80,7 +92,19 @@ function getOrCreateSheet() {
     
     // Auto resize columns
     for (let i = 1; i <= HEADERS.length; i++) {
-      sheet.setColumnWidth(i, i === 4 ? 300 : 160); // wider for Query
+      sheet.setColumnWidth(i, i === 6 ? 300 : 160); // wider for Query
+    }
+  } else {
+    // Check if headers need upgrade to include Phone & Email
+    const curHeaders = sheet.getRange(1, 1, 1, Math.max(sheet.getLastColumn(), 6)).getValues()[0];
+    const headerStr = curHeaders.map(function(h) { return String(h).toLowerCase(); }).join(",");
+    if (headerStr.indexOf("phone") === -1 && headerStr.indexOf("number") === -1) {
+      // Upgrade header row to new standard schema
+      const headerRange = sheet.getRange(1, 1, 1, HEADERS.length);
+      headerRange.setValues([HEADERS]);
+      headerRange.setFontWeight("bold");
+      headerRange.setBackground("#0f766e");
+      headerRange.setFontColor("#ffffff");
     }
   }
   
@@ -102,7 +126,7 @@ function doGet(e) {
     if (action === "ping") {
       const response = {
         status: "success",
-        message: "Google Sheets Web App is connected and live!",
+        message: "Google Sheets Web App is connected and live with Phone and Gmail fields!",
         sheetName: sheet.getName(),
         rowCount: Math.max(0, sheet.getLastRow() - 1),
         serverTime: new Date().toISOString()
@@ -112,12 +136,24 @@ function doGet(e) {
 
     // Default action: read all records
     const lastRow = sheet.getLastRow();
+    const lastCol = Math.max(sheet.getLastColumn(), HEADERS.length);
     const records = [];
 
     if (lastRow > 1) {
       // Read rows starting from row 2 (skipping header)
-      const dataRange = sheet.getRange(2, 1, lastRow - 1, HEADERS.length);
+      const dataRange = sheet.getRange(2, 1, lastRow - 1, lastCol);
       const values = dataRange.getValues();
+      const headerRow = sheet.getRange(1, 1, 1, lastCol).getValues()[0].map(function(h) {
+        return String(h).trim().toLowerCase();
+      });
+
+      const hasPhoneCol = headerRow.indexOf("phone") !== -1 || headerRow.indexOf("number") !== -1;
+      const phoneIdx = hasPhoneCol ? (headerRow.indexOf("phone") !== -1 ? headerRow.indexOf("phone") : headerRow.indexOf("number")) : 2;
+      const emailIdx = headerRow.indexOf("email") !== -1 ? headerRow.indexOf("email") : (headerRow.indexOf("gmail") !== -1 ? headerRow.indexOf("gmail") : 3);
+      const catIdx = headerRow.indexOf("category") !== -1 ? headerRow.indexOf("category") : (hasPhoneCol ? 4 : 2);
+      const queryIdx = headerRow.indexOf("query") !== -1 ? headerRow.indexOf("query") : (hasPhoneCol ? 5 : 3);
+      const timeIdx = headerRow.indexOf("typing time") !== -1 ? headerRow.indexOf("typing time") : (hasPhoneCol ? 6 : 4);
+      const asgIdx = headerRow.indexOf("assigned by") !== -1 ? headerRow.indexOf("assigned by") : (hasPhoneCol ? 7 : 5);
 
       for (let i = 0; i < values.length; i++) {
         const row = values[i];
@@ -134,10 +170,12 @@ function doGet(e) {
           id: i + 1,
           timestamp: formattedTimestamp,
           name: String(row[1] || "").trim(),
-          category: String(row[2] || "").trim(),
-          query: String(row[3] || "").trim(),
-          typingTime: String(row[4] || "").trim(),
-          assignedBy: String(row[5] || "").trim()
+          phone: hasPhoneCol ? String(row[phoneIdx] || "").trim() : "",
+          email: hasPhoneCol ? String(row[emailIdx] || "").trim() : "",
+          category: normalizeCategory(row[catIdx]),
+          query: String(row[queryIdx] || "").trim(),
+          typingTime: String(row[timeIdx] || "").trim(),
+          assignedBy: String(row[asgIdx] || "").trim()
         });
       }
     }
@@ -183,7 +221,9 @@ function doPost(e) {
     }
 
     const name = String(data.name || "").trim();
-    const category = String(data.category || "").trim();
+    const phone = String(data.phone || data.number || "").trim();
+    const email = String(data.email || data.gmail || "").trim();
+    const category = normalizeCategory(data.category);
     const query = String(data.query || "").trim();
     const typingTime = String(data.typingTime || "").trim();
     const assignedBy = String(data.assignedBy || "").trim();
@@ -200,10 +240,12 @@ function doPost(e) {
     const timestampStr = Utilities.formatDate(now, Session.getScriptTimeZone(), "yyyy-MM-dd HH:mm:ss");
 
     // Prepare row matching HEADERS order:
-    // [Timestamp, Name, Category, Query, Typing Time, Assigned By]
+    // [Timestamp, Name, Phone, Email, Category, Query, Typing Time, Assigned By]
     const newRow = [
       timestampStr,
       name,
+      phone,
+      email,
       category,
       query,
       typingTime,
@@ -218,6 +260,8 @@ function doPost(e) {
       entry: {
         timestamp: timestampStr,
         name: name,
+        phone: phone,
+        email: email,
         category: category,
         query: query,
         typingTime: typingTime,
@@ -233,6 +277,7 @@ function doPost(e) {
       message: error.toString()
     });
   }
+}
 }
 
 /**
@@ -262,7 +307,9 @@ function testAppScript() {
     postData: {
       contents: JSON.stringify({
         name: "Aarav Sharma",
-        category: "Diamond Member",
+        phone: "+91 98201 54321",
+        email: "aarav.sharma@gmail.com",
+        category: "Diamond",
         query: "Need access to advanced module recordings and mentorship slot.",
         typingTime: "10:30 AM",
         assignedBy: "Sachin"
